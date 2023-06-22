@@ -21,6 +21,6 @@ namespace UniversityManagement.Entities.Models
         public int Amount { get; set; }
         public virtual ICollection<Student> Students {get;set;}
 
-        //Branch 1
+        //Branch   vchdg
     }
 }
