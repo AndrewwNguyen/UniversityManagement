@@ -20,5 +20,7 @@ namespace UniversityManagement.Entities.Models
         public DateTime YearOfAdmission { get; set; }
         public int Amount { get; set; }
         public virtual ICollection<Student> Students {get;set;}
+
+        //Branch 1
     }
 }
