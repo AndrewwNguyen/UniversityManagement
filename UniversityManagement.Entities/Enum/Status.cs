@@ -8,7 +8,8 @@ namespace UniversityManagement.Entities.Enum
 {
     public enum Status
     {
-        Deleted,
-        Actived
+        Inprocess,
+        Pass,
+        failed
     }
 }

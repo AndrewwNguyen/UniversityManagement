@@ -15,7 +15,7 @@ namespace UniversityManagement.Entities.Configuration
         {
             builder.HasKey(x => new { x.IdSubject, x.IdStudent });
             builder.HasOne(x => x.Student).WithMany(x => x.Subject_Students).HasForeignKey(x => x.IdStudent);
-            builder.HasOne(x => x.Subject).WithMany(x => x.Subject_Students).HasForeignKey(x => x.IdSubject);
+            builder.HasOne(x => x.Subject).WithMany(x => x.Subject_Student).HasForeignKey(x => x.IdSubject);
         }
     }
 }

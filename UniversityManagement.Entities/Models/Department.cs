@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace UniversityManagement.Entities.Models
 {
-    public class Deparment
+    public class Department
     {
         [Key]
         public int IdDeparment { get; set; }

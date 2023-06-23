@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UniversityManagement.Entities.Configuration
+namespace UniversityManagement.Entities.Data
 {
-    internal class DeparmentConfiguration
+    public class SeedData
     {
     }
 }

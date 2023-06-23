@@ -15,12 +15,11 @@ namespace UniversityManagement.Entities.Models
         public string? Name { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string? Address { get; set;}
-        [ForeignKey("Class")]
-        public int IdClass { get; set; }
-        public virtual Class Class { get; set; }
+        public int? IdClass { get; set; }
+        public virtual Class? Class { get; set; }
 
         public virtual ICollection<Subject_Student>? Subject_Students { get; set; }
-        public virtual ICollection<Subject_Score>? Subject_Scores { get; set; }
+        public string? Description { get; set; }    
 
     }
 }

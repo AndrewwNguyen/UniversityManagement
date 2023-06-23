@@ -11,8 +11,8 @@ namespace UniversityManagement.Entities.Models
     {
         [Key]
         public int IdTeacher { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public virtual ICollection<Subject> Subjects { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public virtual ICollection<Subject>? Subjects { get; set; }
     }
 }

@@ -13,6 +13,6 @@ namespace UniversityManagement.Entities.Models
         public int IdClassRoom { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-        public virtual Subject Subject { get; set; }
+        public virtual ICollection<Subject_Classroom>? Subject_Classrooms { get; set; }
     }
 }

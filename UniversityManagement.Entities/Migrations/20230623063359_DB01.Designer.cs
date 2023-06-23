@@ -12,7 +12,7 @@ using UniversityManagement.Entities.Data;
 namespace UniversityManagement.Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230622132845_DB01")]
+    [Migration("20230623063359_DB01")]
     partial class DB01
     {
         /// <inheritdoc />
@@ -71,7 +71,7 @@ namespace UniversityManagement.Entities.Migrations
                     b.ToTable("ClassRoom");
                 });
 
-            modelBuilder.Entity("UniversityManagement.Entities.Models.Deparment", b =>
+            modelBuilder.Entity("UniversityManagement.Entities.Models.Department", b =>
                 {
                     b.Property<int>("IdDeparment")
                         .ValueGeneratedOnAdd()
@@ -87,13 +87,16 @@ namespace UniversityManagement.Entities.Migrations
 
                     b.HasKey("IdDeparment");
 
-                    b.ToTable("Deparment");
+                    b.ToTable("Department");
                 });
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Student", b =>
                 {
-                    b.Property<int>("IdClass")
+                    b.Property<int>("IdStudent")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdStudent"));
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -101,7 +104,7 @@ namespace UniversityManagement.Entities.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IdStudent")
+                    b.Property<int?>("IdClass")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -109,7 +112,9 @@ namespace UniversityManagement.Entities.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("IdClass");
+                    b.HasKey("IdStudent");
+
+                    b.HasIndex("IdClass");
 
                     b.ToTable("Student", (string)null);
                 });
@@ -117,22 +122,40 @@ namespace UniversityManagement.Entities.Migrations
             modelBuilder.Entity("UniversityManagement.Entities.Models.Subject", b =>
                 {
                     b.Property<int>("IdSubject")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdSubject"));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("IdTeacher")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TeacherIdTeacher")
-                        .HasColumnType("int");
-
                     b.HasKey("IdSubject");
 
-                    b.HasIndex("TeacherIdTeacher");
+                    b.HasIndex("IdTeacher");
 
-                    b.ToTable("Subject");
+                    b.ToTable("Subject", (string)null);
+                });
+
+            modelBuilder.Entity("UniversityManagement.Entities.Models.Subject_Classroom", b =>
+                {
+                    b.Property<int>("IdSubject")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdRoom")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdSubject", "IdRoom");
+
+                    b.HasIndex("IdRoom");
+
+                    b.ToTable("Subject_Classroom");
                 });
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Subject_Score", b =>
@@ -150,7 +173,7 @@ namespace UniversityManagement.Entities.Migrations
 
                     b.HasIndex("IdStudent");
 
-                    b.ToTable("Subject_Scores");
+                    b.ToTable("Subject_Score");
                 });
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Subject_Student", b =>
@@ -177,11 +200,9 @@ namespace UniversityManagement.Entities.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTeacher"));
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdTeacher");
@@ -191,7 +212,7 @@ namespace UniversityManagement.Entities.Migrations
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Class", b =>
                 {
-                    b.HasOne("UniversityManagement.Entities.Models.Deparment", "Deparment")
+                    b.HasOne("UniversityManagement.Entities.Models.Department", "Deparment")
                         .WithMany("Classes")
                         .HasForeignKey("IdDeparment")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -204,26 +225,39 @@ namespace UniversityManagement.Entities.Migrations
                 {
                     b.HasOne("UniversityManagement.Entities.Models.Class", "Class")
                         .WithMany("Students")
-                        .HasForeignKey("IdClass")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdClass");
 
                     b.Navigation("Class");
                 });
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Subject", b =>
                 {
-                    b.HasOne("UniversityManagement.Entities.Models.ClassRoom", "ClassRoom")
-                        .WithOne("Subject")
-                        .HasForeignKey("UniversityManagement.Entities.Models.Subject", "IdSubject")
+                    b.HasOne("UniversityManagement.Entities.Models.Teacher", "Teacher")
+                        .WithMany("Subjects")
+                        .HasForeignKey("IdTeacher")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UniversityManagement.Entities.Models.Teacher", null)
-                        .WithMany("Subjects")
-                        .HasForeignKey("TeacherIdTeacher");
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("UniversityManagement.Entities.Models.Subject_Classroom", b =>
+                {
+                    b.HasOne("UniversityManagement.Entities.Models.ClassRoom", "ClassRoom")
+                        .WithMany("Subject_Classrooms")
+                        .HasForeignKey("IdRoom")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UniversityManagement.Entities.Models.Subject", "Subject")
+                        .WithMany("Subject_Classroom")
+                        .HasForeignKey("IdSubject")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ClassRoom");
+
+                    b.Navigation("Subject");
                 });
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Subject_Score", b =>
@@ -254,7 +288,7 @@ namespace UniversityManagement.Entities.Migrations
                         .IsRequired();
 
                     b.HasOne("UniversityManagement.Entities.Models.Subject", "Subject")
-                        .WithMany("Subject_Students")
+                        .WithMany("Subject_Student")
                         .HasForeignKey("IdSubject")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -271,11 +305,10 @@ namespace UniversityManagement.Entities.Migrations
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.ClassRoom", b =>
                 {
-                    b.Navigation("Subject")
-                        .IsRequired();
+                    b.Navigation("Subject_Classrooms");
                 });
 
-            modelBuilder.Entity("UniversityManagement.Entities.Models.Deparment", b =>
+            modelBuilder.Entity("UniversityManagement.Entities.Models.Department", b =>
                 {
                     b.Navigation("Classes");
                 });
@@ -289,9 +322,11 @@ namespace UniversityManagement.Entities.Migrations
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Subject", b =>
                 {
+                    b.Navigation("Subject_Classroom");
+
                     b.Navigation("Subject_Score");
 
-                    b.Navigation("Subject_Students");
+                    b.Navigation("Subject_Student");
                 });
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Teacher", b =>

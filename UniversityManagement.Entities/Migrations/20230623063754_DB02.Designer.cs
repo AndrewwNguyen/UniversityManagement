@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UniversityManagement.Entities.Data;
 
@@ -11,9 +12,11 @@ using UniversityManagement.Entities.Data;
 namespace UniversityManagement.Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230623063754_DB02")]
+    partial class DB02
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,16 +36,11 @@ namespace UniversityManagement.Entities.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("IdDeparment")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("YearOfAdmission")
                         .HasColumnType("datetime2");
@@ -51,7 +49,7 @@ namespace UniversityManagement.Entities.Migrations
 
                     b.HasIndex("IdDeparment");
 
-                    b.ToTable("Class", (string)null);
+                    b.ToTable("Class");
 
                     b.HasData(
                         new
@@ -132,13 +130,11 @@ namespace UniversityManagement.Entities.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdClassRoom");
 
-                    b.ToTable("ClassRoom", (string)null);
+                    b.ToTable("ClassRoom");
 
                     b.HasData(
                         new
@@ -161,13 +157,11 @@ namespace UniversityManagement.Entities.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdDeparment");
 
-                    b.ToTable("Department", (string)null);
+                    b.ToTable("Department");
 
                     b.HasData(
                         new
@@ -216,9 +210,6 @@ namespace UniversityManagement.Entities.Migrations
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("IdClass")
                         .HasColumnType("int");
 
@@ -238,7 +229,7 @@ namespace UniversityManagement.Entities.Migrations
                         {
                             IdStudent = 2,
                             Address = "Bac Ninh",
-                            DateOfBirth = new DateTime(2001, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(2012, 12, 25, 1, 3, 12, 0, DateTimeKind.Unspecified),
                             IdClass = 1,
                             Name = "Nguyen Duc Bao Son"
                         },
@@ -246,7 +237,7 @@ namespace UniversityManagement.Entities.Migrations
                         {
                             IdStudent = 3,
                             Address = "Ha Noi",
-                            DateOfBirth = new DateTime(2001, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(2012, 12, 25, 1, 3, 12, 0, DateTimeKind.Unspecified),
                             IdClass = 1,
                             Name = "Nguyen Quang Trung"
                         },
@@ -254,7 +245,7 @@ namespace UniversityManagement.Entities.Migrations
                         {
                             IdStudent = 4,
                             Address = "Bac Giang",
-                            DateOfBirth = new DateTime(2001, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(2012, 12, 25, 1, 3, 12, 0, DateTimeKind.Unspecified),
                             IdClass = 3,
                             Name = "Nguyen Manh Hiep"
                         },
@@ -262,7 +253,7 @@ namespace UniversityManagement.Entities.Migrations
                         {
                             IdStudent = 5,
                             Address = "Ha Noi",
-                            DateOfBirth = new DateTime(2003, 12, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(2012, 12, 25, 1, 3, 12, 0, DateTimeKind.Unspecified),
                             IdClass = 4,
                             Name = "Vu Hoang Minh"
                         },
@@ -270,7 +261,7 @@ namespace UniversityManagement.Entities.Migrations
                         {
                             IdStudent = 6,
                             Address = "Hai Duong",
-                            DateOfBirth = new DateTime(1999, 12, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(2012, 12, 25, 1, 3, 12, 0, DateTimeKind.Unspecified),
                             IdClass = 3,
                             Name = "Doan Duy Anh"
                         },
@@ -278,7 +269,7 @@ namespace UniversityManagement.Entities.Migrations
                         {
                             IdStudent = 7,
                             Address = "Ha Noi",
-                            DateOfBirth = new DateTime(2000, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(2012, 12, 25, 1, 3, 12, 0, DateTimeKind.Unspecified),
                             IdClass = 2,
                             Name = "Phan Tien Anh"
                         },
@@ -286,7 +277,7 @@ namespace UniversityManagement.Entities.Migrations
                         {
                             IdStudent = 8,
                             Address = "Ha Noi",
-                            DateOfBirth = new DateTime(2000, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(2012, 12, 25, 1, 3, 12, 0, DateTimeKind.Unspecified),
                             IdClass = 4,
                             Name = "Ngo Ngoc Duc"
                         },
@@ -294,7 +285,7 @@ namespace UniversityManagement.Entities.Migrations
                         {
                             IdStudent = 9,
                             Address = "Nam Dinh",
-                            DateOfBirth = new DateTime(1998, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(2012, 12, 25, 1, 3, 12, 0, DateTimeKind.Unspecified),
                             IdClass = 5,
                             Name = "Nguyen Thi Khanh"
                         },
@@ -302,7 +293,7 @@ namespace UniversityManagement.Entities.Migrations
                         {
                             IdStudent = 10,
                             Address = "Thai Binh",
-                            DateOfBirth = new DateTime(2001, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(2012, 12, 25, 1, 3, 12, 0, DateTimeKind.Unspecified),
                             IdClass = 3,
                             Name = "Le Kien Truc"
                         });
@@ -398,14 +389,29 @@ namespace UniversityManagement.Entities.Migrations
                     b.Property<int>("IdRoom")
                         .HasColumnType("int");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("IdSubject", "IdRoom");
 
                     b.HasIndex("IdRoom");
 
                     b.ToTable("Subject_Classroom");
+                });
+
+            modelBuilder.Entity("UniversityManagement.Entities.Models.Subject_Score", b =>
+                {
+                    b.Property<int>("IdSubject")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdStudent")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Mark")
+                        .HasColumnType("int");
+
+                    b.HasKey("IdSubject", "IdStudent");
+
+                    b.HasIndex("IdStudent");
+
+                    b.ToTable("Subject_Score");
                 });
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Subject_Student", b =>
@@ -414,15 +420,6 @@ namespace UniversityManagement.Entities.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("IdStudent")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<float?>("Mark")
-                        .HasColumnType("real");
-
-                    b.Property<int?>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("IdSubject", "IdStudent");
@@ -435,33 +432,27 @@ namespace UniversityManagement.Entities.Migrations
                         new
                         {
                             IdSubject = 4,
-                            IdStudent = 2,
-                            Mark = 7f,
-                            Status = 1
+                            IdStudent = 2
                         },
                         new
                         {
                             IdSubject = 2,
-                            IdStudent = 2,
-                            Status = 0
+                            IdStudent = 2
                         },
                         new
                         {
                             IdSubject = 1,
-                            IdStudent = 3,
-                            Status = 0
+                            IdStudent = 3
                         },
                         new
                         {
                             IdSubject = 1,
-                            IdStudent = 2,
-                            Status = 0
+                            IdStudent = 2
                         },
                         new
                         {
                             IdSubject = 2,
-                            IdStudent = 3,
-                            Status = 0
+                            IdStudent = 3
                         });
                 });
 
@@ -481,7 +472,7 @@ namespace UniversityManagement.Entities.Migrations
 
                     b.HasKey("IdTeacher");
 
-                    b.ToTable("Teacher", (string)null);
+                    b.ToTable("Teacher");
 
                     b.HasData(
                         new
@@ -572,6 +563,25 @@ namespace UniversityManagement.Entities.Migrations
                     b.Navigation("Subject");
                 });
 
+            modelBuilder.Entity("UniversityManagement.Entities.Models.Subject_Score", b =>
+                {
+                    b.HasOne("UniversityManagement.Entities.Models.Student", "Student")
+                        .WithMany("Subject_Scores")
+                        .HasForeignKey("IdStudent")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("UniversityManagement.Entities.Models.Subject", "Subject")
+                        .WithMany("Subject_Score")
+                        .HasForeignKey("IdSubject")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Subject");
+                });
+
             modelBuilder.Entity("UniversityManagement.Entities.Models.Subject_Student", b =>
                 {
                     b.HasOne("UniversityManagement.Entities.Models.Student", "Student")
@@ -608,12 +618,16 @@ namespace UniversityManagement.Entities.Migrations
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Student", b =>
                 {
+                    b.Navigation("Subject_Scores");
+
                     b.Navigation("Subject_Students");
                 });
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Subject", b =>
                 {
                     b.Navigation("Subject_Classroom");
+
+                    b.Navigation("Subject_Score");
 
                     b.Navigation("Subject_Student");
                 });

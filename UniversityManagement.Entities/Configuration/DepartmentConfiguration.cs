@@ -9,12 +9,12 @@ using UniversityManagement.Entities.Models;
 
 namespace UniversityManagement.Entities.Configuration
 {
-    public class ClassConfiguration : IEntityTypeConfiguration<Class>
+    public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
     {
-        public void Configure(EntityTypeBuilder<Class> builder)
+        public void Configure(EntityTypeBuilder<Department> builder)
         {
-            builder.ToTable(nameof(Class));
-            builder.HasKey(x => x.IdClass);
+            builder.ToTable(nameof(Department));
+            builder.HasKey(x => x.IdDeparment);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
         }
     }
