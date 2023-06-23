@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UniversityManagement.Services.IServices
 {
-    internal interface IStudentServices
+    internal class IBaseService
     {
     }
 }
