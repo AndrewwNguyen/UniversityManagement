@@ -4,55 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UniversityManagement.Entities.Data;
+using UniversityManagement.Respositories.Infrastructures;
 using UniversityManagement.Services.IServices;
 
 namespace UniversityManagement.Services.Services
 {
     public abstract class BaseService<TEntity> :IBaseService<TEntity> where TEntity : class
     {
-        protected readonly ApplicationDbContext db;
-
-        public BaseReponsitory(ApplicationDbContext context)
+        private readonly IUnitOfWork _unitOfWork;
+        public BaseService(IUnitOfWork unitOfWork)
         {
-            db = context;
+            _unitOfWork = unitOfWork;
         }
 
-        string entity = typeof(TEntity).Name;
-
-        public virtual void AddTEntity(TEntity entity)
-        {
-            db.Set<TEntity>().Add(entity);
-        }
-
-
-        public virtual void DeleteTEntity(TEntity entity)
-        {
-            db.Set<TEntity>().Remove(entity);
-        }
-
-        public virtual void DeleteTEntity(int entityId)
-        {
-            db.Set<TEntity>().Remove(db.Set<TEntity>().Find(entityId));
-        }
-
-        public virtual TEntity Find(int entityId)
-        {
-            return db.Set<TEntity>().Find(entityId);
-        }
-
-        public virtual IEnumerable<TEntity> GetAllEntities()
-        {
-            return db.Set<TEntity>().ToList();
-        }
-
-        public virtual void UpdateTEntity(TEntity entity)
-        {
-            db.Set<TEntity>().Update(entity);
-        }
-
-        public IEnumerable<TEntity> Pagination(int pageSize, int pageIndex)
-        {
-            return db.Set<TEntity>().Skip((pageIndex - 1) * pageSize).Take(pageSize);
-        }
     }
 }

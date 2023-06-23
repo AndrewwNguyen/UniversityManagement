@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace UniversityManagement.Services.IServices
 {
-    internal class IBaseService
+    public interface IBaseService<TEntity>
     {
+
     }
 }

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\UniversityManagement.Entities\UniversityManagement.Entities.csproj" />
+    <ProjectReference Include="..\UniversityManagement.Respositories\UniversityManagement.Respositories.csproj" />
   </ItemGroup>
 
 </Project>
