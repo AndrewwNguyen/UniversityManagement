@@ -9,7 +9,7 @@ using UniversityManagement.Services.IServices;
 
 namespace UniversityManagement.Services.Services
 {
-    public class StudentServices:IStudentServices
+    public class StudentServices : IStudentServices
     {
         private readonly IUnitOfWork _unitOfWork;
         public StudentServices(IUnitOfWork unitOfWork)
@@ -36,26 +36,26 @@ namespace UniversityManagement.Services.Services
 
         public Student Find(int entityId)
         {
-            var category = _unitOfWork.studentRepository.Find(entityId);
-            return category;
+            var student = _unitOfWork.studentRepository.Find(entityId);
+            return student;
         }
 
         public IEnumerable<Student> GetAllEntities()
         {
-            var categorys = _unitOfWork.studentRepository.GetAllEntities();
-            return categorys;
+            var student = _unitOfWork.studentRepository.GetAllEntities();
+            return student;
         }
 
         public Student GetStudentByName(string name)
         {
-            var category = _unitOfWork.studentRepository.GetStudentByName(name);
-            return category;
+            var student = _unitOfWork.studentRepository.GetStudentByName(name);
+            return student;
         }
 
         public IEnumerable<Student> GetAllStudentInClass(int postId)
         {
-            var categories = _unitOfWork.studentRepository.GetAllStudentInClass(postId);
-            return categories;
+            var student = _unitOfWork.studentRepository.GetAllStudentInClass(postId);
+            return student;
         }
 
         public void UpdateStudent(Student entity)

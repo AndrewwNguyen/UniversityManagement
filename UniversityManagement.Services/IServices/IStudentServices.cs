@@ -17,6 +17,7 @@ namespace UniversityManagement.Services.IServices
         IEnumerable<Student> GetAllEntities();
         Student GetStudentByName(string name);
         IEnumerable<Student> GetAllStudentInClass(int ClassId);
+
         public IEnumerable<Student> StudentPagination(int pageSize, int PageIndex);
     }
 }

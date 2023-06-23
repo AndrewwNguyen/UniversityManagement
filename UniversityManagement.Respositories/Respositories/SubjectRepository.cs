@@ -20,5 +20,11 @@ namespace UniversityManagement.Respositories.Respositories
         {
             return db.Set<Subject>().Include(x => x.Subject_Student).ThenInclude(x => x.Student.IdStudent == StudentId).ToList();
         }
+
+        public Subject GetSubjectByName(string name)
+        {
+            Subject subject = db.Set<Subject>().FirstOrDefault(x => x.Name == name);
+            return subject;
+        }
     }
 }
