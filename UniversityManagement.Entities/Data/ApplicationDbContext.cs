@@ -49,19 +49,19 @@ namespace UniversityManagement.Entities.Data
 
             //DEPARMENT
             modelBuilder.Entity<Department>().HasData(
-                new Department { IdDeparment = 1, Name = "Cong Nghe Thong Tin", Description = "No" }
+                new Department { DeparmentId = 1, DeparmentName = "Cong Nghe Thong Tin", Description = "No" }
                 );
             modelBuilder.Entity<Department>().HasData(
-    new Department { IdDeparment = 2, Name = "Luat kinh Te", Description = "No" }
+    new Department { DeparmentId = 2, DeparmentName = "Luat kinh Te", Description = "No" }
     );
             modelBuilder.Entity<Department>().HasData(
-    new Department { IdDeparment = 3, Name = "Quan Tri Kinh Doanh", Description = "No" }
+    new Department { DeparmentId = 3, DeparmentName = "Quan Tri Kinh Doanh", Description = "No" }
     );
             modelBuilder.Entity<Department>().HasData(
-    new Department { IdDeparment = 4, Name = "Marketing", Description = "No" }
+    new Department { DeparmentId = 4, DeparmentName = "Marketing", Description = "No" }
     );
             modelBuilder.Entity<Department>().HasData(
-    new Department { IdDeparment = 5, Name = "Co Khi", Description = "No" }
+    new Department { DeparmentId = 5, DeparmentName = "Co Khi", Description = "No" }
     );
 
 
@@ -69,126 +69,125 @@ namespace UniversityManagement.Entities.Data
 
             //CLASS
             modelBuilder.Entity<Class>().HasData(
-             new Class { IdClass = 1, Name = "Cong nghe thong tin 1", IdDeparment = 1, Amount = 75 }
+             new Class { ClassId = 1, ClassName = "Cong nghe thong tin 1", DepartmentId = 1, Amount = 75 }
                 );
             modelBuilder.Entity<Class>().HasData(
- new Class { IdClass = 2, Name = "Cong nghe thong tin 2", IdDeparment = 1, Amount = 70 }
+ new Class { ClassId = 2, ClassName = "Cong nghe thong tin 2", DepartmentId = 1, Amount = 70 }
     );
             modelBuilder.Entity<Class>().HasData(
- new Class { IdClass = 3, Name = "Marketing 2", IdDeparment = 4, Amount = 46 }
+ new Class { ClassId = 3, ClassName = "Marketing 2", DepartmentId = 4, Amount = 46 }
     );
             modelBuilder.Entity<Class>().HasData(
- new Class { IdClass = 4, Name = "Co Khi", IdDeparment = 5, Amount = 49 }
+ new Class { ClassId = 4, ClassName = "Co Khi", DepartmentId = 5, Amount = 49 }
     );
             modelBuilder.Entity<Class>().HasData(
- new Class { IdClass = 5, Name = "Cong nghe thong tin 3", IdDeparment = 1, Amount = 70 }
+ new Class { ClassId = 5, ClassName = "Cong nghe thong tin 3", DepartmentId = 1, Amount = 70 }
     );
             modelBuilder.Entity<Class>().HasData(
- new Class { IdClass = 6, Name = "Quan Tri Kinh Doanh 1", IdDeparment = 3, Amount = 60 }
+ new Class { ClassId = 6, ClassName = "Quan Tri Kinh Doanh 1", DepartmentId = 3, Amount = 60 }
     );
             modelBuilder.Entity<Class>().HasData(
- new Class { IdClass = 7, Name = "Luat Kinh Te 1", IdDeparment = 2, Amount = 72 }
+ new Class { ClassId = 7, ClassName = "Luat Kinh Te 1", DepartmentId = 2, Amount = 72 }
     );
             modelBuilder.Entity<Class>().HasData(
- new Class { IdClass = 8, Name = "Co Khi 2", IdDeparment = 5, Amount = 75 }
+ new Class { ClassId = 8, ClassName = "Co Khi 2", DepartmentId = 5, Amount = 75 }
     );
 
 
             // STUDENT
             modelBuilder.Entity<Student>().HasData(
-                new Student { IdStudent = 2, Name = "Nguyen Duc Bao Son", Address = "Bac Ninh", IdClass = 1, DateOfBirth = new DateTime(2001, 9, 2) }
+                new Student { StudentId = 2, StudentName = "Nguyen Duc Bao Son", Address = "Bac Ninh", ClassId = 1, DateOfBirth = new DateTime(2001, 9, 2),Description="No" }
                 ); ;
 
             modelBuilder.Entity<Student>().HasData(
-                new Student { IdStudent = 3, Name = "Nguyen Quang Trung", Address = "Ha Noi", IdClass = 1, DateOfBirth = new DateTime(2001, 12, 25) }
+                new Student { StudentId = 3, StudentName = "Nguyen Quang Trung", Address = "Ha Noi", ClassId = 1, DateOfBirth = new DateTime(2001, 12, 25), Description = "No" }
                 ); ;
 
             modelBuilder.Entity<Student>().HasData(
-                new Student { IdStudent = 4, Name = "Nguyen Manh Hiep", Address = "Bac Giang", IdClass = 3, DateOfBirth = new DateTime(2001, 1, 4) }
+                new Student { StudentId = 4, StudentName = "Nguyen Manh Hiep", Address = "Bac Giang", ClassId = 3, DateOfBirth = new DateTime(2001, 1, 4), Description = "No" }
                 ); ;
 
             modelBuilder.Entity<Student>().HasData(
-                new Student { IdStudent = 5, Name = "Vu Hoang Minh", Address = "Ha Noi", IdClass = 4, DateOfBirth = new DateTime(2003, 12, 4) }
+                new Student { StudentId = 5, StudentName = "Vu Hoang Minh", Address = "Ha Noi", ClassId = 4, DateOfBirth = new DateTime(2003, 12, 4), Description = "No" }
                 ); ;
 
             modelBuilder.Entity<Student>().HasData(
-                new Student { IdStudent = 6, Name = "Doan Duy Anh", Address = "Hai Duong", IdClass = 3, DateOfBirth = new DateTime(1999, 12, 8) }
+                new Student { StudentId = 6, StudentName = "Doan Duy Anh", Address = "Hai Duong", ClassId = 3, DateOfBirth = new DateTime(1999, 12, 8), Description = "No" }
                 ); ;
 
             modelBuilder.Entity<Student>().HasData(
-                new Student { IdStudent = 7, Name = "Phan Tien Anh", Address = "Ha Noi", IdClass = 2, DateOfBirth = new DateTime(2000, 2, 2) }
+                new Student { StudentId = 7, StudentName = "Phan Tien Anh", Address = "Ha Noi", ClassId = 2, DateOfBirth = new DateTime(2000, 2, 2), Description = "No" }
                 ); ;
 
             modelBuilder.Entity<Student>().HasData(
-                new Student { IdStudent = 8, Name = "Ngo Ngoc Duc", Address = "Ha Noi", IdClass = 4, DateOfBirth = new DateTime(2000, 12, 25) }
+                new Student { StudentId = 8, StudentName = "Ngo Ngoc Duc", Address = "Ha Noi", ClassId = 4, DateOfBirth = new DateTime(2000, 12, 25), Description = "No" }
                 ); ;
 
             modelBuilder.Entity<Student>().HasData(
-                new Student { IdStudent = 9, Name = "Nguyen Thi Khanh", Address = "Nam Dinh", IdClass = 5, DateOfBirth = new DateTime(1998, 4, 4) }
+                new Student { StudentId = 9, StudentName = "Nguyen Thi Khanh", Address = "Nam Dinh", ClassId = 5, DateOfBirth = new DateTime(1998, 4, 4), Description = "No" }
                 ); ;
 
             modelBuilder.Entity<Student>().HasData(
-                new Student { IdStudent = 10, Name = "Le Kien Truc", Address = "Thai Binh", IdClass = 3, DateOfBirth = new DateTime(2001, 12, 25) }
+                new Student { StudentId = 10, StudentName = "Le Kien Truc", Address = "Thai Binh", ClassId = 3, DateOfBirth = new DateTime(2001, 12, 25), Description = "No" }
                 );
 
 
             ///SUBJECT
             modelBuilder.Entity<Subject>().HasData(
-                new Subject { IdSubject = 1, Name = "Lap Trinh Web", Description = "No" ,IdTeacher =1}
+                new Subject { SubjectId = 1, SubjectName = "Lap Trinh Web", Description = "No" ,TeacherId =1}
                 );
             modelBuilder.Entity<Subject>().HasData(
-    new Subject { IdSubject = 2, Name = "An Ninh Mang", Description = "No", IdTeacher = 2 }
+    new Subject { SubjectId = 2, SubjectName = "An Ninh Mang", Description = "No", TeacherId = 2 }
     );
             modelBuilder.Entity<Subject>().HasData(
-    new Subject { IdSubject = 3, Name = "Tri Tue Nhan Tao", Description = "No", IdTeacher = 1 }
+    new Subject { SubjectId = 3, SubjectName = "Tri Tue Nhan Tao", Description = "No", TeacherId = 1 }
     );
             modelBuilder.Entity<Subject>().HasData(
-    new Subject { IdSubject = 4, Name = "Lich Su Dang", Description = "No" , IdTeacher = 3 }
+    new Subject { SubjectId = 4, SubjectName = "Lich Su Dang", Description = "No" , TeacherId = 3 }
     );
             modelBuilder.Entity<Subject>().HasData(
-    new Subject { IdSubject = 5, Name = "Dai So Tuyen Tinh", Description = "No" , IdTeacher = 4 }
+    new Subject { SubjectId = 5, SubjectName = "Dai So Tuyen Tinh", Description = "No" , TeacherId = 4 }
     );
             modelBuilder.Entity<Subject>().HasData(
-    new Subject { IdSubject = 6, Name = "Co So Du Lieu", Description = "No" , IdTeacher = 5 }
+    new Subject { SubjectId = 6, SubjectName = "Co So Du Lieu", Description = "No" , TeacherId = 5 }
     );
             modelBuilder.Entity<Subject>().HasData(
-    new Subject { IdSubject = 7, Name = "Xu Ly Anh", Description = "No" , IdTeacher = 6 }
+    new Subject { SubjectId = 7, SubjectName = "Xu Ly Anh", Description = "No" , TeacherId = 6 }
     );
             modelBuilder.Entity<Subject>().HasData(
-    new Subject { IdSubject = 8, Name = "Khai Pha Du Lieu", Description = "No" , IdTeacher = 1 }
+    new Subject { SubjectId = 8, SubjectName = "Khai Pha Du Lieu", Description = "No" , TeacherId = 1 }
     );
             modelBuilder.Entity<ClassRoom>().HasData(
-                new ClassRoom { IdClassRoom = 1, Name = "Room 303A7", Description = "No"}
+                new ClassRoom {ClassRoomId = 1, ClassRoomName = "Room 303A7", Description = "No" }
                 );
-
             //                // TEACHER
             modelBuilder.Entity<Teacher>().HasData(
-                new Teacher { IdTeacher = 1, Name = "Bui Ngoc Dung", Description = "No",}
+                new Teacher { TeacherId = 1, TeacherName = "Bui Ngoc Dung", Description = "No",}
                 );
             modelBuilder.Entity<Teacher>().HasData(
-    new Teacher { IdTeacher = 2, Name = "Nguyen Kim Sao", Description = "No", }
+    new Teacher { TeacherId = 2, TeacherName = "Nguyen Kim Sao", Description = "No", }
     );
             modelBuilder.Entity<Teacher>().HasData(
-    new Teacher { IdTeacher = 3, Name = "Nguyen Thu Phuong", Description = "No", }
+    new Teacher { TeacherId = 3, TeacherName = "Nguyen Thu Phuong", Description = "No", }
     );
             modelBuilder.Entity<Teacher>().HasData(
-    new Teacher { IdTeacher = 4, Name = "Thieu Tran Cuong", Description = "No", }
+    new Teacher { TeacherId = 4, TeacherName = "Thieu Tran Cuong", Description = "No", }
     );
             modelBuilder.Entity<Teacher>().HasData(
-    new Teacher { IdTeacher = 5, Name = "Dao Nhu Quynh", Description = "No", }
+    new Teacher { TeacherId = 5, TeacherName = "Dao Nhu Quynh", Description = "No", }
     );
             modelBuilder.Entity<Teacher>().HasData(
-    new Teacher { IdTeacher = 6, Name = "Nguyen Gia Quy", Description = "No", }
+    new Teacher { TeacherId = 6, TeacherName = "Nguyen Gia Quy", Description = "No", }
     );
 
 
             //SUBJECT_STUDENT
             modelBuilder.Entity<Subject_Student>().HasData(
-                new Subject_Student { IdStudent = 2, IdSubject = 4 ,Status = Enum.Status.Pass, Mark =7},
-                new Subject_Student { IdStudent = 2, IdSubject = 2, Status = Enum.Status.Inprocess },
-                new Subject_Student { IdStudent = 3, IdSubject = 1, Status = Enum.Status.Inprocess },
-                new Subject_Student { IdStudent = 2, IdSubject = 1 , Status = Enum.Status.Inprocess },
-                new Subject_Student { IdStudent = 3, IdSubject = 2 , Status = Enum.Status.Inprocess }
+                new Subject_Student { StudentId = 2, SubjectId = 4 ,Status = Enum.Status.Pass, Mark =7},
+                new Subject_Student { StudentId = 2, SubjectId = 2, Status = Enum.Status.Inprocess },
+                new Subject_Student { StudentId = 3, SubjectId = 1, Status = Enum.Status.Inprocess },
+                new Subject_Student { StudentId = 2, SubjectId = 1 , Status = Enum.Status.Inprocess },
+                new Subject_Student { StudentId = 3, SubjectId = 2 , Status = Enum.Status.Inprocess }
                 );
         }
     }

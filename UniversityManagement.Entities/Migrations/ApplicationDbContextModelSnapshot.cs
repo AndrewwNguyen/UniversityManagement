@@ -17,201 +17,205 @@ namespace UniversityManagement.Entities.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.7")
+                .HasAnnotation("ProductVersion", "7.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Class", b =>
                 {
-                    b.Property<int>("IdClass")
+                    b.Property<int>("ClassId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdClass"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClassId"));
 
                     b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ClassName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("DepartmentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdDeparment")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
-
                     b.Property<DateTime>("YearOfAdmission")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("IdClass");
+                    b.HasKey("ClassId");
 
-                    b.HasIndex("IdDeparment");
+                    b.HasIndex("DepartmentId");
 
                     b.ToTable("Class", (string)null);
 
                     b.HasData(
                         new
                         {
-                            IdClass = 1,
+                            ClassId = 1,
                             Amount = 75,
-                            IdDeparment = 1,
-                            Name = "Cong nghe thong tin 1",
+                            ClassName = "Cong nghe thong tin 1",
+                            DepartmentId = 1,
                             YearOfAdmission = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            IdClass = 2,
+                            ClassId = 2,
                             Amount = 70,
-                            IdDeparment = 1,
-                            Name = "Cong nghe thong tin 2",
+                            ClassName = "Cong nghe thong tin 2",
+                            DepartmentId = 1,
                             YearOfAdmission = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            IdClass = 3,
+                            ClassId = 3,
                             Amount = 46,
-                            IdDeparment = 4,
-                            Name = "Marketing 2",
+                            ClassName = "Marketing 2",
+                            DepartmentId = 4,
                             YearOfAdmission = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            IdClass = 4,
+                            ClassId = 4,
                             Amount = 49,
-                            IdDeparment = 5,
-                            Name = "Co Khi",
+                            ClassName = "Co Khi",
+                            DepartmentId = 5,
                             YearOfAdmission = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            IdClass = 5,
+                            ClassId = 5,
                             Amount = 70,
-                            IdDeparment = 1,
-                            Name = "Cong nghe thong tin 3",
+                            ClassName = "Cong nghe thong tin 3",
+                            DepartmentId = 1,
                             YearOfAdmission = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            IdClass = 6,
+                            ClassId = 6,
                             Amount = 60,
-                            IdDeparment = 3,
-                            Name = "Quan Tri Kinh Doanh 1",
+                            ClassName = "Quan Tri Kinh Doanh 1",
+                            DepartmentId = 3,
                             YearOfAdmission = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            IdClass = 7,
+                            ClassId = 7,
                             Amount = 72,
-                            IdDeparment = 2,
-                            Name = "Luat Kinh Te 1",
+                            ClassName = "Luat Kinh Te 1",
+                            DepartmentId = 2,
                             YearOfAdmission = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
-                            IdClass = 8,
+                            ClassId = 8,
                             Amount = 75,
-                            IdDeparment = 5,
-                            Name = "Co Khi 2",
+                            ClassName = "Co Khi 2",
+                            DepartmentId = 5,
                             YearOfAdmission = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.ClassRoom", b =>
                 {
-                    b.Property<int>("IdClassRoom")
+                    b.Property<int>("ClassRoomId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdClassRoom"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClassRoomId"));
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("ClassRoomName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("IdClassRoom");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ClassRoomId");
 
                     b.ToTable("ClassRoom", (string)null);
 
                     b.HasData(
                         new
                         {
-                            IdClassRoom = 1,
-                            Description = "No",
-                            Name = "Room 303A7"
+                            ClassRoomId = 1,
+                            ClassRoomName = "Room 303A7",
+                            Description = "No"
                         });
                 });
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Department", b =>
                 {
-                    b.Property<int>("IdDeparment")
+                    b.Property<int>("DeparmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdDeparment"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeparmentId"));
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("DeparmentName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("IdDeparment");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("DeparmentId");
 
                     b.ToTable("Department", (string)null);
 
                     b.HasData(
                         new
                         {
-                            IdDeparment = 1,
-                            Description = "No",
-                            Name = "Cong Nghe Thong Tin"
+                            DeparmentId = 1,
+                            DeparmentName = "Cong Nghe Thong Tin",
+                            Description = "No"
                         },
                         new
                         {
-                            IdDeparment = 2,
-                            Description = "No",
-                            Name = "Luat kinh Te"
+                            DeparmentId = 2,
+                            DeparmentName = "Luat kinh Te",
+                            Description = "No"
                         },
                         new
                         {
-                            IdDeparment = 3,
-                            Description = "No",
-                            Name = "Quan Tri Kinh Doanh"
+                            DeparmentId = 3,
+                            DeparmentName = "Quan Tri Kinh Doanh",
+                            Description = "No"
                         },
                         new
                         {
-                            IdDeparment = 4,
-                            Description = "No",
-                            Name = "Marketing"
+                            DeparmentId = 4,
+                            DeparmentName = "Marketing",
+                            Description = "No"
                         },
                         new
                         {
-                            IdDeparment = 5,
-                            Description = "No",
-                            Name = "Co Khi"
+                            DeparmentId = 5,
+                            DeparmentName = "Co Khi",
+                            Description = "No"
                         });
                 });
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Student", b =>
                 {
-                    b.Property<int>("IdStudent")
+                    b.Property<int>("StudentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdStudent"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ClassId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -219,201 +223,207 @@ namespace UniversityManagement.Entities.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("IdClass")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("StudentName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("IdStudent");
+                    b.HasKey("StudentId");
 
-                    b.HasIndex("IdClass");
+                    b.HasIndex("ClassId");
 
                     b.ToTable("Student", (string)null);
 
                     b.HasData(
                         new
                         {
-                            IdStudent = 2,
+                            StudentId = 2,
                             Address = "Bac Ninh",
+                            ClassId = 1,
                             DateOfBirth = new DateTime(2001, 9, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdClass = 1,
-                            Name = "Nguyen Duc Bao Son"
+                            Description = "No",
+                            StudentName = "Nguyen Duc Bao Son"
                         },
                         new
                         {
-                            IdStudent = 3,
+                            StudentId = 3,
                             Address = "Ha Noi",
+                            ClassId = 1,
                             DateOfBirth = new DateTime(2001, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdClass = 1,
-                            Name = "Nguyen Quang Trung"
+                            Description = "No",
+                            StudentName = "Nguyen Quang Trung"
                         },
                         new
                         {
-                            IdStudent = 4,
+                            StudentId = 4,
                             Address = "Bac Giang",
+                            ClassId = 3,
                             DateOfBirth = new DateTime(2001, 1, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdClass = 3,
-                            Name = "Nguyen Manh Hiep"
+                            Description = "No",
+                            StudentName = "Nguyen Manh Hiep"
                         },
                         new
                         {
-                            IdStudent = 5,
+                            StudentId = 5,
                             Address = "Ha Noi",
+                            ClassId = 4,
                             DateOfBirth = new DateTime(2003, 12, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdClass = 4,
-                            Name = "Vu Hoang Minh"
+                            Description = "No",
+                            StudentName = "Vu Hoang Minh"
                         },
                         new
                         {
-                            IdStudent = 6,
+                            StudentId = 6,
                             Address = "Hai Duong",
+                            ClassId = 3,
                             DateOfBirth = new DateTime(1999, 12, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdClass = 3,
-                            Name = "Doan Duy Anh"
+                            Description = "No",
+                            StudentName = "Doan Duy Anh"
                         },
                         new
                         {
-                            IdStudent = 7,
+                            StudentId = 7,
                             Address = "Ha Noi",
+                            ClassId = 2,
                             DateOfBirth = new DateTime(2000, 2, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdClass = 2,
-                            Name = "Phan Tien Anh"
+                            Description = "No",
+                            StudentName = "Phan Tien Anh"
                         },
                         new
                         {
-                            IdStudent = 8,
+                            StudentId = 8,
                             Address = "Ha Noi",
+                            ClassId = 4,
                             DateOfBirth = new DateTime(2000, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdClass = 4,
-                            Name = "Ngo Ngoc Duc"
+                            Description = "No",
+                            StudentName = "Ngo Ngoc Duc"
                         },
                         new
                         {
-                            IdStudent = 9,
+                            StudentId = 9,
                             Address = "Nam Dinh",
+                            ClassId = 5,
                             DateOfBirth = new DateTime(1998, 4, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdClass = 5,
-                            Name = "Nguyen Thi Khanh"
+                            Description = "No",
+                            StudentName = "Nguyen Thi Khanh"
                         },
                         new
                         {
-                            IdStudent = 10,
+                            StudentId = 10,
                             Address = "Thai Binh",
+                            ClassId = 3,
                             DateOfBirth = new DateTime(2001, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            IdClass = 3,
-                            Name = "Le Kien Truc"
+                            Description = "No",
+                            StudentName = "Le Kien Truc"
                         });
                 });
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Subject", b =>
                 {
-                    b.Property<int>("IdSubject")
+                    b.Property<int>("SubjectId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdSubject"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SubjectId"));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdTeacher")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
+                    b.Property<string>("SubjectName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdSubject");
+                    b.Property<int>("TeacherId")
+                        .HasColumnType("int");
 
-                    b.HasIndex("IdTeacher");
+                    b.HasKey("SubjectId");
+
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Subject", (string)null);
 
                     b.HasData(
                         new
                         {
-                            IdSubject = 1,
+                            SubjectId = 1,
                             Description = "No",
-                            IdTeacher = 1,
-                            Name = "Lap Trinh Web"
+                            SubjectName = "Lap Trinh Web",
+                            TeacherId = 1
                         },
                         new
                         {
-                            IdSubject = 2,
+                            SubjectId = 2,
                             Description = "No",
-                            IdTeacher = 2,
-                            Name = "An Ninh Mang"
+                            SubjectName = "An Ninh Mang",
+                            TeacherId = 2
                         },
                         new
                         {
-                            IdSubject = 3,
+                            SubjectId = 3,
                             Description = "No",
-                            IdTeacher = 1,
-                            Name = "Tri Tue Nhan Tao"
+                            SubjectName = "Tri Tue Nhan Tao",
+                            TeacherId = 1
                         },
                         new
                         {
-                            IdSubject = 4,
+                            SubjectId = 4,
                             Description = "No",
-                            IdTeacher = 3,
-                            Name = "Lich Su Dang"
+                            SubjectName = "Lich Su Dang",
+                            TeacherId = 3
                         },
                         new
                         {
-                            IdSubject = 5,
+                            SubjectId = 5,
                             Description = "No",
-                            IdTeacher = 4,
-                            Name = "Dai So Tuyen Tinh"
+                            SubjectName = "Dai So Tuyen Tinh",
+                            TeacherId = 4
                         },
                         new
                         {
-                            IdSubject = 6,
+                            SubjectId = 6,
                             Description = "No",
-                            IdTeacher = 5,
-                            Name = "Co So Du Lieu"
+                            SubjectName = "Co So Du Lieu",
+                            TeacherId = 5
                         },
                         new
                         {
-                            IdSubject = 7,
+                            SubjectId = 7,
                             Description = "No",
-                            IdTeacher = 6,
-                            Name = "Xu Ly Anh"
+                            SubjectName = "Xu Ly Anh",
+                            TeacherId = 6
                         },
                         new
                         {
-                            IdSubject = 8,
+                            SubjectId = 8,
                             Description = "No",
-                            IdTeacher = 1,
-                            Name = "Khai Pha Du Lieu"
+                            SubjectName = "Khai Pha Du Lieu",
+                            TeacherId = 1
                         });
                 });
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Subject_Classroom", b =>
                 {
-                    b.Property<int>("IdSubject")
+                    b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdRoom")
+                    b.Property<int>("ClassRoomId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdSubject", "IdRoom");
+                    b.HasKey("SubjectId", "ClassRoomId");
 
-                    b.HasIndex("IdRoom");
+                    b.HasIndex("ClassRoomId");
 
                     b.ToTable("Subject_Classroom");
                 });
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Subject_Student", b =>
                 {
-                    b.Property<int>("IdSubject")
+                    b.Property<int>("SubjectId")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdStudent")
+                    b.Property<int>("StudentId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -425,100 +435,100 @@ namespace UniversityManagement.Entities.Migrations
                     b.Property<int?>("Status")
                         .HasColumnType("int");
 
-                    b.HasKey("IdSubject", "IdStudent");
+                    b.HasKey("SubjectId", "StudentId");
 
-                    b.HasIndex("IdStudent");
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Subject_Student");
 
                     b.HasData(
                         new
                         {
-                            IdSubject = 4,
-                            IdStudent = 2,
+                            SubjectId = 4,
+                            StudentId = 2,
                             Mark = 7f,
                             Status = 1
                         },
                         new
                         {
-                            IdSubject = 2,
-                            IdStudent = 2,
+                            SubjectId = 2,
+                            StudentId = 2,
                             Status = 0
                         },
                         new
                         {
-                            IdSubject = 1,
-                            IdStudent = 3,
+                            SubjectId = 1,
+                            StudentId = 3,
                             Status = 0
                         },
                         new
                         {
-                            IdSubject = 1,
-                            IdStudent = 2,
+                            SubjectId = 1,
+                            StudentId = 2,
                             Status = 0
                         },
                         new
                         {
-                            IdSubject = 2,
-                            IdStudent = 3,
+                            SubjectId = 2,
+                            StudentId = 3,
                             Status = 0
                         });
                 });
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Teacher", b =>
                 {
-                    b.Property<int>("IdTeacher")
+                    b.Property<int>("TeacherId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdTeacher"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeacherId"));
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("TeacherName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("IdTeacher");
+                    b.HasKey("TeacherId");
 
                     b.ToTable("Teacher", (string)null);
 
                     b.HasData(
                         new
                         {
-                            IdTeacher = 1,
+                            TeacherId = 1,
                             Description = "No",
-                            Name = "Bui Ngoc Dung"
+                            TeacherName = "Bui Ngoc Dung"
                         },
                         new
                         {
-                            IdTeacher = 2,
+                            TeacherId = 2,
                             Description = "No",
-                            Name = "Nguyen Kim Sao"
+                            TeacherName = "Nguyen Kim Sao"
                         },
                         new
                         {
-                            IdTeacher = 3,
+                            TeacherId = 3,
                             Description = "No",
-                            Name = "Nguyen Thu Phuong"
+                            TeacherName = "Nguyen Thu Phuong"
                         },
                         new
                         {
-                            IdTeacher = 4,
+                            TeacherId = 4,
                             Description = "No",
-                            Name = "Thieu Tran Cuong"
+                            TeacherName = "Thieu Tran Cuong"
                         },
                         new
                         {
-                            IdTeacher = 5,
+                            TeacherId = 5,
                             Description = "No",
-                            Name = "Dao Nhu Quynh"
+                            TeacherName = "Dao Nhu Quynh"
                         },
                         new
                         {
-                            IdTeacher = 6,
+                            TeacherId = 6,
                             Description = "No",
-                            Name = "Nguyen Gia Quy"
+                            TeacherName = "Nguyen Gia Quy"
                         });
                 });
 
@@ -526,7 +536,7 @@ namespace UniversityManagement.Entities.Migrations
                 {
                     b.HasOne("UniversityManagement.Entities.Models.Department", "Deparment")
                         .WithMany("Classes")
-                        .HasForeignKey("IdDeparment")
+                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -537,7 +547,9 @@ namespace UniversityManagement.Entities.Migrations
                 {
                     b.HasOne("UniversityManagement.Entities.Models.Class", "Class")
                         .WithMany("Students")
-                        .HasForeignKey("IdClass");
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Class");
                 });
@@ -546,7 +558,7 @@ namespace UniversityManagement.Entities.Migrations
                 {
                     b.HasOne("UniversityManagement.Entities.Models.Teacher", "Teacher")
                         .WithMany("Subjects")
-                        .HasForeignKey("IdTeacher")
+                        .HasForeignKey("TeacherId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -557,13 +569,13 @@ namespace UniversityManagement.Entities.Migrations
                 {
                     b.HasOne("UniversityManagement.Entities.Models.ClassRoom", "ClassRoom")
                         .WithMany("Subject_Classrooms")
-                        .HasForeignKey("IdRoom")
+                        .HasForeignKey("ClassRoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("UniversityManagement.Entities.Models.Subject", "Subject")
                         .WithMany("Subject_Classroom")
-                        .HasForeignKey("IdSubject")
+                        .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -576,13 +588,13 @@ namespace UniversityManagement.Entities.Migrations
                 {
                     b.HasOne("UniversityManagement.Entities.Models.Student", "Student")
                         .WithMany("Subject_Students")
-                        .HasForeignKey("IdStudent")
+                        .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("UniversityManagement.Entities.Models.Subject", "Subject")
                         .WithMany("Subject_Student")
-                        .HasForeignKey("IdSubject")
+                        .HasForeignKey("SubjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

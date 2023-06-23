@@ -16,23 +16,23 @@ namespace UniversityManagement.Respositories.Respositories
         {
 
         }
-        public List<Student> GetAllStudentDepartment(int idDepartment)
+        public List<Student> GetAllStudentDepartment(int departmentId)
         {
-            return db.Set<Student>().Include(x => x.Class).ThenInclude(a => a.Deparment.IdDeparment == idDepartment).ToList();
+            return db.Set<Student>().Include(x => x.Class).ThenInclude(a => a.Deparment.DeparmentId == departmentId).ToList();
         }
-        public List<Student> GetAllStudentInClass(int idclass)
+        public List<Student> GetAllStudentInClass(int classId)
         {
-            return db.Set<Student>().Where(x => x.IdClass == idclass).ToList();
-        }
-
-        public List<Student> GetAllStudentInSubject(int idSubject)
-        {
-            return db.Set<Student>().Include(x => x.Subject_Students.Where(x => x.IdSubject == idSubject)).ToList();
+            return db.Set<Student>().Where(x => x.ClassId == classId).ToList();
         }
 
-        public Student GetStudentByName(string name)
+        public List<Student> GetAllStudentInSubject(int subjectId)
         {
-            Student student = db.Set<Student>().FirstOrDefault(x => x.Name == name);
+            return db.Set<Student>().Include(x => x.Subject_Students.Where(x => x.SubjectId == subjectId)).ToList();
+        }
+
+        public Student GetStudentByName(string studentName)
+        {
+            Student student = db.Set<Student>().FirstOrDefault(x => x.StudentName == studentName);
             return student;
         }
 

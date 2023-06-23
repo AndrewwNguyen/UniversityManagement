@@ -14,8 +14,8 @@ namespace UniversityManagement.Entities.Configuration
         public void Configure(EntityTypeBuilder<Class> builder)
         {
             builder.ToTable(nameof(Class));
-            builder.HasKey(x => x.IdClass);
-            builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
+            builder.HasKey(x => x.ClassId);
+            builder.Property(x => x.ClassName).IsRequired().HasMaxLength(100);
         }
     }
 }

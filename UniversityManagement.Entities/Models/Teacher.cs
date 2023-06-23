@@ -10,8 +10,8 @@ namespace UniversityManagement.Entities.Models
     public class Teacher
     {
         [Key]
-        public int IdTeacher { get; set; }
-        public string? Name { get; set; }
+        public int TeacherId { get; set; }
+        public string? TeacherName { get; set; }
         public string? Description { get; set; }
         public virtual ICollection<Subject>? Subjects { get; set; }
     }

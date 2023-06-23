@@ -14,8 +14,8 @@ namespace UniversityManagement.Entities.Configuration
         public void Configure(EntityTypeBuilder<Subject> builder)
         {
             builder.ToTable(nameof(Subject));
-            builder.HasKey(x => x.IdSubject);
-            builder.HasOne(x=>x.Teacher).WithMany(x=>x.Subjects).HasForeignKey(x=>x.IdTeacher);
+            builder.HasKey(x => x.SubjectId);
+            builder.HasOne(x=>x.Teacher).WithMany(x=>x.Subjects).HasForeignKey(x=>x.TeacherId);
         }
     }
 }

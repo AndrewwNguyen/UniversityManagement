@@ -1,12 +1,21 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
+using UniversityManagement.API.Models;
 using UniversityManagement.Entities.Data;
+using UniversityManagement.Respositories.Infrastructures;
+using UniversityManagement.Services.IServices;
+using UniversityManagement.Services.Services;
+using UniversityManagement.ViewModel;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<ApplicationDbContext>(option =>
 {
-    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection")).UseLazyLoadingProxies();
+    option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
 });
 
 builder.Services.AddCors(options =>
@@ -16,17 +25,10 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
     });
 });
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+//builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddAutoMapper(typeof(MappingConfig));
-builder.Services.AddScoped<IUserResponsitory, UserResponsitory>();
-//builder.Services.AddScoped<ITagResponsitory, TagResponsitory>();
-//builder.Services.AddScoped<IPostResponsitory, PostResponsitory>();
-//builder.Services.AddScoped<ICategoryResponsitory,CategoryResponsitory>();
-//builder.Services.AddScoped<ICommentResponsitory, CommentResponsitory>();
-builder.Services.AddScoped<ICommentService, CommentService>();
-builder.Services.AddScoped<ITagService, TagService>();
-builder.Services.AddScoped<IPostService, PostService>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IStudentServices, StudentServices>();
+builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(c => new APIResponse());
 var key = builder.Configuration.GetValue<string>("ApiSettings:Secret");
@@ -85,8 +87,8 @@ builder.Services.AddSwaggerGen(options => {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
         Version = "v1.0",
-        Title = "JustBlog V1",
-        Description = "API to manage Just Blogs",
+        Title = "UniversityManagement V1",
+        Description = "API to manage UniversityManagement",
         TermsOfService = new Uri("https://example.com/terms"),
         Contact = new OpenApiContact
         {
@@ -102,8 +104,8 @@ builder.Services.AddSwaggerGen(options => {
     options.SwaggerDoc("v2", new OpenApiInfo
     {
         Version = "v2.0",
-        Title = "JustBlog V2",
-        Description = "API to manage JustBlog",
+        Title = "UniversityManagement V2",
+        Description = "API to manage UniversityManagement",
         TermsOfService = new Uri("https://example.com/terms"),
         Contact = new OpenApiContact
         {

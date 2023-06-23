@@ -15,8 +15,8 @@ namespace UniversityManagement.Entities.Configuration
         public void Configure(EntityTypeBuilder<ClassRoom> builder)
         {
             builder.ToTable(nameof(ClassRoom));
-            builder.HasKey(x => x.IdClassRoom);
-            builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
+            builder.HasKey(x => x.ClassRoomId);
+            builder.Property(x => x.ClassRoomName).IsRequired().HasMaxLength(100);
         }
     }
 }

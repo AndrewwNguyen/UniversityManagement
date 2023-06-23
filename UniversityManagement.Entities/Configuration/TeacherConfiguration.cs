@@ -15,7 +15,7 @@ namespace UniversityManagement.Entities.Configuration
         public void Configure(EntityTypeBuilder<Teacher> builder)
         {
             builder.ToTable(nameof(Teacher));
-            builder.HasKey(x => x.IdTeacher);
+            builder.HasKey(x => x.TeacherId);
         }
     }
 }

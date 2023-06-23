@@ -10,8 +10,8 @@ namespace UniversityManagement.Entities.Models
     public class Department
     {
         [Key]
-        public int IdDeparment { get; set; }
-        public string? Name { get; set; }
+        public int DeparmentId { get; set; }
+        public string? DeparmentName { get; set; }
         public string? Description { get; set; }
         public virtual ICollection<Class>? Classes { get; set; }
     }

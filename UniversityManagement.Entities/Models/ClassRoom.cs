@@ -10,8 +10,8 @@ namespace UniversityManagement.Entities.Models
     public class ClassRoom
     {
         [Key]
-        public int IdClassRoom { get; set; }
-        public string? Name { get; set; }
+        public int ClassRoomId { get; set; }
+        public string? ClassRoomName { get; set; }
         public string? Description { get; set; }
         public virtual ICollection<Subject_Classroom>? Subject_Classrooms { get; set; }
     }

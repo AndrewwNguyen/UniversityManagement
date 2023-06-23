@@ -8,8 +8,8 @@ namespace UniversityManagement.Entities.Models
 {
     public class Subject_Classroom
     {
-        public int IdRoom { get; set; }
-        public int IdSubject { get; set; }
+        public int ClassRoomId { get; set; }
+        public int SubjectId { get; set; }
         public virtual Subject Subject { get; set; }
         public virtual ClassRoom ClassRoom { get; set; }
         public string? Description { get; set; }

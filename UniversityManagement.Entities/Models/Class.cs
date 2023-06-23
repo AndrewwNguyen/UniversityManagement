@@ -12,10 +12,10 @@ namespace UniversityManagement.Entities.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int IdClass { get; set; }
-        public string? Name { get; set; }
-        [ForeignKey("Deparment")]
-        public int IdDeparment { get; set; }
+        public int ClassId { get; set; }
+        public string ClassName { get; set; }
+        [ForeignKey("Department")]
+        public int DepartmentId { get; set; }
         public virtual Department? Deparment { get; set; }
         public DateTime YearOfAdmission { get; set; }
         public int Amount { get; set; }

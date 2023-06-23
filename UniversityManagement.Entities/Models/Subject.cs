@@ -11,12 +11,12 @@ namespace UniversityManagement.Entities.Models
     public class Subject
     {
         [Key]
-        public int IdSubject { get; set; }
-        public string? Name { get; set; }
+        public int SubjectId { get; set; }
+        public string? SubjectName { get; set; }
         public string? Description { get; set; }
         public virtual ICollection<Subject_Student>? Subject_Student { get;set; }
         public virtual ICollection<Subject_Classroom>? Subject_Classroom { get; set; }
-        public int IdTeacher { get; set; }
+        public int TeacherId { get; set; }
         public virtual Teacher? Teacher { get; set; }
     }
 }
