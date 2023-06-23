@@ -10,15 +10,15 @@ using UniversityManagement.Respositories.IRespositories;
 
 namespace UniversityManagement.Respositories.Respositories
 {
-    public class StudentRepository :BaseReponsitory<Student>, IStudentRepository
+    public class StudentRepository : BaseReponsitory<Student>, IStudentRepository
     {
         public StudentRepository(ApplicationDbContext context) : base(context)
         {
-           
+
         }
         public List<Student> GetAllStudentDepartment(int idDepartment)
         {
-            return db.Set<Student>().Include(x=>x.Class).ThenInclude(a=>a.Deparment.IdDeparment == idDepartment).ToList();
+            return db.Set<Student>().Include(x => x.Class).ThenInclude(a => a.Deparment.IdDeparment == idDepartment).ToList();
         }
         public List<Student> GetAllStudentInClass(int idclass)
         {
@@ -32,7 +32,7 @@ namespace UniversityManagement.Respositories.Respositories
 
         public Student GetStudentByName(string name)
         {
-           Student student = db.Set<Student>().FirstOrDefault(x=>x.Name == name);
+            Student student = db.Set<Student>().FirstOrDefault(x => x.Name == name);
             return student;
         }
 
@@ -43,7 +43,7 @@ namespace UniversityManagement.Respositories.Respositories
 
         public dynamic GetStudentWithSubject()
         {
-            return db.Set<Student>().Include(x=>x.Subject_Students).ThenInclude(x=>x.Subject);
+            return db.Set<Student>().Include(x => x.Subject_Students).ThenInclude(x => x.Subject);
         }
 
     }

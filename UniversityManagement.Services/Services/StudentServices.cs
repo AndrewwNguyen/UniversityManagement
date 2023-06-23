@@ -33,6 +33,7 @@ namespace UniversityManagement.Services.Services
             _unitOfWork.studentRepository.DeleteTEntity(entityId);
             _unitOfWork.Savechanges();
         }
+
         public Student Find(int entityId)
         {
             var category = _unitOfWork.studentRepository.Find(entityId);
