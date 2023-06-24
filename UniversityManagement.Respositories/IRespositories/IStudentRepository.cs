@@ -8,6 +8,7 @@ namespace UniversityManagement.Respositories.IRespositories
         public Student GetStudentByName(string name); 
         List<Student> GetAllStudentInClass(int idClass);
         List<Student> GetAllStudentInSubject(int idSubject);
+        List<Student> GetStudentsBySubject(string subjectName);
         List<Student> GetAllStudentDepartment(int idDepartment);
         dynamic GetStudentWithClass();
         dynamic GetStudentWithSubject();

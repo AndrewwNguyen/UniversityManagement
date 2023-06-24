@@ -7,7 +7,10 @@ namespace UniversityManagement.Respositories.IRespositories
     {
         List<Subject> GetAllSubjectByStudent(string studentName);
         List<Subject> GetAllSubjectByStudentId(int StudentId);
+
         public Subject GetSubjectByName(string name);
+
+        public List<Subject> GetSubjectByTeacher(string teacherName);
 
     }
 }

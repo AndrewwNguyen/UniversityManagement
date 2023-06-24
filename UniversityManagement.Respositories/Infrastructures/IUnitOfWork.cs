@@ -13,6 +13,7 @@ namespace UniversityManagement.Respositories.Infrastructures
     {
         public IStudentRepository studentRepository { get; }
         public ISubjectRepository subjectRepository { get; }
+        public ITeacherRepository teacherRepository { get; }
         public ApplicationDbContext ApplicationDbContext { get; }
         int Savechanges();
     }

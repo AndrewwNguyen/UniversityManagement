@@ -2,35 +2,34 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 using System.Net;
 using UniversityManagement.API.Models;
 using UniversityManagement.Entities.Models;
 using UniversityManagement.Services.IServices;
-using UniversityManagement.ViewModel.StudentViewModels;
+using UniversityManagement.ViewModel.SubjectViewModels;
 
 namespace UniversityManagement.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentAPIController : ControllerBase
+    public class SubjectAPIController : ControllerBase
     {
-        private readonly IStudentServices studentServices;
+        private readonly ISubjectService subjectService;
         private readonly IMapper mapper;
         private readonly APIResponse _response;
-        public StudentAPIController(IStudentServices studentServices, IMapper mapper, APIResponse _response)
+        public SubjectAPIController(ISubjectService subjectService, IMapper mapper, APIResponse _response)
         {
-            this.studentServices = studentServices;
+            this.subjectService = subjectService;
             this.mapper = mapper;
             this._response = _response;
         }
         [HttpGet]
-        public async Task<ActionResult<APIResponse>> GetStudents()
+        public async Task<ActionResult<APIResponse>> GetSubjects()
         {
             try
             {
-                var studentlist = studentServices.GetAllEntities();
-                _response.Result = mapper.Map<List<StudentViewModel>>(studentlist);
+                var subjectlist = subjectService.GetAllEntities();
+                _response.Result = mapper.Map<List<SubjectViewModel>>(subjectlist);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
@@ -40,13 +39,13 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
-        [HttpGet("{id:int}", Name = "GetStudent")]
+        [HttpGet("{id:int}", Name = "GetSubject")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponse>> GetStudent(int id)
+        public async Task<ActionResult<APIResponse>> GetSubject(int id)
         {
             try
             {
@@ -55,13 +54,13 @@ namespace UniversityManagement.API.Controllers
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
                 }
-                var student = studentServices.Find(id);
-                if (student == null)
+                var subject = subjectService.Find(id);
+                if (subject == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
                     return NotFound(_response);
                 }
-                _response.Result = mapper.Map<StudentViewModel>(student);
+                _response.Result = mapper.Map<SubjectViewModel>(subject);
                 _response.StatusCode = HttpStatusCode.OK;
                 _response.IsSuccess = true;
                 return Ok(_response);
@@ -73,25 +72,20 @@ namespace UniversityManagement.API.Controllers
             return _response;
         }
         [HttpPost]
-        public async Task<ActionResult<APIResponse>> CreateStudent([FromBody] CreateStudentViewModel createVM)
+        public async Task<ActionResult<APIResponse>> CreateSubject([FromBody] CreateSubjectViewModel createVM)
         {
             try
             {
-                //if (await studentServices.GetAsync(u => u.StudentId.ToLower() == createVM.StudentId.ToLower()) != null)
-                //{
-                //    ModelState.AddModelError("CustomError", "Student Content already Exists !");
-                //    return BadRequest(ModelState);
-                //}
                 if (createVM == null)
                 {
                     return BadRequest(createVM);
                 }
-                Student student = mapper.Map<Student>(createVM);
-                studentServices.AddStudent(student);
-                _response.Result = mapper.Map<StudentViewModel>(student);
+                Subject subject = mapper.Map<Subject>(createVM);
+                subjectService.AddSubject(subject);
+                _response.Result = mapper.Map<SubjectViewModel>(subject);
                 _response.StatusCode = HttpStatusCode.Created;
                 _response.IsSuccess = true;
-                return CreatedAtRoute("GetStudent", new { id = student.StudentId }, _response);
+                return CreatedAtRoute("GetSubject", new { id = subject.SubjectId }, _response);
             }
             catch (Exception ex)
             {
@@ -99,9 +93,8 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
-
-        [HttpDelete("{id:int}", Name = "DeleteStudent")]
-        public async Task<ActionResult<APIResponse>> DeleteStudent(int id)
+        [HttpDelete("{id:int}", Name = "DeleteSubject")]
+        public async Task<ActionResult<APIResponse>> DeleteSubject(int id)
         {
             try
             {
@@ -109,12 +102,12 @@ namespace UniversityManagement.API.Controllers
                 {
                     return BadRequest();
                 }
-                var student = studentServices.Find(id);
-                if (student == null)
+                var subject = subjectService.Find(id);
+                if (subject == null)
                 {
                     return NotFound();
                 }
-                studentServices.DeleteStudent(student);
+                subjectService.DeleteSubject(subject);
                 _response.StatusCode = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
@@ -125,22 +118,17 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
-        [HttpPut("{id:int}", Name = "UpdateStudent")]
-        public async Task<ActionResult<APIResponse>> UpdateStudent(int id, [FromBody] StudentViewModel updateViewModel)
+        [HttpPut("{id:int}", Name = "UpdateSubject")]
+        public async Task<ActionResult<APIResponse>> UpdateSubject(int id, [FromBody] SubjectViewModel updateViewModel)
         {
             try
             {
-                if (updateViewModel == null || id != updateViewModel.StudentId)
+                if (updateViewModel == null || id != updateViewModel.SubjectId)
                 {
                     return BadRequest();
                 }
-                //if (await pos.GetAsync(u => u.StudentId.ToLower() == updateViewModel.StudentId.ToLower()) != null)
-                //{
-                //    ModelState.AddModelError("CustomError", "Student Id already Exists !");
-                //    return BadRequest(ModelState);
-                //}
-                Student model = mapper.Map<Student>(updateViewModel);
-                studentServices.UpdateStudent(model);
+                Subject model = mapper.Map<Subject>(updateViewModel);
+                subjectService.UpdateSubject(model);
                 _response.StatusCode = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
@@ -152,24 +140,24 @@ namespace UniversityManagement.API.Controllers
             return _response;
         }
 
-        [HttpPatch("{id:int}", Name = "UpdateStudentPartial")]
-        public async Task<ActionResult<APIResponse>> UpdateStudentPartial(int id, JsonPatchDocument<CreateStudentViewModel> createStudentViewModel)
+        [HttpPatch("{id:int}", Name = "UpdateSubjectPartial")]
+        public async Task<ActionResult<APIResponse>> UpdateSubjectPartial(int id, JsonPatchDocument<CreateSubjectViewModel> createSubjectViewModel)
         {
             try
             {
-                if (createStudentViewModel == null || id == 0)
+                if (createSubjectViewModel == null || id == 0)
                 {
                     return BadRequest();
                 }
-                var student = studentServices.Find(id);
-                CreateStudentViewModel createVM = mapper.Map<CreateStudentViewModel>(student);
-                if (student == null)
+                var subject = subjectService.Find(id);
+                CreateSubjectViewModel createVM = mapper.Map<CreateSubjectViewModel>(subject);
+                if (subject == null)
                 {
                     return BadRequest();
                 }
-                createStudentViewModel.ApplyTo(createVM, ModelState);
-                Student model = mapper.Map<Student>(createVM);
-                studentServices.UpdateStudent(model);
+                createSubjectViewModel.ApplyTo(createVM, ModelState);
+                Subject model = mapper.Map<Subject>(createVM);
+                subjectService.UpdateSubject(model);
                 if (ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
@@ -184,27 +172,16 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
+        [HttpGet("GetSubjectByTeacher/{teacherName}", Name = "GetSubjectByTeacher")]
+        public async Task<ActionResult<APIResponse>> GetSubjectByTeacher(string teacherName)
+        {
+            var teacher = subjectService.GetSubjectByTeacher(teacherName);
+            _response.Result = mapper.Map<List<SubjectViewModel>>(teacher);
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.IsSuccess = true;
+            return Ok(_response);
+        }
 
-        [HttpGet("GetStudentsBySubject/{subjectName}", Name = "GetStudentsBySubject")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        public async Task<ActionResult<APIResponse>> GetStudentsBySubject(string subjectName)
-        {
-            var students = studentServices.GetStudentsBySubject(subjectName);
-            _response.Result = mapper.Map<List<StudentViewModel>>(students);
-            _response.StatusCode = HttpStatusCode.OK;
-            _response.IsSuccess = true;
-            return Ok(_response);
-        }
-        [HttpGet("GetStudentsBySubjectId/{subjectId}", Name = "GetStudentsBySubjectId")]
-        public async Task<ActionResult<APIResponse>> GetStudentsBySubject(int subjectId)
-        {
-            var students = studentServices.GetStudentsBySubjectId(subjectId);
-            _response.Result = mapper.Map<List<StudentViewModel>>(students);
-            _response.StatusCode = HttpStatusCode.OK;
-            _response.IsSuccess = true;
-            return Ok(_response);
-        }
     }
+
 }

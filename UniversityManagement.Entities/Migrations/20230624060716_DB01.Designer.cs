@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UniversityManagement.Entities.Data;
 
@@ -11,9 +12,11 @@ using UniversityManagement.Entities.Data;
 namespace UniversityManagement.Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230624060716_DB01")]
+    partial class DB01
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,9 +214,10 @@ namespace UniversityManagement.Entities.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"));
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ClassId")
+                    b.Property<int>("ClassId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -331,7 +335,7 @@ namespace UniversityManagement.Entities.Migrations
                     b.Property<string>("SubjectName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TeacherId")
+                    b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
                     b.HasKey("SubjectId");
@@ -546,7 +550,9 @@ namespace UniversityManagement.Entities.Migrations
                 {
                     b.HasOne("UniversityManagement.Entities.Models.Class", "Class")
                         .WithMany("Students")
-                        .HasForeignKey("ClassId");
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Class");
                 });
@@ -555,7 +561,9 @@ namespace UniversityManagement.Entities.Migrations
                 {
                     b.HasOne("UniversityManagement.Entities.Models.Teacher", "Teacher")
                         .WithMany("Subjects")
-                        .HasForeignKey("TeacherId");
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Teacher");
                 });

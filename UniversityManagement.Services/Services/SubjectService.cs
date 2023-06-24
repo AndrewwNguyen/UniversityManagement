@@ -69,5 +69,11 @@ namespace UniversityManagement.Services.Services
             var subject = _unitOfWork.subjectRepository.GetAllSubjectByStudentId(StudentId);
             return subject;
         }
+
+        public IEnumerable<Subject> GetSubjectByTeacher(string teacherName)
+        {
+            var subject = _unitOfWork.subjectRepository.GetSubjectByTeacher(teacherName);
+            return subject;
+        }
     }
 }

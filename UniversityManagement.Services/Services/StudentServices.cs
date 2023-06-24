@@ -45,13 +45,21 @@ namespace UniversityManagement.Services.Services
             var student = _unitOfWork.studentRepository.GetAllEntities();
             return student;
         }
-
+        public IEnumerable<Student> GetStudentsBySubject(string subjectName)
+        {
+            var student = _unitOfWork.studentRepository.GetStudentsBySubject(subjectName);
+            return student;
+        }
         public Student GetStudentByName(string name)
         {
             var student = _unitOfWork.studentRepository.GetStudentByName(name);
             return student;
         }
-
+        public IEnumerable<Student> GetStudentsBySubjectId(int subjectId)
+        {
+            var student = _unitOfWork.studentRepository.GetAllStudentInSubject(subjectId);
+            return student;
+        }
         public IEnumerable<Student> GetAllStudentInClass(int postId)
         {
             var student = _unitOfWork.studentRepository.GetAllStudentInClass(postId);

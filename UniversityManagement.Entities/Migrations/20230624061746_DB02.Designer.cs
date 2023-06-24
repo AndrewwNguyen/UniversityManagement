@@ -12,8 +12,8 @@ using UniversityManagement.Entities.Data;
 namespace UniversityManagement.Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230623181605_DB01")]
-    partial class DB01
+    [Migration("20230624061746_DB02")]
+    partial class DB02
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -214,10 +214,9 @@ namespace UniversityManagement.Entities.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("StudentId"));
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ClassId")
+                    b.Property<int?>("ClassId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -550,9 +549,7 @@ namespace UniversityManagement.Entities.Migrations
                 {
                     b.HasOne("UniversityManagement.Entities.Models.Class", "Class")
                         .WithMany("Students")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClassId");
 
                     b.Navigation("Class");
                 });

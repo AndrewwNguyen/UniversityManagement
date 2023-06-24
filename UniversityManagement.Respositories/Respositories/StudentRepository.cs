@@ -29,22 +29,22 @@ namespace UniversityManagement.Respositories.Respositories
         {
             return db.Set<Student>().Include(x => x.Subject_Students.Where(x => x.SubjectId == subjectId)).ToList();
         }
-
+        public List<Student> GetStudentsBySubject(string subjectName)
+        {
+            return db.Set<Student>().Include(x => x.Subject_Students).ThenInclude(x => x.Subject.SubjectName == subjectName).ToList();
+        }
         public Student GetStudentByName(string studentName)
         {
             Student student = db.Set<Student>().FirstOrDefault(x => x.StudentName == studentName);
             return student;
         }
-
         public dynamic GetStudentWithClass()
         {
             return db.Set<Student>().Include(x => x.Class);
         }
-
         public dynamic GetStudentWithSubject()
         {
             return db.Set<Student>().Include(x => x.Subject_Students).ThenInclude(x => x.Subject);
         }
-
     }
 }

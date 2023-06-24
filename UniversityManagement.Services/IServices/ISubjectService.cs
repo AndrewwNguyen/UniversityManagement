@@ -19,5 +19,6 @@ namespace UniversityManagement.Services.IServices
         IEnumerable<Subject> GetAllSubjectByStudent(string name);
         IEnumerable<Subject> GetAllSubjectByStudentId(int StudentId);
         public IEnumerable<Subject> SubjectPagination(int pageSize, int PageIndex);
+        public IEnumerable<Subject> GetSubjectByTeacher(string stringName);
     }
 }

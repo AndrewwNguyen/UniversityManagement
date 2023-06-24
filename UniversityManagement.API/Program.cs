@@ -29,6 +29,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 builder.Services.AddScoped<IStudentServices, StudentServices>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
+builder.Services.AddScoped<ITeacherService, TeacherService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(c => new APIResponse());
 var key = builder.Configuration.GetValue<string>("ApiSettings:Secret");

@@ -26,5 +26,10 @@ namespace UniversityManagement.Respositories.Respositories
             Subject subject = db.Set<Subject>().FirstOrDefault(x => x.SubjectName == subjectName);
             return subject;
         }
+
+        public List<Subject> GetSubjectByTeacher(string teacherName)
+        {
+            return db.Set<Subject>().Where(x => x.Teacher.TeacherName.Contains(teacherName)).ToList();
+        }
     }
 }
