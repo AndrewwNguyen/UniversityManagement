@@ -15,13 +15,13 @@ namespace UniversityManagement.API.Controllers
     [ApiController]
     public class StudentAPIController : ControllerBase
     {
-        private readonly IStudentServices studentServices;
-        private readonly IMapper mapper;
+        private readonly IStudentServices _studentServices;
+        private readonly IMapper _mapper;
         private readonly APIResponse _response;
         public StudentAPIController(IStudentServices studentServices, IMapper mapper, APIResponse _response)
         {
-            this.studentServices = studentServices;
-            this.mapper = mapper;
+            this._studentServices = studentServices;
+            this._mapper = mapper;
             this._response = _response;
         }
         [HttpGet]
@@ -29,8 +29,8 @@ namespace UniversityManagement.API.Controllers
         {
             try
             {
-                var studentlist = studentServices.GetAllEntities();
-                _response.Result = mapper.Map<List<StudentViewModel>>(studentlist);
+                var studentlist = _studentServices.GetAllEntities();
+                _response.Result = _mapper.Map<List<StudentViewModel>>(studentlist);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
@@ -55,13 +55,13 @@ namespace UniversityManagement.API.Controllers
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
                 }
-                var student = studentServices.Find(id);
+                var student = _studentServices.Find(id);
                 if (student == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
                     return NotFound(_response);
                 }
-                _response.Result = mapper.Map<StudentViewModel>(student);
+                _response.Result = _mapper.Map<StudentViewModel>(student);
                 _response.StatusCode = HttpStatusCode.OK;
                 _response.IsSuccess = true;
                 return Ok(_response);
@@ -86,9 +86,9 @@ namespace UniversityManagement.API.Controllers
                 {
                     return BadRequest(createVM);
                 }
-                Student student = mapper.Map<Student>(createVM);
-                studentServices.AddStudent(student);
-                _response.Result = mapper.Map<StudentViewModel>(student);
+                Student student = _mapper.Map<Student>(createVM);
+                _studentServices.AddStudent(student);
+                _response.Result = _mapper.Map<StudentViewModel>(student);
                 _response.StatusCode = HttpStatusCode.Created;
                 _response.IsSuccess = true;
                 return CreatedAtRoute("GetStudent", new { id = student.StudentId }, _response);
@@ -109,12 +109,12 @@ namespace UniversityManagement.API.Controllers
                 {
                     return BadRequest();
                 }
-                var student = studentServices.Find(id);
+                var student = _studentServices.Find(id);
                 if (student == null)
                 {
                     return NotFound();
                 }
-                studentServices.DeleteStudent(student);
+                _studentServices.DeleteStudent(student);
                 _response.StatusCode = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
@@ -139,8 +139,8 @@ namespace UniversityManagement.API.Controllers
                 //    ModelState.AddModelError("CustomError", "Student Id already Exists !");
                 //    return BadRequest(ModelState);
                 //}
-                Student model = mapper.Map<Student>(updateViewModel);
-                studentServices.UpdateStudent(model);
+                Student model = _mapper.Map<Student>(updateViewModel);
+                _studentServices.UpdateStudent(model);
                 _response.StatusCode = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
@@ -161,15 +161,15 @@ namespace UniversityManagement.API.Controllers
                 {
                     return BadRequest();
                 }
-                var student = studentServices.Find(id);
-                CreateStudentViewModel createVM = mapper.Map<CreateStudentViewModel>(student);
+                var student = _studentServices.Find(id);
+                CreateStudentViewModel createVM = _mapper.Map<CreateStudentViewModel>(student);
                 if (student == null)
                 {
                     return BadRequest();
                 }
                 createStudentViewModel.ApplyTo(createVM, ModelState);
-                Student model = mapper.Map<Student>(createVM);
-                studentServices.UpdateStudent(model);
+                Student model = _mapper.Map<Student>(createVM);
+                _studentServices.UpdateStudent(model);
                 if (ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
@@ -191,8 +191,8 @@ namespace UniversityManagement.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<ActionResult<APIResponse>> GetStudentsBySubject(string subjectName)
         {
-            var students = studentServices.GetStudentsBySubject(subjectName);
-            _response.Result = mapper.Map<List<StudentViewModel>>(students);
+            var students = _studentServices.GetStudentsBySubject(subjectName);
+            _response.Result = _mapper.Map<List<StudentViewModel>>(students);
             _response.StatusCode = HttpStatusCode.OK;
             _response.IsSuccess = true;
             return Ok(_response);
@@ -200,8 +200,8 @@ namespace UniversityManagement.API.Controllers
         [HttpGet("GetStudentsBySubjectId/{subjectId}", Name = "GetStudentsBySubjectId")]
         public async Task<ActionResult<APIResponse>> GetStudentsBySubject(int subjectId)
         {
-            var students = studentServices.GetStudentsBySubjectId(subjectId);
-            _response.Result = mapper.Map<List<StudentViewModel>>(students);
+            var students = _studentServices.GetStudentsBySubjectId(subjectId);
+            _response.Result = _mapper.Map<List<StudentViewModel>>(students);
             _response.StatusCode = HttpStatusCode.OK;
             _response.IsSuccess = true;
             return Ok(_response);

@@ -14,13 +14,13 @@ namespace UniversityManagement.API.Controllers
     [ApiController]
     public class SubjectAPIController : ControllerBase
     {
-        private readonly ISubjectService subjectService;
-        private readonly IMapper mapper;
+        private readonly ISubjectService _subjectService;
+        private readonly IMapper _mapper;
         private readonly APIResponse _response;
         public SubjectAPIController(ISubjectService subjectService, IMapper mapper, APIResponse _response)
         {
-            this.subjectService = subjectService;
-            this.mapper = mapper;
+            this._subjectService = subjectService;
+            this._mapper = mapper;
             this._response = _response;
         }
         [HttpGet]
@@ -28,8 +28,8 @@ namespace UniversityManagement.API.Controllers
         {
             try
             {
-                var subjectlist = subjectService.GetAllEntities();
-                _response.Result = mapper.Map<List<SubjectViewModel>>(subjectlist);
+                var subjectlist = _subjectService.GetAllEntities();
+                _response.Result = _mapper.Map<List<SubjectViewModel>>(subjectlist);
                 _response.StatusCode = HttpStatusCode.OK;
                 return Ok(_response);
             }
@@ -54,13 +54,13 @@ namespace UniversityManagement.API.Controllers
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
                 }
-                var subject = subjectService.Find(id);
+                var subject = _subjectService.Find(id);
                 if (subject == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
                     return NotFound(_response);
                 }
-                _response.Result = mapper.Map<SubjectViewModel>(subject);
+                _response.Result = _mapper.Map<SubjectViewModel>(subject);
                 _response.StatusCode = HttpStatusCode.OK;
                 _response.IsSuccess = true;
                 return Ok(_response);
@@ -80,9 +80,9 @@ namespace UniversityManagement.API.Controllers
                 {
                     return BadRequest(createVM);
                 }
-                Subject subject = mapper.Map<Subject>(createVM);
-                subjectService.AddSubject(subject);
-                _response.Result = mapper.Map<SubjectViewModel>(subject);
+                Subject subject = _mapper.Map<Subject>(createVM);
+                _subjectService.AddSubject(subject);
+                _response.Result = _mapper.Map<SubjectViewModel>(subject);
                 _response.StatusCode = HttpStatusCode.Created;
                 _response.IsSuccess = true;
                 return CreatedAtRoute("GetSubject", new { id = subject.SubjectId }, _response);
@@ -98,16 +98,12 @@ namespace UniversityManagement.API.Controllers
         {
             try
             {
-                if (id == 0)
-                {
-                    return BadRequest();
-                }
-                var subject = subjectService.Find(id);
+                var subject = _subjectService.Find(id);
                 if (subject == null)
                 {
                     return NotFound();
                 }
-                subjectService.DeleteSubject(subject);
+                _subjectService.DeleteSubject(subject);
                 _response.StatusCode = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
@@ -127,8 +123,8 @@ namespace UniversityManagement.API.Controllers
                 {
                     return BadRequest();
                 }
-                Subject model = mapper.Map<Subject>(updateViewModel);
-                subjectService.UpdateSubject(model);
+                Subject model = _mapper.Map<Subject>(updateViewModel);
+                _subjectService.UpdateSubject(model);
                 _response.StatusCode = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);
@@ -145,19 +141,19 @@ namespace UniversityManagement.API.Controllers
         {
             try
             {
-                if (createSubjectViewModel == null || id == 0)
+                if (createSubjectViewModel == null)
                 {
                     return BadRequest();
                 }
-                var subject = subjectService.Find(id);
-                CreateSubjectViewModel createVM = mapper.Map<CreateSubjectViewModel>(subject);
+                var subject = _subjectService.Find(id);
+                CreateSubjectViewModel createVM = _mapper.Map<CreateSubjectViewModel>(subject);
                 if (subject == null)
                 {
                     return BadRequest();
                 }
                 createSubjectViewModel.ApplyTo(createVM, ModelState);
-                Subject model = mapper.Map<Subject>(createVM);
-                subjectService.UpdateSubject(model);
+                Subject model = _mapper.Map<Subject>(createVM);
+                _subjectService.UpdateSubject(model);
                 if (ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
@@ -175,13 +171,12 @@ namespace UniversityManagement.API.Controllers
         [HttpGet("GetSubjectByTeacher/{teacherName}", Name = "GetSubjectByTeacher")]
         public async Task<ActionResult<APIResponse>> GetSubjectByTeacher(string teacherName)
         {
-            var teacher = subjectService.GetSubjectByTeacher(teacherName);
-            _response.Result = mapper.Map<List<SubjectViewModel>>(teacher);
+            var teacher = _subjectService.GetSubjectByTeacher(teacherName);
+            _response.Result = _mapper.Map<List<SubjectViewModel>>(teacher);
             _response.StatusCode = HttpStatusCode.OK;
             _response.IsSuccess = true;
             return Ok(_response);
         }
-
     }
 
 }

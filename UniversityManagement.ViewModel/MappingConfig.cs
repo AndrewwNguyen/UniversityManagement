@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Hosting;
 using UniversityManagement.Entities.Models;
+using UniversityManagement.ViewModel.DepartmentViewModels;
 using UniversityManagement.ViewModel.StudentViewModels;
 using UniversityManagement.ViewModel.SubjectViewModels;
 using UniversityManagement.ViewModel.TeacherViewModels;
@@ -41,7 +42,14 @@ namespace UniversityManagement.ViewModel
             CreateMap<TeacherViewModel, UpdateTeacherViewModel>().ReverseMap();
 
 
+            //DEPARTMENT
+            CreateMap<Department, DepartmentViewModel>().ReverseMap();
 
+            CreateMap<Department, CreateDepartmentViewModel>().ReverseMap();
+            CreateMap<Department, UpdateDepartmentViewModel>().ReverseMap();
+
+            CreateMap<DepartmentViewModel, CreateDepartmentViewModel>().ReverseMap();
+            CreateMap<DepartmentViewModel, UpdateDepartmentViewModel>().ReverseMap();
         }
     }
 }

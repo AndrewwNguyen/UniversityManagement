@@ -16,9 +16,9 @@ namespace UniversityManagement.Respositories.Respositories
         {
 
         }
-        public List<Student> GetAllStudentDepartment(int departmentId)
+        public async Task<List<Student>> GetAllStudentDepartment(int departmentId)
         {
-            return db.Set<Student>().Include(x => x.Class).ThenInclude(a => a.Deparment.DeparmentId == departmentId).ToList();
+             return   db.Set<Student>().Include(x => x.Class).ThenInclude(a => a.Deparment.DeparmentId == departmentId).ToList();
         }
         public List<Student> GetAllStudentInClass(int classId)
         {
@@ -33,7 +33,7 @@ namespace UniversityManagement.Respositories.Respositories
         {
             return db.Set<Student>().Include(x => x.Subject_Students).ThenInclude(x => x.Subject.SubjectName == subjectName).ToList();
         }
-        public Student GetStudentByName(string studentName)
+        public async Task<Student> GetStudentByName(string studentName)
         {
             Student student = db.Set<Student>().FirstOrDefault(x => x.StudentName == studentName);
             return student;
