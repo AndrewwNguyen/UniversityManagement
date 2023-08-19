@@ -35,13 +35,6 @@ namespace UniversityManagement.Services.Services
             var subject = _unitOfWork.subjectRepository.Find(entityId);
             return subject;
         }
-
-        public IEnumerable<Subject> GetAllEntities()
-        {
-            var subject = _unitOfWork.subjectRepository.GetAllEntities();
-            return subject;
-        }
-
         public Subject GetSubjectByName(string name)
         {
             var subject = _unitOfWork.subjectRepository.GetSubjectByName(name);
