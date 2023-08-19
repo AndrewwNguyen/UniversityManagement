@@ -13,7 +13,7 @@ namespace UniversityManagement.ViewModel
         public MappingConfig()
         {
             //STUDENT
-            CreateMap<Student, StudentViewModel>().ForMember(x=>x.ClassName,x=>x.MapFrom(x=>x.Class.ClassName)).ForMember(x=>x.SubjectName,x=>x.MapFrom(x=>x.Subject_Students.Select(x=>x.Subject.SubjectName))).ReverseMap();
+            CreateMap<Student, StudentViewModel>().ForMember(x => x.ClassName, x => x.MapFrom(x => x.Class.ClassName)).ForMember(x => x.SubjectName, x => x.MapFrom(x => x.Subject_Students.Select(x => x.Subject.SubjectName))).ForMember(x=>x.DepartmentName,x=>x.MapFrom(x=>x.Class.Department.DepartmentName)).ReverseMap();
 
             CreateMap<Student, CreateStudentViewModel>().ReverseMap();
             CreateMap<Student, UpdateStudentViewModel>().ReverseMap();
@@ -23,7 +23,7 @@ namespace UniversityManagement.ViewModel
 
 
             //SUBJECT
-            CreateMap<Subject, SubjectViewModel>().ForMember(x=>x.TeacherName,x=>x.MapFrom(c=>c.Teacher.TeacherName)).ReverseMap();
+            CreateMap<Subject, SubjectViewModel>().ForMember(x => x.TeacherName, x => x.MapFrom(c => c.Teacher.TeacherName)).ReverseMap();
 
             CreateMap<Subject, CreateSubjectViewModel>().ReverseMap();
             CreateMap<Subject, UpdateSubjectViewModel>().ReverseMap();
@@ -33,7 +33,7 @@ namespace UniversityManagement.ViewModel
 
 
             //TEACHER
-            CreateMap<Teacher, TeacherViewModel>().ForMember(x=>x.SubjectName,x=>x.MapFrom(x=>x.Subjects.Select(x=>x.SubjectName))).ReverseMap();
+            CreateMap<Teacher, TeacherViewModel>().ForMember(x => x.SubjectName, x => x.MapFrom(x => x.Subjects.Select(x => x.SubjectName))).ReverseMap();
 
             CreateMap<Teacher, CreateTeacherViewModel>().ReverseMap();
             CreateMap<Teacher, UpdateTeacherViewModel>().ReverseMap();

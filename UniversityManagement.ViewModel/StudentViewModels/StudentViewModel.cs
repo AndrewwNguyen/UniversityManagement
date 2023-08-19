@@ -13,7 +13,8 @@ namespace UniversityManagement.ViewModel.StudentViewModels
         public DateTime DateOfBirth { get; set; }
         public string? Address { get; set; }
         public string? Description { get; set; }
-        public string ClassName { get; set; }
+        public string? ClassName { get; set; }
         public ICollection<string> SubjectName { get; set; }
+        public string? DepartmentName { get; set; }
     }
 }
