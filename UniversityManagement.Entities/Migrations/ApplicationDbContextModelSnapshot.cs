@@ -17,7 +17,7 @@ namespace UniversityManagement.Entities.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.8")
+                .HasAnnotation("ProductVersion", "7.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -151,13 +151,13 @@ namespace UniversityManagement.Entities.Migrations
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Department", b =>
                 {
-                    b.Property<int>("DeparmentId")
+                    b.Property<int>("DepartmentId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeparmentId"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentId"));
 
-                    b.Property<string>("DeparmentName")
+                    b.Property<string>("DepartmentName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
@@ -165,39 +165,39 @@ namespace UniversityManagement.Entities.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("DeparmentId");
+                    b.HasKey("DepartmentId");
 
                     b.ToTable("Department", (string)null);
 
                     b.HasData(
                         new
                         {
-                            DeparmentId = 1,
-                            DeparmentName = "Cong Nghe Thong Tin",
+                            DepartmentId = 1,
+                            DepartmentName = "Cong Nghe Thong Tin",
                             Description = "No"
                         },
                         new
                         {
-                            DeparmentId = 2,
-                            DeparmentName = "Luat kinh Te",
+                            DepartmentId = 2,
+                            DepartmentName = "Luat kinh Te",
                             Description = "No"
                         },
                         new
                         {
-                            DeparmentId = 3,
-                            DeparmentName = "Quan Tri Kinh Doanh",
+                            DepartmentId = 3,
+                            DepartmentName = "Quan Tri Kinh Doanh",
                             Description = "No"
                         },
                         new
                         {
-                            DeparmentId = 4,
-                            DeparmentName = "Marketing",
+                            DepartmentId = 4,
+                            DepartmentName = "Marketing",
                             Description = "No"
                         },
                         new
                         {
-                            DeparmentId = 5,
-                            DeparmentName = "Co Khi",
+                            DepartmentId = 5,
+                            DepartmentName = "Co Khi",
                             Description = "No"
                         });
                 });
@@ -213,7 +213,7 @@ namespace UniversityManagement.Entities.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ClassId")
+                    b.Property<int>("ClassId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DateOfBirth")
@@ -329,9 +329,10 @@ namespace UniversityManagement.Entities.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SubjectName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TeacherId")
+                    b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
                     b.HasKey("SubjectId");
@@ -533,20 +534,22 @@ namespace UniversityManagement.Entities.Migrations
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Class", b =>
                 {
-                    b.HasOne("UniversityManagement.Entities.Models.Department", "Deparment")
+                    b.HasOne("UniversityManagement.Entities.Models.Department", "Department")
                         .WithMany("Classes")
                         .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Deparment");
+                    b.Navigation("Department");
                 });
 
             modelBuilder.Entity("UniversityManagement.Entities.Models.Student", b =>
                 {
                     b.HasOne("UniversityManagement.Entities.Models.Class", "Class")
                         .WithMany("Students")
-                        .HasForeignKey("ClassId");
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Class");
                 });
@@ -555,7 +558,9 @@ namespace UniversityManagement.Entities.Migrations
                 {
                     b.HasOne("UniversityManagement.Entities.Models.Teacher", "Teacher")
                         .WithMany("Subjects")
-                        .HasForeignKey("TeacherId");
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Teacher");
                 });

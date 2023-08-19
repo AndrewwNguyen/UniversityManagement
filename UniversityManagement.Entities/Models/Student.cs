@@ -17,8 +17,9 @@ namespace UniversityManagement.Entities.Models
         public DateTime DateOfBirth { get; set; }
         public string? Address { get; set;}
         [ForeignKey("Class")]
-        public int? ClassId { get; set; }
-        public virtual Class? Class { get; set; }
+        public int ClassId { get; set; }
+        public virtual Class Class { get; set; }
+
         public virtual ICollection<Subject_Student>? Subject_Students { get; set; }
         public string? Description { get; set; }    
 

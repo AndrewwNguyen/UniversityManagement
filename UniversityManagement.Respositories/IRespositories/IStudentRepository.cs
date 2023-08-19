@@ -12,5 +12,6 @@ namespace UniversityManagement.Respositories.IRespositories
         List<Student> GetAllStudentDepartment(int idDepartment);
         dynamic GetStudentWithClass();
         dynamic GetStudentWithSubject();
+        public IEnumerable<Student> GetAllEntities();
     }
 }

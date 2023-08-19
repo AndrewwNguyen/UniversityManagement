@@ -16,7 +16,7 @@ namespace UniversityManagement.Entities.Models
         public string ClassName { get; set; }
         [ForeignKey("Department")]
         public int DepartmentId { get; set; }
-        public virtual Department? Deparment { get; set; }
+        public virtual Department? Department { get; set; }
         public DateTime YearOfAdmission { get; set; }
         public int Amount { get; set; }
         public virtual ICollection<Student>? Students {get;set;}

@@ -17,9 +17,9 @@ namespace UniversityManagement.Entities.Data
         public DbSet<ClassRoom> ClassRoom { get; set; }
         public DbSet<Department> Department { get; set; }
         public DbSet<Student> Student { get; set; }
-        public DbSet <Subject_Student> Subject_Student { get; set; }
-        public DbSet <Subject> Subject { get; set; }
-        public DbSet <Teacher> Teacher { get; set; }
+        public DbSet<Subject_Student> Subject_Student { get; set; }
+        public DbSet<Subject> Subject { get; set; }
+        public DbSet<Teacher> Teacher { get; set; }
         public DbSet<Subject_Classroom> Subject_Classroom { get; set; }
         private const string connectionString = @"Server=ANDREWW\SQLEXPRESS;Database=UniversityManagement;Integrated Security=True;Trusted_Connection =True;TrustServerCertificate=True;";
 
@@ -49,19 +49,19 @@ namespace UniversityManagement.Entities.Data
 
             //DEPARMENT
             modelBuilder.Entity<Department>().HasData(
-                new Department { DeparmentId = 1, DeparmentName = "Cong Nghe Thong Tin", Description = "No" }
+                new Department { DepartmentId = 1, DepartmentName = "Cong Nghe Thong Tin", Description = "No" }
                 );
             modelBuilder.Entity<Department>().HasData(
-    new Department { DeparmentId = 2, DeparmentName = "Luat kinh Te", Description = "No" }
+    new Department { DepartmentId = 2, DepartmentName = "Luat kinh Te", Description = "No" }
     );
             modelBuilder.Entity<Department>().HasData(
-    new Department { DeparmentId = 3, DeparmentName = "Quan Tri Kinh Doanh", Description = "No" }
+    new Department { DepartmentId = 3, DepartmentName = "Quan Tri Kinh Doanh", Description = "No" }
     );
             modelBuilder.Entity<Department>().HasData(
-    new Department { DeparmentId = 4, DeparmentName = "Marketing", Description = "No" }
+    new Department { DepartmentId = 4, DepartmentName = "Marketing", Description = "No" }
     );
             modelBuilder.Entity<Department>().HasData(
-    new Department { DeparmentId = 5, DeparmentName = "Co Khi", Description = "No" }
+    new Department { DepartmentId = 5, DepartmentName = "Co Khi", Description = "No" }
     );
 
 
@@ -96,7 +96,7 @@ namespace UniversityManagement.Entities.Data
 
             // STUDENT
             modelBuilder.Entity<Student>().HasData(
-                new Student { StudentId = 2, StudentName = "Nguyen Duc Bao Son", Address = "Bac Ninh", ClassId = 1, DateOfBirth = new DateTime(2001, 9, 2),Description="No" }
+                new Student { StudentId = 2, StudentName = "Nguyen Duc Bao Son", Address = "Bac Ninh", ClassId = 1, DateOfBirth = new DateTime(2001, 9, 2), Description = "No" }
                 ); ;
 
             modelBuilder.Entity<Student>().HasData(
@@ -134,7 +134,7 @@ namespace UniversityManagement.Entities.Data
 
             ///SUBJECT
             modelBuilder.Entity<Subject>().HasData(
-                new Subject { SubjectId = 1, SubjectName = "Lap Trinh Web", Description = "No" ,TeacherId =1}
+                new Subject { SubjectId = 1, SubjectName = "Lap Trinh Web", Description = "No", TeacherId = 1 }
                 );
             modelBuilder.Entity<Subject>().HasData(
     new Subject { SubjectId = 2, SubjectName = "An Ninh Mang", Description = "No", TeacherId = 2 }
@@ -143,26 +143,26 @@ namespace UniversityManagement.Entities.Data
     new Subject { SubjectId = 3, SubjectName = "Tri Tue Nhan Tao", Description = "No", TeacherId = 1 }
     );
             modelBuilder.Entity<Subject>().HasData(
-    new Subject { SubjectId = 4, SubjectName = "Lich Su Dang", Description = "No" , TeacherId = 3 }
+    new Subject { SubjectId = 4, SubjectName = "Lich Su Dang", Description = "No", TeacherId = 3 }
     );
             modelBuilder.Entity<Subject>().HasData(
-    new Subject { SubjectId = 5, SubjectName = "Dai So Tuyen Tinh", Description = "No" , TeacherId = 4 }
+    new Subject { SubjectId = 5, SubjectName = "Dai So Tuyen Tinh", Description = "No", TeacherId = 4 }
     );
             modelBuilder.Entity<Subject>().HasData(
-    new Subject { SubjectId = 6, SubjectName = "Co So Du Lieu", Description = "No" , TeacherId = 5 }
+    new Subject { SubjectId = 6, SubjectName = "Co So Du Lieu", Description = "No", TeacherId = 5 }
     );
             modelBuilder.Entity<Subject>().HasData(
-    new Subject { SubjectId = 7, SubjectName = "Xu Ly Anh", Description = "No" , TeacherId = 6 }
+    new Subject { SubjectId = 7, SubjectName = "Xu Ly Anh", Description = "No", TeacherId = 6 }
     );
             modelBuilder.Entity<Subject>().HasData(
-    new Subject { SubjectId = 8, SubjectName = "Khai Pha Du Lieu", Description = "No" , TeacherId = 1 }
+    new Subject { SubjectId = 8, SubjectName = "Khai Pha Du Lieu", Description = "No", TeacherId = 1 }
     );
             modelBuilder.Entity<ClassRoom>().HasData(
-                new ClassRoom {ClassRoomId = 1, ClassRoomName = "Room 303A7", Description = "No" }
+                new ClassRoom { ClassRoomId = 1, ClassRoomName = "Room 303A7", Description = "No" }
                 );
             //                // TEACHER
             modelBuilder.Entity<Teacher>().HasData(
-                new Teacher { TeacherId = 1, TeacherName = "Bui Ngoc Dung", Description = "No",}
+                new Teacher { TeacherId = 1, TeacherName = "Bui Ngoc Dung", Description = "No", }
                 );
             modelBuilder.Entity<Teacher>().HasData(
     new Teacher { TeacherId = 2, TeacherName = "Nguyen Kim Sao", Description = "No", }
@@ -183,11 +183,11 @@ namespace UniversityManagement.Entities.Data
 
             //SUBJECT_STUDENT
             modelBuilder.Entity<Subject_Student>().HasData(
-                new Subject_Student { StudentId = 2, SubjectId = 4 ,Status = Enum.Status.Pass, Mark =7},
+                new Subject_Student { StudentId = 2, SubjectId = 4, Status = Enum.Status.Pass, Mark = 7 },
                 new Subject_Student { StudentId = 2, SubjectId = 2, Status = Enum.Status.Inprocess },
                 new Subject_Student { StudentId = 3, SubjectId = 1, Status = Enum.Status.Inprocess },
-                new Subject_Student { StudentId = 2, SubjectId = 1 , Status = Enum.Status.Inprocess },
-                new Subject_Student { StudentId = 3, SubjectId = 2 , Status = Enum.Status.Inprocess }
+                new Subject_Student { StudentId = 2, SubjectId = 1, Status = Enum.Status.Inprocess },
+                new Subject_Student { StudentId = 3, SubjectId = 2, Status = Enum.Status.Inprocess }
                 );
         }
     }

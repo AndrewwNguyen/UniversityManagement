@@ -16,11 +16,11 @@ namespace UniversityManagement.Respositories.Respositories
         {
 
         }
-        public async Task<List<Student>> GetAllStudentDepartment(int departmentId)
+        public List<Student> GetAllStudentDepartment(int departmentId)
         {
-             return   db.Set<Student>().Include(x => x.Class).ThenInclude(a => a.Deparment.DeparmentId == departmentId).ToList();
+             return db.Set<Student>().Include(x => x.Class).ThenInclude(a => a.Department.DepartmentId == departmentId).ToList();
         }
-        public List<Student> GetAllStudentInClass(int classId)
+        public List<Student> GetAllStudentInClass(int classId) 
         {
             return db.Set<Student>().Where(x => x.ClassId == classId).ToList();
         }
@@ -33,7 +33,7 @@ namespace UniversityManagement.Respositories.Respositories
         {
             return db.Set<Student>().Include(x => x.Subject_Students).ThenInclude(x => x.Subject.SubjectName == subjectName).ToList();
         }
-        public async Task<Student> GetStudentByName(string studentName)
+        public Student GetStudentByName(string studentName)
         {
             Student student = db.Set<Student>().FirstOrDefault(x => x.StudentName == studentName);
             return student;
@@ -45,6 +45,10 @@ namespace UniversityManagement.Respositories.Respositories
         public dynamic GetStudentWithSubject()
         {
             return db.Set<Student>().Include(x => x.Subject_Students).ThenInclude(x => x.Subject);
+        }
+        public virtual IEnumerable<Student> GetAllEntities()
+        {
+            return db.Set<Student>().Include(x=>x.Class).ThenInclude(x=>x.Department).Include(x=>x.Subject_Students).ThenInclude(x=>x.Subject).ToList();
         }
     }
 }

@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityManagement.Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityManagement.Respositories", "UniversityManagement.Respositories\UniversityManagement.Respositories.csproj", "{7252C953-58A6-46DE-B77F-B7930EF01C3E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityManagement.API", "UniversityManagement.API\UniversityManagement.API.csproj", "{6D1268C7-BC89-43BD-9E50-8CED586F2AD9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityManagement.API", "UniversityManagement.API\UniversityManagement.API.csproj", "{6D1268C7-BC89-43BD-9E50-8CED586F2AD9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityManagement.ViewModel", "UniversityManagement.ViewModel\UniversityManagement.ViewModel.csproj", "{72FED93F-D780-45DC-B27F-ACCBED997CBF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UniversityManagement.ViewModel", "UniversityManagement.ViewModel\UniversityManagement.ViewModel.csproj", "{72FED93F-D780-45DC-B27F-ACCBED997CBF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversityManagement.Web", "UniversityManagement.Web\UniversityManagement.Web.csproj", "{959B64E9-307C-4CD2-99FB-CB8EC691FB0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{72FED93F-D780-45DC-B27F-ACCBED997CBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72FED93F-D780-45DC-B27F-ACCBED997CBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72FED93F-D780-45DC-B27F-ACCBED997CBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{959B64E9-307C-4CD2-99FB-CB8EC691FB0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{959B64E9-307C-4CD2-99FB-CB8EC691FB0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{959B64E9-307C-4CD2-99FB-CB8EC691FB0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{959B64E9-307C-4CD2-99FB-CB8EC691FB0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

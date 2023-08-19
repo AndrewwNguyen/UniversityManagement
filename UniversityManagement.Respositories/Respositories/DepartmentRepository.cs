@@ -17,8 +17,12 @@ namespace UniversityManagement.Respositories.Respositories
         }
         public Department GetDepartmentByName(string departmentName)
         {
-            Department department = db.Set<Department>().FirstOrDefault(x => x.DeparmentName == departmentName);
+            Department department = db.Set<Department>().FirstOrDefault(x => x.DepartmentName == departmentName);
             return department;
+        }
+        public virtual IEnumerable<Department> GetAllEntities()
+        {
+            return db.Set<Department>().ToList();
         }
     }
 }

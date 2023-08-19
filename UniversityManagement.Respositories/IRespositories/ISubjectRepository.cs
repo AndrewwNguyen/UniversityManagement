@@ -11,6 +11,7 @@ namespace UniversityManagement.Respositories.IRespositories
         public Subject GetSubjectByName(string name);
 
         public List<Subject> GetSubjectByTeacher(string teacherName);
+        public IEnumerable<Subject> GetAllEntities();
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Hosting;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -11,8 +12,9 @@ namespace UniversityManagement.Entities.Models
     {
         [Key]
         public int TeacherId { get; set; }
-        public string? TeacherName { get; set; }
+        public string? TeacherName { get; set; }        
         public string? Description { get; set; }
-        public virtual ICollection<Subject>? Subjects { get; set; }
+        public virtual ICollection<Subject>? Subjects { get; set; } = new List<Subject>();
+
     }
 }

@@ -14,7 +14,6 @@ namespace UniversityManagement.Respositories.IRespositories
         void UpdateTEntity(TEntity entity);
         void DeleteTEntity(TEntity entity);
         void DeleteTEntity(int entityId);
-        IEnumerable<TEntity> GetAllEntities();
         IEnumerable<TEntity> Pagination(int pageSize, int pageIndex);
     }
 }

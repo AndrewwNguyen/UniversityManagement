@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using UniversityManagement.Entities.Data;
 using UniversityManagement.Entities.Models;
 using UniversityManagement.Respositories.IRespositories;
@@ -30,6 +31,11 @@ namespace UniversityManagement.Respositories.Respositories
         public List<Subject> GetSubjectByTeacher(string teacherName)
         {
             return db.Set<Subject>().Where(x => x.Teacher.TeacherName.Contains(teacherName)).ToList();
+        }
+
+        public virtual IEnumerable<Subject> GetAllEntities()
+        {
+            return db.Set<Subject>().Include(x=>x.Teacher).ToList();
         }
     }
 }

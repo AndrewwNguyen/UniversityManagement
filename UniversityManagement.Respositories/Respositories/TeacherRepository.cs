@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,10 @@ namespace UniversityManagement.Respositories.Respositories
         public Teacher GetTeacherBySubject(string subjectName)
         {
             throw new NotImplementedException();
+        }
+        public virtual IEnumerable<Teacher> GetAllEntities()
+        {
+            return db.Set<Teacher>().Include(x => x.Subjects).ToList();
         }
     }
 }

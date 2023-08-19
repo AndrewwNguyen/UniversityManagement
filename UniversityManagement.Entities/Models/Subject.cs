@@ -13,11 +13,14 @@ namespace UniversityManagement.Entities.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SubjectId { get; set; }
+        [Required]
         public string? SubjectName { get; set; }
         public string? Description { get; set; }
         public virtual ICollection<Subject_Student>? Subject_Student { get;set; }
         public virtual ICollection<Subject_Classroom>? Subject_Classroom { get; set; }
-        public int? TeacherId { get; set; }
-        public virtual Teacher? Teacher { get; set; }
+
+        [ForeignKey("Teacher")]
+        public int TeacherId { get; set; }
+        public virtual Teacher Teacher { get; set; }
     }
 }

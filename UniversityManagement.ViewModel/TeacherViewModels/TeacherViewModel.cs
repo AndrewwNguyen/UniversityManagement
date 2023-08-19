@@ -12,6 +12,7 @@ namespace UniversityManagement.ViewModel.TeacherViewModels
         public int TeacherId { get; set; }
         public string? TeacherName { get; set; }
         public string? Description { get; set; }
-        public virtual ICollection<Subject>? Subjects { get; set; }
+        public ICollection<string> SubjectName { get; set; }
+        public string DepartmentName { get; set; }
     }
 }

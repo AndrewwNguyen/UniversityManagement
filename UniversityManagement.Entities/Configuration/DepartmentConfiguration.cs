@@ -14,8 +14,8 @@ namespace UniversityManagement.Entities.Configuration
         public void Configure(EntityTypeBuilder<Department> builder)
         {
             builder.ToTable(nameof(Department));
-            builder.HasKey(x => x.DeparmentId);
-            builder.Property(x => x.DeparmentName).IsRequired().HasMaxLength(100);
+            builder.HasKey(x => x.DepartmentId);
+            builder.Property(x => x.DepartmentName).IsRequired().HasMaxLength(100);
         }
     }
 }

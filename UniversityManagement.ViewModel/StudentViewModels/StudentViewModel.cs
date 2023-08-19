@@ -12,8 +12,8 @@ namespace UniversityManagement.ViewModel.StudentViewModels
         public string? StudentName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string? Address { get; set; }
-        public string ClassName { get; set; }
-        public virtual ICollection<string>? SubjectName { get; set; }
         public string? Description { get; set; }
+        public string ClassName { get; set; }
+        public ICollection<string> SubjectName { get; set; }
     }
 }

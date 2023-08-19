@@ -5,8 +5,6 @@ using System.Net;
 using UniversityManagement.API.Models;
 using UniversityManagement.Entities.Models;
 using UniversityManagement.Services.IServices;
-using UniversityManagement.Services.Services;
-using UniversityManagement.ViewModel.SubjectViewModels;
 using UniversityManagement.ViewModel.TeacherViewModels;
 
 namespace UniversityManagement.API.Controllers
@@ -45,13 +43,13 @@ namespace UniversityManagement.API.Controllers
         {
             try
             {
-                var teacher = teacherService.Find(id);
+                var teacher = _teacherService.Find(id);
                 if (teacher == null)
                 {
                     _response.StatusCode = HttpStatusCode.NotFound;
                     return NotFound(_response);
                 }
-                _response.Result = mapper.Map<TeacherViewModel>(teacher);
+                _response.Result = _mapper.Map<TeacherViewModel>(teacher);
                 _response.StatusCode = HttpStatusCode.OK;
                 _response.IsSuccess = true;
                 return Ok(_response);
@@ -71,9 +69,9 @@ namespace UniversityManagement.API.Controllers
                 {
                     return BadRequest(createVM);
                 }
-                Teacher teacher = mapper.Map<Teacher>(createVM);
-                teacherService.AddTeacher(teacher);
-                _response.Result = mapper.Map<TeacherViewModel>(teacher);
+                Teacher teacher = _mapper.Map<Teacher>(createVM);
+                _teacherService.AddTeacher(teacher);
+                _response.Result = _mapper.Map<TeacherViewModel>(teacher);
                 _response.StatusCode = HttpStatusCode.Created;
                 _response.IsSuccess = true;
                 return CreatedAtRoute("GetTeacher", new { id = teacher.TeacherId }, _response);
@@ -89,12 +87,12 @@ namespace UniversityManagement.API.Controllers
         {
             try
             {
-                var teacher = teacherService.Find(id);
+                var teacher = _teacherService.Find(id);
                 if (teacher == null)
                 {
                     return NotFound();
                 }
-                teacherService.DeleteTeacher(teacher);
+                _teacherService.DeleteTeacher(teacher);
                 _response.StatusCode = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);

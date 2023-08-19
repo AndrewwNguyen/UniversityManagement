@@ -72,12 +72,12 @@ namespace UniversityManagement.API.Controllers
                 {
                     return BadRequest(createVM);
                 }
-                Department department = _mapper.Map<Department>(createVM);
+                Department department =  _mapper.Map<Department>(createVM);
                 _departmentService.AddDepartment(department);
                 _response.Result = _mapper.Map<DepartmentViewModel>(department);
                 _response.StatusCode = HttpStatusCode.Created;
                 _response.IsSuccess = true;
-                return CreatedAtRoute("GetSubject", new { id = department.DeparmentId }, _response);
+                return CreatedAtRoute("GetDepartment", new { id = department.DepartmentId }, _response);
             }
             catch (Exception ex)
             {
@@ -85,8 +85,8 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
-        [HttpDelete("{id:int}", Name = "DeleteSubject")]
-        public async Task<ActionResult<APIResponse>> DeleteSubject(int id)
+        [HttpDelete("{id:int}", Name = "DeleteDepartment")]
+        public async Task<ActionResult<APIResponse>> DeleteDepartment(int id)
         {
             try
             {
