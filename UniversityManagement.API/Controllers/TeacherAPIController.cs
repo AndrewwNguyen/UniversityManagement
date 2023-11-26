@@ -66,7 +66,7 @@ namespace UniversityManagement.API.Controllers
         }
 
         [HttpPost]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> CreateTeacher([FromBody] CreateTeacherViewModel createVM)
         {
             try
@@ -90,7 +90,7 @@ namespace UniversityManagement.API.Controllers
         }
 
         [HttpDelete("{id:Guid}", Name = "DeleteTeacher")]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> DeleteTeacher(Guid id)
         {
             try
@@ -113,7 +113,7 @@ namespace UniversityManagement.API.Controllers
         }
 
         [HttpPut("{id:Guid}", Name = "UpdateTeacher")]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> UpdateTeacher(Guid id, [FromBody] TeacherViewModel updateViewModel)
         {
             try

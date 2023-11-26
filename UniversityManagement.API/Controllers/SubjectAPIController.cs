@@ -76,7 +76,7 @@ namespace UniversityManagement.API.Controllers
             return _response;
         }
         [HttpPost]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> CreateSubject([FromBody] CreateSubjectViewModel createVM)
         {
             try
@@ -99,7 +99,7 @@ namespace UniversityManagement.API.Controllers
             return _response;
         }
         [HttpDelete("{id:Guid}", Name = "DeleteSubject")]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> DeleteSubject(Guid id)
         {
             try
@@ -122,7 +122,7 @@ namespace UniversityManagement.API.Controllers
         }
 
         [HttpPut("{id:Guid}", Name = "UpdateSubject")]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> UpdateSubject(Guid id, [FromBody] SubjectViewModel updateViewModel)
         {
             try
@@ -145,7 +145,7 @@ namespace UniversityManagement.API.Controllers
         }
 
         [HttpPatch("{id:Guid}", Name = "UpdateSubjectPartial")]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> UpdateSubjectPartial(Guid id, JsonPatchDocument<CreateSubjectViewModel> createSubjectViewModel)
         {
             try
@@ -179,7 +179,7 @@ namespace UniversityManagement.API.Controllers
         }
 
         [HttpGet("GetSubjectByTeacher/{teacherName}", Name = "GetSubjectByTeacher")]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> GetSubjectByTeacher(string teacherName)
         {
             var teacher = _subjectService.GetSubjectByTeacher(teacherName);

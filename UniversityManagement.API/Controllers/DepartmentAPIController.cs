@@ -23,7 +23,7 @@ namespace UniversityManagement.API.Controllers
             this._response = _response;
         }
 
-        [HttpGet]   
+        [HttpGet]
         [Authorize()]
         public async Task<ActionResult<APIResponse>> GetDepartments()
         {
@@ -66,7 +66,7 @@ namespace UniversityManagement.API.Controllers
         }
 
         [HttpPost]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> CreateDepartment([FromBody] CreateDepartmentViewModel createVM)
         {
             try
@@ -90,7 +90,7 @@ namespace UniversityManagement.API.Controllers
         }
 
         [HttpDelete("{id:Guid}", Name = "DeleteDepartment")]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> DeleteDepartment(Guid id)
         {
             try
@@ -113,7 +113,7 @@ namespace UniversityManagement.API.Controllers
         }
 
         [HttpPut("{id:Guid}", Name = "UpdateDepartment")]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> UpdateDepartment(Guid id, [FromBody] DepartmentViewModel updateViewModel)
         {
             try

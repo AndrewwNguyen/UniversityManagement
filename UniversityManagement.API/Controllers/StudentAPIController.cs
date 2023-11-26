@@ -78,7 +78,7 @@ namespace UniversityManagement.API.Controllers
         }
 
         [HttpPost]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> CreateStudent([FromBody] CreateStudentViewModel createVM)
         {
             try
@@ -102,7 +102,7 @@ namespace UniversityManagement.API.Controllers
         }
 
         [HttpDelete("{id:Guid}", Name = "DeleteStudent")]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> DeleteStudent(Guid id)
         {
             try
@@ -127,7 +127,7 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id:Guid}", Name = "UpdateStudent")]
         public async Task<ActionResult<APIResponse>> UpdateStudent(Guid id, [FromBody] StudentViewModel updateViewModel)
         {
@@ -151,7 +151,7 @@ namespace UniversityManagement.API.Controllers
         }
 
         [HttpPatch("{id:Guid}", Name = "UpdateStudentPartial")]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> UpdateStudentPartial(Guid id, JsonPatchDocument<CreateStudentViewModel> createStudentViewModel)
         {
             try
@@ -188,7 +188,7 @@ namespace UniversityManagement.API.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> GetStudentsBySubject(string subjectName)
         {
             var students = _studentServices.GetStudentsBySubject(subjectName);
