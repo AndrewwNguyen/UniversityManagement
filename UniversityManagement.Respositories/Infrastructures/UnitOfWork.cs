@@ -1,10 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UniversityManagement.Entities.Data;
+﻿using UniversityManagement.Entities.Data;
 using UniversityManagement.Respositories.IRespositories;
 using UniversityManagement.Respositories.Respositories;
 
@@ -17,6 +11,8 @@ namespace UniversityManagement.Respositories.Infrastructures
         private ISubjectRepository _subjectRepository;
         private ITeacherRepository _teacherRepository;
         private IDepartmentRepository _departmentRepository;
+        private IClassRepository _classRepository;
+        private IUserRepository _userRepository;
         public UnitOfWork(ApplicationDbContext applicationDbContext)
         {
             _applicationDbContext = applicationDbContext;
@@ -25,6 +21,8 @@ namespace UniversityManagement.Respositories.Infrastructures
         public IStudentRepository studentRepository => _studentRepository ?? (_studentRepository = new StudentRepository(_applicationDbContext));
         public ISubjectRepository subjectRepository => _subjectRepository ?? (_subjectRepository = new SubjectRepository(_applicationDbContext));
         public ITeacherRepository teacherRepository => _teacherRepository ?? (_teacherRepository = new TeacherRepository(_applicationDbContext));
+        public IClassRepository classRepository => _classRepository ?? (_classRepository = new ClassRepository(_applicationDbContext));
+        public IUserRepository userRepository => _userRepository ?? (_userRepository = new UserRepository(_applicationDbContext));
         public ApplicationDbContext ApplicationDbContext => _applicationDbContext;
         public void Dispose()
         {

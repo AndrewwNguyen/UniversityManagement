@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UniversityManagement.Entities.Models;
+﻿using UniversityManagement.Entities.Models;
 using UniversityManagement.Respositories.Infrastructures;
 using UniversityManagement.Services.IServices;
 
@@ -34,7 +29,7 @@ namespace UniversityManagement.Services.Services
             _unitOfWork.Savechanges();
         }
 
-        public Teacher Find(int entityId)
+        public Teacher Find(Guid entityId)
         {
             var subject = _unitOfWork.teacherRepository.Find(entityId);
             return subject;

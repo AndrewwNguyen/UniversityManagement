@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace UniversityManagement.Entities.Models
 {
-    public class Department
+    public class Department : BaseModel
     {
         [Key]
-        public int DepartmentId { get; set; }
+        public Guid DepartmentId { get; set; }
         public string? DepartmentName { get; set; }
         public string? Description { get; set; }
         public virtual ICollection<Class>? Classes { get; set; }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UniversityManagement.Entities.Models;
+﻿using UniversityManagement.Entities.Models;
 using UniversityManagement.Respositories.Infrastructures;
 using UniversityManagement.Services.IServices;
 
@@ -34,7 +29,7 @@ namespace UniversityManagement.Services.Services
             _unitOfWork.Savechanges();
         }
 
-        public Department Find(int entityId)
+        public Department Find(Guid entityId)
         {
             var department = _unitOfWork.departmentRepository.Find(entityId);
             return department;

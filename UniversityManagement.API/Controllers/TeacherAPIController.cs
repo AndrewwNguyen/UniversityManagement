@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using UniversityManagement.API.Models;
@@ -22,7 +22,9 @@ namespace UniversityManagement.API.Controllers
             _mapper = mapper;
             this._response = _response;
         }
+
         [HttpGet]
+        [Authorize()]
         public async Task<ActionResult<APIResponse>> GetTeachers()
         {
             try
@@ -38,8 +40,10 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
-        [HttpGet("{id:int}", Name = "GetTeacher")]
-        public async Task<ActionResult<APIResponse>> GetTeacher(int id)
+
+        [HttpGet("{id:Guid}", Name = "GetTeacher")]
+        [Authorize()]
+        public async Task<ActionResult<APIResponse>> GetTeacher(Guid id)
         {
             try
             {
@@ -60,7 +64,9 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
+
         [HttpPost]
+        [Authorize()]
         public async Task<ActionResult<APIResponse>> CreateTeacher([FromBody] CreateTeacherViewModel createVM)
         {
             try
@@ -82,8 +88,10 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
-        [HttpDelete("{id:int}", Name = "DeleteTeacher")]
-        public async Task<ActionResult<APIResponse>> DeleteTeacher(int id)
+
+        [HttpDelete("{id:Guid}", Name = "DeleteTeacher")]
+        [Authorize()]
+        public async Task<ActionResult<APIResponse>> DeleteTeacher(Guid id)
         {
             try
             {
@@ -103,5 +111,29 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
+
+        [HttpPut("{id:Guid}", Name = "UpdateTeacher")]
+        [Authorize()]
+        public async Task<ActionResult<APIResponse>> UpdateTeacher(Guid id, [FromBody] TeacherViewModel updateViewModel)
+        {
+            try
+            {
+                if (updateViewModel == null || id != updateViewModel.TeacherId)
+                {
+                    return BadRequest();
+                }
+                Teacher model = _mapper.Map<Teacher>(updateViewModel);
+                _teacherService.UpdateTeacher(model);
+                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.IsSuccess = true;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
+            }
+            return _response;
+        }
+
     }
 }

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -23,7 +23,9 @@ namespace UniversityManagement.API.Controllers
             this._mapper = mapper;
             this._response = _response;
         }
+
         [HttpGet]
+        [Authorize()]
         public async Task<ActionResult<APIResponse>> GetSubjects()
         {
             try
@@ -39,17 +41,19 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
-        [HttpGet("{id:int}", Name = "GetSubject")]
+
+        [HttpGet("{id:Guid}", Name = "GetSubject")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<APIResponse>> GetSubject(int id)
+        [Authorize()]
+        public async Task<ActionResult<APIResponse>> GetSubject(Guid id)
         {
             try
             {
-                if (id == 0)
+                if (id == Guid.Empty)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
                     return BadRequest(_response);
@@ -72,6 +76,7 @@ namespace UniversityManagement.API.Controllers
             return _response;
         }
         [HttpPost]
+        [Authorize()]
         public async Task<ActionResult<APIResponse>> CreateSubject([FromBody] CreateSubjectViewModel createVM)
         {
             try
@@ -93,8 +98,9 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
-        [HttpDelete("{id:int}", Name = "DeleteSubject")]
-        public async Task<ActionResult<APIResponse>> DeleteSubject(int id)
+        [HttpDelete("{id:Guid}", Name = "DeleteSubject")]
+        [Authorize()]
+        public async Task<ActionResult<APIResponse>> DeleteSubject(Guid id)
         {
             try
             {
@@ -114,8 +120,10 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
-        [HttpPut("{id:int}", Name = "UpdateSubject")]
-        public async Task<ActionResult<APIResponse>> UpdateSubject(int id, [FromBody] SubjectViewModel updateViewModel)
+
+        [HttpPut("{id:Guid}", Name = "UpdateSubject")]
+        [Authorize()]
+        public async Task<ActionResult<APIResponse>> UpdateSubject(Guid id, [FromBody] SubjectViewModel updateViewModel)
         {
             try
             {
@@ -136,8 +144,9 @@ namespace UniversityManagement.API.Controllers
             return _response;
         }
 
-        [HttpPatch("{id:int}", Name = "UpdateSubjectPartial")]
-        public async Task<ActionResult<APIResponse>> UpdateSubjectPartial(int id, JsonPatchDocument<CreateSubjectViewModel> createSubjectViewModel)
+        [HttpPatch("{id:Guid}", Name = "UpdateSubjectPartial")]
+        [Authorize()]
+        public async Task<ActionResult<APIResponse>> UpdateSubjectPartial(Guid id, JsonPatchDocument<CreateSubjectViewModel> createSubjectViewModel)
         {
             try
             {
@@ -168,7 +177,9 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
+
         [HttpGet("GetSubjectByTeacher/{teacherName}", Name = "GetSubjectByTeacher")]
+        [Authorize()]
         public async Task<ActionResult<APIResponse>> GetSubjectByTeacher(string teacherName)
         {
             var teacher = _subjectService.GetSubjectByTeacher(teacherName);

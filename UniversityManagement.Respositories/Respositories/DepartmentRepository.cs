@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UniversityManagement.Entities.Data;
+﻿using UniversityManagement.Entities.Data;
 using UniversityManagement.Entities.Models;
 using UniversityManagement.Respositories.IRespositories;
 
@@ -20,9 +15,9 @@ namespace UniversityManagement.Respositories.Respositories
             Department department = db.Set<Department>().FirstOrDefault(x => x.DepartmentName == departmentName);
             return department;
         }
-        public virtual IEnumerable<Department> GetAllEntities()
+        public override IEnumerable<Department> GetAllEntities()
         {
-            return db.Set<Department>().ToList();
+            return db.Set<Department>().OrderBy(x => x.DateOfCreation).ToList();
         }
     }
 }

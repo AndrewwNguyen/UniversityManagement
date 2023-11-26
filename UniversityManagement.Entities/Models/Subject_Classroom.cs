@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace UniversityManagement.Entities.Models
 {
-    public class Subject_Classroom
+    public class Subject_Classroom : BaseModel
     {
-        public int ClassRoomId { get; set; }
-        public int SubjectId { get; set; }
+        public Guid ClassRoomId { get; set; }
+        public Guid SubjectId { get; set; }
         public virtual Subject Subject { get; set; }
         public virtual ClassRoom ClassRoom { get; set; }
         public string? Description { get; set; }

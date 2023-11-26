@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace UniversityManagement.Entities.Models
 {
-    public class ClassRoom
+    public class ClassRoom : BaseModel
     {
         [Key]
-        public int ClassRoomId { get; set; }
+        public Guid ClassRoomId { get; set; }
         public string? ClassRoomName { get; set; }
         public string? Description { get; set; }
         public virtual ICollection<Subject_Classroom>? Subject_Classrooms { get; set; }
