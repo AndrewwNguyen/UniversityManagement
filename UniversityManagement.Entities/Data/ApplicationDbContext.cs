@@ -41,7 +41,6 @@ namespace UniversityManagement.Entities.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ClassConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ClassRoomConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(DepartmentConfiguration).Assembly);
-            modelBuilder.ApplyConfigurationsFromAssembly(typeof(StudentConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(Subject_StudentConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(TeacherConfiguration).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(Subject_ClassroomConfiguration).Assembly);
