@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UniversityManagement.Respositories.Infrastructures;
-
-namespace UniversityManagement.Respositories.IRespositories
+﻿namespace UniversityManagement.Respositories.IRespositories
 {
     public interface IBaseRepository<TEntity>
     {
-        TEntity Find(int entityId);
+        TEntity Find(Guid entityId);
         void AddTEntity(TEntity entity);
         void UpdateTEntity(TEntity entity);
         void DeleteTEntity(TEntity entity);

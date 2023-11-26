@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UniversityManagement.Entities.Models
 {
-    public class Subject
+    public class Subject : BaseModel
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int SubjectId { get; set; }
+        public Guid SubjectId { get; set; }
         [Required]
         public string? SubjectName { get; set; }
         public string? Description { get; set; }
@@ -20,7 +14,7 @@ namespace UniversityManagement.Entities.Models
         public virtual ICollection<Subject_Classroom>? Subject_Classroom { get; set; }
 
         [ForeignKey("Teacher")]
-        public int TeacherId { get; set; }
+        public Guid TeacherId { get; set; }
         public virtual Teacher Teacher { get; set; }
     }
 }

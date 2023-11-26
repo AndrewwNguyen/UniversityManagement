@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UniversityManagement.Entities.Data;
+﻿using UniversityManagement.Entities.Data;
 using UniversityManagement.Respositories.IRespositories;
 
 namespace UniversityManagement.Respositories.Infrastructures
@@ -15,6 +10,8 @@ namespace UniversityManagement.Respositories.Infrastructures
         public ISubjectRepository subjectRepository { get; }
         public ITeacherRepository teacherRepository { get; }
         public IDepartmentRepository departmentRepository { get; }
+        public IClassRepository classRepository { get; }
+        public IUserRepository userRepository { get; }
         public ApplicationDbContext ApplicationDbContext { get; }
         int Savechanges();
     }

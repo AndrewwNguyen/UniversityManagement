@@ -8,18 +8,16 @@ using System.Threading.Tasks;
 
 namespace UniversityManagement.Entities.Models
 {
-    public class Student
+    public class Student:BaseModel
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int StudentId { get; set; }
-        public string? StudentName { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public Guid StudentId { get; set; }
+        public string StudentName { get; set; }
+        public DateTime? DateOfBirth { get; set; }
         public string? Address { get; set;}
         [ForeignKey("Class")]
-        public int ClassId { get; set; }
-        public virtual Class Class { get; set; }
-
+        public Guid? ClassId { get; set; }
+        public virtual Class? Class { get; set; }
         public virtual ICollection<Subject_Student>? Subject_Students { get; set; }
         public string? Description { get; set; }    
 

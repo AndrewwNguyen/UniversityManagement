@@ -1,11 +1,15 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using UniversityManagement.API.Models;
 using UniversityManagement.Entities.Data;
+using UniversityManagement.Entities.Models;
+using UniversityManagement.Entities.Validators;
 using UniversityManagement.Respositories.Infrastructures;
 using UniversityManagement.Services.IServices;
 using UniversityManagement.Services.Services;
@@ -25,17 +29,27 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
     });
 });
-//builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddAutoMapper(typeof(MappingConfig));
 builder.Services.AddScoped<IStudentServices, StudentServices>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();
+builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped(c => new APIResponse());
-var key = builder.Configuration.GetValue<string>("ApiSettings:Secret");
+builder.Services.AddControllers()
+    .AddFluentValidation(x => {
+        x.ImplicitlyValidateChildProperties = true;
+        });
 
+//register the fluent validator
+builder.Services.AddScoped<IValidator<Teacher>, TeacherValidator>();
+builder.Services.AddScoped<IValidator<Student>, StudentValidator>();
+builder.Services.AddScoped<IValidator<Subject>, SubjectValidator>();
 
+var key = builder.Configuration.GetValue<string>("ApiSettings:SecretKey");
+//var secretKeyBytes = Encoding.UTF8.GetBytes(key);
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

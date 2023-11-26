@@ -1,9 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UniversityManagement.Entities.Data;
 using UniversityManagement.Entities.Models;
 using UniversityManagement.Respositories.IRespositories;
@@ -23,13 +18,9 @@ namespace UniversityManagement.Respositories.Respositories
             return teacher;
         }
 
-        public Teacher GetTeacherBySubject(string subjectName)
-        {
-            throw new NotImplementedException();
-        }
         public virtual IEnumerable<Teacher> GetAllEntities()
         {
-            return db.Set<Teacher>().Include(x => x.Subjects).ToList();
+            return db.Set<Teacher>().Include(x => x.Subjects).OrderBy(x => x.DateOfCreation).ToList();
         }
     }
 }

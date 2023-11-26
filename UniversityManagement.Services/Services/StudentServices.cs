@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UniversityManagement.Entities.Models;
+﻿using UniversityManagement.Entities.Models;
 using UniversityManagement.Respositories.Infrastructures;
 using UniversityManagement.Services.IServices;
 
@@ -18,6 +13,8 @@ namespace UniversityManagement.Services.Services
         }
         public void AddStudent(Student entity)
         {
+            entity.DateOfCreation = DateTime.Now;
+            entity.DateOfUpdate = DateTime.Now;
             _unitOfWork.studentRepository.AddTEntity(entity);
             _unitOfWork.Savechanges();
         }
@@ -34,7 +31,7 @@ namespace UniversityManagement.Services.Services
             _unitOfWork.Savechanges();
         }
 
-        public Student Find(int entityId)
+        public Student Find(Guid entityId)
         {
             var student = _unitOfWork.studentRepository.Find(entityId);
             return student;
@@ -55,12 +52,12 @@ namespace UniversityManagement.Services.Services
             var student = _unitOfWork.studentRepository.GetStudentByName(name);
             return student;
         }
-        public IEnumerable<Student> GetStudentsBySubjectId(int subjectId)
+        public IEnumerable<Student> GetStudentsBySubjectId(Guid subjectId)
         {
             var student = _unitOfWork.studentRepository.GetAllStudentInSubject(subjectId);
             return student;
         }
-        public IEnumerable<Student> GetAllStudentInClass(int postId)
+        public IEnumerable<Student> GetAllStudentInClass(Guid postId)
         {
             var student = _unitOfWork.studentRepository.GetAllStudentInClass(postId);
             return student;
@@ -68,6 +65,7 @@ namespace UniversityManagement.Services.Services
 
         public void UpdateStudent(Student entity)
         {
+            entity.DateOfUpdate = DateTime.Now;
             _unitOfWork.studentRepository.UpdateTEntity(entity);
             _unitOfWork.Savechanges();
         }

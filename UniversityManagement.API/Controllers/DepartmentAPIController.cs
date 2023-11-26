@@ -1,14 +1,11 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using UniversityManagement.API.Models;
 using UniversityManagement.Entities.Models;
 using UniversityManagement.Services.IServices;
-using UniversityManagement.Services.Services;
 using UniversityManagement.ViewModel.DepartmentViewModels;
-using UniversityManagement.ViewModel.StudentViewModels;
-using UniversityManagement.ViewModel.SubjectViewModels;
 
 namespace UniversityManagement.API.Controllers
 {
@@ -25,7 +22,9 @@ namespace UniversityManagement.API.Controllers
             this._mapper = mapper;
             this._response = _response;
         }
-        [HttpGet]
+
+        [HttpGet]   
+        [Authorize()]
         public async Task<ActionResult<APIResponse>> GetDepartments()
         {
             try
@@ -41,8 +40,10 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
-        [HttpGet("{id:int}", Name = "GetDepartment")]
-        public async Task<ActionResult<APIResponse>> GetDepartment(int id)
+
+        [HttpGet("{id:Guid}", Name = "GetDepartment")]
+        [Authorize()]
+        public async Task<ActionResult<APIResponse>> GetDepartment(Guid id)
         {
             try
             {
@@ -63,7 +64,9 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
+
         [HttpPost]
+        [Authorize()]
         public async Task<ActionResult<APIResponse>> CreateDepartment([FromBody] CreateDepartmentViewModel createVM)
         {
             try
@@ -85,8 +88,10 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
-        [HttpDelete("{id:int}", Name = "DeleteDepartment")]
-        public async Task<ActionResult<APIResponse>> DeleteDepartment(int id)
+
+        [HttpDelete("{id:Guid}", Name = "DeleteDepartment")]
+        [Authorize()]
+        public async Task<ActionResult<APIResponse>> DeleteDepartment(Guid id)
         {
             try
             {
@@ -96,6 +101,29 @@ namespace UniversityManagement.API.Controllers
                     return NotFound();
                 }
                 _departmentService.DeleteDepartment(department);
+                _response.StatusCode = HttpStatusCode.NoContent;
+                _response.IsSuccess = true;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.ErrorMessages = new List<string>() { ex.ToString() };
+            }
+            return _response;
+        }
+
+        [HttpPut("{id:Guid}", Name = "UpdateDepartment")]
+        [Authorize()]
+        public async Task<ActionResult<APIResponse>> UpdateDepartment(Guid id, [FromBody] DepartmentViewModel updateViewModel)
+        {
+            try
+            {
+                if (updateViewModel == null || id != updateViewModel.DepartmentId)
+                {
+                    return BadRequest();
+                }
+                Department model = _mapper.Map<Department>(updateViewModel);
+                _departmentService.UpdateDepartment(model);
                 _response.StatusCode = HttpStatusCode.NoContent;
                 _response.IsSuccess = true;
                 return Ok(_response);

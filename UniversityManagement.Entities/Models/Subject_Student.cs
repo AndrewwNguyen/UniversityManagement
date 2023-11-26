@@ -8,10 +8,10 @@ using UniversityManagement.Entities.Enum;
 
 namespace UniversityManagement.Entities.Models
 {
-    public class Subject_Student 
+    public class Subject_Student : BaseModel
     {
-        public int StudentId { get; set; }
-        public int SubjectId { get; set;}   
+        public Guid StudentId { get; set; }
+        public Guid SubjectId { get; set;}   
         public virtual Subject Subject { get; set; }
         public virtual Student Student { get; set; }
         public float? Mark { get; set; }

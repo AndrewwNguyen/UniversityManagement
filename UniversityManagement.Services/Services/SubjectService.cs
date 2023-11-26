@@ -1,5 +1,4 @@
-﻿
-using UniversityManagement.Entities.Models;
+﻿using UniversityManagement.Entities.Models;
 using UniversityManagement.Respositories.Infrastructures;
 using UniversityManagement.Services.IServices;
 
@@ -30,7 +29,7 @@ namespace UniversityManagement.Services.Services
             _unitOfWork.Savechanges();
         }
 
-        public Subject Find(int entityId)
+        public Subject Find(Guid entityId)
         {
             var subject = _unitOfWork.subjectRepository.Find(entityId);
             return subject;
@@ -64,7 +63,7 @@ namespace UniversityManagement.Services.Services
             return _unitOfWork.subjectRepository.Pagination(pageSize, PageIndex);
         }
 
-        public IEnumerable<Subject> GetAllSubjectByStudentId(int StudentId)
+        public IEnumerable<Subject> GetAllSubjectByStudentId(Guid StudentId)
         {
             var subject = _unitOfWork.subjectRepository.GetAllSubjectByStudentId(StudentId);
             return subject;

@@ -1,5 +1,4 @@
-﻿
-using UniversityManagement.Entities.Data;
+﻿using UniversityManagement.Entities.Data;
 using UniversityManagement.Respositories.IRespositories;
 
 namespace UniversityManagement.Respositories.Respositories
@@ -12,8 +11,6 @@ namespace UniversityManagement.Respositories.Respositories
         {
             db = context;
         }
-
-        string entity = typeof(TEntity).Name;
 
         public virtual void AddTEntity(TEntity entity)
         {
@@ -31,7 +28,7 @@ namespace UniversityManagement.Respositories.Respositories
             db.Set<TEntity>().Remove(db.Set<TEntity>().Find(entityId));
         }
 
-        public virtual TEntity Find(int entityId)
+        public virtual TEntity Find(Guid entityId)
         {
             return db.Set<TEntity>().Find(entityId);
         }

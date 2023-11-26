@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UniversityManagement.ViewModel.StudentViewModels
+﻿namespace UniversityManagement.ViewModel.StudentViewModels
 {
     public class StudentViewModel
     {
-        public int StudentId { get; set; }
+        public Guid StudentId { get; set; }
         public string? StudentName { get; set; }
         public DateTime DateOfBirth { get; set; }
         public string? Address { get; set; }
@@ -16,5 +10,8 @@ namespace UniversityManagement.ViewModel.StudentViewModels
         public string? ClassName { get; set; }
         public ICollection<string> SubjectName { get; set; }
         public string? DepartmentName { get; set; }
+        public DateTime DateOfCreation { get; set; }
+        public DateTime DateOfUpdate { get; set; }
+        public string Status { get; set; }
     }
 }

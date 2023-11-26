@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.Extensions.Hosting;
 using UniversityManagement.Entities.Models;
 using UniversityManagement.ViewModel.DepartmentViewModels;
 using UniversityManagement.ViewModel.StudentViewModels;

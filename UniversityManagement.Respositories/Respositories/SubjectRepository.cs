@@ -1,6 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.EntityFrameworkCore;
 using UniversityManagement.Entities.Data;
 using UniversityManagement.Entities.Models;
 using UniversityManagement.Respositories.IRespositories;
@@ -13,11 +11,13 @@ namespace UniversityManagement.Respositories.Respositories
         {
 
         }
+
         public List<Subject> GetAllSubjectByStudent(string studentName)
         {
             return db.Set<Subject>().Include(x => x.Subject_Student).ThenInclude(x => x.Student.StudentName == studentName).ToList();
         }
-        public List<Subject> GetAllSubjectByStudentId(int StudentId)
+
+        public List<Subject> GetAllSubjectByStudentId(Guid StudentId)
         {
             return db.Set<Subject>().Include(x => x.Subject_Student).ThenInclude(x => x.Student.StudentId == StudentId).ToList();
         }
@@ -35,7 +35,7 @@ namespace UniversityManagement.Respositories.Respositories
 
         public virtual IEnumerable<Subject> GetAllEntities()
         {
-            return db.Set<Subject>().Include(x=>x.Teacher).ToList();
+            return db.Set<Subject>().Include(x => x.Teacher).OrderBy(x => x.DateOfCreation).ToList();
         }
     }
 }
