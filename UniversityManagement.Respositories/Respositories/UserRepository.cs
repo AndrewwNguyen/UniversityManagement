@@ -20,7 +20,7 @@ namespace UniversityManagement.Respositories.Respositories
 
         public UserRepository(ApplicationDbContext context) : base(context)
         {
-
+            string key = "Zwv8r2NMf64Rau5WE9xsF3DHmtcSGVp7";
         }
 
         public RefreshToken CheckRefreshToken(LoginResponse model)
@@ -45,8 +45,6 @@ namespace UniversityManagement.Respositories.Respositories
         }
         public async Task<LoginResponse> Login(LoginRequest request)
         {
-            IConfigurationSection section = _configuration.GetSection("ApiSettings");
-            string secretKey = section.GetValue<string>("SecretKey");
             var user = db.Set<User>().FirstOrDefault(x => x.UserName.ToLower() == request.UserName.ToLower() && x.Password == request.Password);
             if (user == null)
             {
@@ -58,7 +56,7 @@ namespace UniversityManagement.Respositories.Respositories
             }
             //if user was found generate JWT Token
             var tokenHanler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(secretKey);
+            var key = Encoding.ASCII.GetBytes("Zwv8r2NMf64Rau5WE9xsF3DHmtcSGVp7");
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {

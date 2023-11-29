@@ -127,16 +127,13 @@ namespace UniversityManagement.API.Controllers
             }
             return _response;
         }
+
         [Authorize(Roles = "Admin")]
         [HttpPut("{id:Guid}", Name = "UpdateStudent")]
         public async Task<ActionResult<APIResponse>> UpdateStudent(Guid id, [FromBody] StudentViewModel updateViewModel)
         {
             try
             {
-                if (updateViewModel == null || id != updateViewModel.StudentId)
-                {
-                    return BadRequest();
-                }
                 Student model = _mapper.Map<Student>(updateViewModel);
                 _studentServices.UpdateStudent(model);
                 _response.StatusCode = HttpStatusCode.NoContent;
@@ -145,44 +142,45 @@ namespace UniversityManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.ErrorMessages.Add("Student is not exist !");
+                return BadRequest(_response);
             }
-            return _response;
         }
 
-        [HttpPatch("{id:Guid}", Name = "UpdateStudentPartial")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<APIResponse>> UpdateStudentPartial(Guid id, JsonPatchDocument<CreateStudentViewModel> createStudentViewModel)
-        {
-            try
-            {
-                if (createStudentViewModel == null || id == Guid.Empty)
-                {
-                    return BadRequest();
-                }
-                var student = _studentServices.Find(id);
-                CreateStudentViewModel createVM = _mapper.Map<CreateStudentViewModel>(student);
-                if (student == null)
-                {
-                    return BadRequest();
-                }
-                createStudentViewModel.ApplyTo(createVM, ModelState);
-                Student model = _mapper.Map<Student>(createVM);
-                _studentServices.UpdateStudent(model);
-                if (ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-                _response.StatusCode = HttpStatusCode.NoContent;
-                _response.IsSuccess = true;
-                return Ok(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-            }
-            return _response;
-        }
+        //[HttpPatch("{id:Guid}", Name = "UpdateStudentPartial")]
+        //[Authorize(Roles = "Admin")]
+        //public async Task<ActionResult<APIResponse>> UpdateStudentPartial(Guid id, JsonPatchDocument<CreateStudentViewModel> createStudentViewModel)
+        //{
+        //    try
+        //    {
+        //        if (createStudentViewModel == null || id == Guid.Empty)
+        //        {
+        //            return BadRequest();
+        //        }
+        //        var student = _studentServices.Find(id);
+        //        CreateStudentViewModel createVM = _mapper.Map<CreateStudentViewModel>(student);
+        //        if (student == null)
+        //        {
+        //            return BadRequest();
+        //        }
+        //        createStudentViewModel.ApplyTo(createVM, ModelState);
+        //        Student model = _mapper.Map<Student>(createVM);
+        //        _studentServices.UpdateStudent(model);
+        //        if (ModelState.IsValid)
+        //        {
+        //            return BadRequest(ModelState);
+        //        }
+        //        _response.StatusCode = HttpStatusCode.NoContent;
+        //        _response.IsSuccess = true;
+        //        return Ok(_response);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _response.ErrorMessages = new List<string>() { ex.ToString() };
+        //    }
+        //    return _response;
+        //}
 
         [HttpGet("GetStudentsBySubject/{subjectName}", Name = "GetStudentsBySubject")]
         [ProducesResponseType(StatusCodes.Status200OK)]

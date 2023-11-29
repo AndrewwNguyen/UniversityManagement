@@ -55,6 +55,8 @@ namespace UniversityManagement.Services.Services
 
         public void UpdateSubject(Subject entity)
         {
+            Subject subject = _unitOfWork.subjectRepository.Find(entity.SubjectId);
+            entity.DateOfUpdate = DateTime.Now;
             _unitOfWork.subjectRepository.UpdateTEntity(entity);
             _unitOfWork.Savechanges();
         }

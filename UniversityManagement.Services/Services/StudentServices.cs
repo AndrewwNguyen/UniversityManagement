@@ -31,12 +31,6 @@ namespace UniversityManagement.Services.Services
             _unitOfWork.Savechanges();
         }
 
-        public Student Find(Guid entityId)
-        {
-            var student = _unitOfWork.studentRepository.Find(entityId);
-            return student;
-        }
-
         public IEnumerable<Student> GetAllEntities()
         {
             var student = _unitOfWork.studentRepository.GetAllEntities();
@@ -63,12 +57,19 @@ namespace UniversityManagement.Services.Services
             return student;
         }
 
+        public Student Find(Guid entityId)
+        {
+            var student = _unitOfWork.studentRepository.Find(entityId);
+            return student;
+        }
+
         public void UpdateStudent(Student entity)
         {
             entity.DateOfUpdate = DateTime.Now;
             _unitOfWork.studentRepository.UpdateTEntity(entity);
             _unitOfWork.Savechanges();
         }
+
         public IEnumerable<Student> StudentPagination(int pageSize, int PageIndex)
         {
             return _unitOfWork.studentRepository.Pagination(pageSize, PageIndex);

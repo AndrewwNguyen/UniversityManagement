@@ -27,8 +27,7 @@ namespace UniversityManagement.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestAPI model)
         {
-            LoginRequestService loginRequest = new LoginRequestService();
-            loginRequest = _mapper.Map<LoginRequestService>(model);
+            LoginRequestService loginRequest = _mapper.Map<LoginRequestService>(model);
             var LoginResponse = await _userService.Login(loginRequest);
             if (LoginResponse.User == null || string.IsNullOrEmpty(LoginResponse.Token))
             {
@@ -46,8 +45,7 @@ namespace UniversityManagement.API.Controllers
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterationRequestAPI model)
         {
-            RegisterationRequestService registerationRequest = new RegisterationRequestService();
-            registerationRequest = _mapper.Map<RegisterationRequestService>(model);
+            RegisterationRequestService registerationRequest = _mapper.Map<RegisterationRequestService>(model);
             bool ifUserNameUnique = _userService.IsUniqueUser(registerationRequest.UserName);
             if (!ifUserNameUnique)
             {
@@ -94,8 +92,7 @@ namespace UniversityManagement.API.Controllers
                 // Check accessToken expire ?
                 //var tokenInverification = tokenHanler.ValidateToken(model.Token, tokenValidateParam, out var validatedToken);
                 //var utcExpireDate = long.Parse(tokenInverification.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
-                LoginResponseService loginResponse = new LoginResponseService();
-                loginResponse = _mapper.Map<LoginResponseService>(model);
+                LoginResponseService loginResponse = _mapper.Map<LoginResponseService>(model);
                 long utcExpireDate = _userService.CreateUnixTime(loginResponse);
                 var expireDate = _userService.ConvertUnixTimeToDateTime(utcExpireDate);
                 if(expireDate >DateTime.UtcNow)
