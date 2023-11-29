@@ -1,6 +1,5 @@
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -13,7 +12,7 @@ using UniversityManagement.Entities.Validators;
 using UniversityManagement.Respositories.Infrastructures;
 using UniversityManagement.Services.IServices;
 using UniversityManagement.Services.Services;
-using UniversityManagement.ViewModel;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +28,9 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod();
     });
 });
-builder.Services.AddAutoMapper(typeof(MappingConfig));
+builder.Services.AddAutoMapper(typeof(UniversityManagement.ViewModel.MappingConfig));
+builder.Services.AddAutoMapper(typeof(UniversityManagement.Services.MappingConfig));
+builder.Services.AddAutoMapper(typeof(UniversityManagement.API.MappingConfig));
 builder.Services.AddScoped<IStudentServices, StudentServices>();
 builder.Services.AddScoped<ISubjectService, SubjectService>();
 builder.Services.AddScoped<ITeacherService, TeacherService>();

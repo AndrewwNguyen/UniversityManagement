@@ -118,10 +118,6 @@ namespace UniversityManagement.API.Controllers
         {
             try
             {
-                if (updateViewModel == null || id != updateViewModel.TeacherId)
-                {
-                    return BadRequest();
-                }
                 Teacher model = _mapper.Map<Teacher>(updateViewModel);
                 _teacherService.UpdateTeacher(model);
                 _response.StatusCode = HttpStatusCode.NoContent;
@@ -131,6 +127,7 @@ namespace UniversityManagement.API.Controllers
             catch (Exception ex)
             {
                 _response.ErrorMessages = new List<string>() { ex.ToString() };
+                _response.StatusCode = HttpStatusCode.BadRequest;
             }
             return _response;
         }

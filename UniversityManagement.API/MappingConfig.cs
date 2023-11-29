@@ -2,7 +2,7 @@
 using UniversityManagement.API.Models;
 using UniversityManagement.Services.Models;
 
-namespace UniversityManagement.API.Automapper
+namespace UniversityManagement.API
 {
     public class MappingConfig : Profile
     {
@@ -11,6 +11,10 @@ namespace UniversityManagement.API.Automapper
             CreateMap<LoginRequestService, LoginRequestAPI>().ReverseMap();
             CreateMap<LoginResponseService, LoginResponseAPI>().ReverseMap();
             CreateMap<RegisterationRequestService, RegisterationRequestAPI>().ReverseMap();
+
+            CreateMap<LoginRequestAPI, LoginRequestService>();
+            CreateMap<LoginResponseAPI, LoginResponseService>().ReverseMap();
+            CreateMap<RegisterationRequestAPI, RegisterationRequestService>().ReverseMap();
         }
     }
 }

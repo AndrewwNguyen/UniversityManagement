@@ -18,8 +18,7 @@ namespace UniversityManagement.Services.Services
         }
         public RefreshToken CheckRefreshToken(LoginResponseService model)
         {
-            LoginResponse response = new LoginResponse();
-            response = _mapper.Map<LoginResponse>(model);
+            LoginResponse response = _mapper.Map<LoginResponse>(model);
             var refreshToken = _unitOfWork.userRepository.CheckRefreshToken(response);
             return refreshToken;
         }
@@ -49,8 +48,7 @@ namespace UniversityManagement.Services.Services
         }
         public async Task<LoginResponse> Login(LoginRequestService request)
         {
-            LoginRequest response = new LoginRequest();
-            response = _mapper.Map<LoginRequest>(request);
+            LoginRequest response = _mapper.Map<LoginRequest>(request);
             var user = await _unitOfWork.userRepository.Login(response);
             return user;
         }
@@ -63,8 +61,7 @@ namespace UniversityManagement.Services.Services
 
         public async Task<User> Register(RegisterationRequestService registerationRequest)
         {
-            RegisterationRequest response = new RegisterationRequest();
-            response = _mapper.Map<RegisterationRequest>(registerationRequest);
+            RegisterationRequest response = _mapper.Map<RegisterationRequest>(registerationRequest);
             var user = await _unitOfWork.userRepository.Register(response);
             return user;
         }
@@ -99,8 +96,7 @@ namespace UniversityManagement.Services.Services
 
         public long CreateUnixTime(LoginResponseService model)
         {
-            LoginResponse response = new LoginResponse();
-            response = _mapper.Map<LoginResponse>(model);
+            LoginResponse response = _mapper.Map<LoginResponse>(model);
             return _unitOfWork.userRepository.CreateUnixTime(response);
         }
     }
