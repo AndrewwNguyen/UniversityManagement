@@ -1,20 +1,26 @@
-﻿using UniversityManagement.Entities.Models;
+﻿using AutoMapper;
+using UniversityManagement.Entities.Models;
 using UniversityManagement.Respositories.Infrastructures;
 using UniversityManagement.Respositories.Models;
 using UniversityManagement.Services.IServices;
+using UniversityManagement.Services.Models;
 
 namespace UniversityManagement.Services.Services
 {
     public class UserService :IUserService
     {
         private readonly IUnitOfWork _unitOfWork;
-        public UserService(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+        public UserService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
-        public RefreshToken CheckRefreshToken(LoginResponse model)
+        public RefreshToken CheckRefreshToken(LoginResponseService model)
         {
-            var refreshToken = _unitOfWork.userRepository.CheckRefreshToken(model);
+            LoginResponse response = new LoginResponse();
+            response = _mapper.Map<LoginResponse>(model);
+            var refreshToken = _unitOfWork.userRepository.CheckRefreshToken(response);
             return refreshToken;
         }
 
@@ -41,9 +47,11 @@ namespace UniversityManagement.Services.Services
             var user = _unitOfWork.userRepository.Find(entityId);
             return user;
         }
-        public async Task<LoginResponse> Login(LoginRequest request)
+        public async Task<LoginResponse> Login(LoginRequestService request)
         {
-            var user = await _unitOfWork.userRepository.Login(request);
+            LoginRequest response = new LoginRequest();
+            response = _mapper.Map<LoginRequest>(request);
+            var user = await _unitOfWork.userRepository.Login(response);
             return user;
         }
 
@@ -53,9 +61,11 @@ namespace UniversityManagement.Services.Services
             return user;
         }
 
-        public async Task<User> Register(RegisterationRequest registerationRequest)
+        public async Task<User> Register(RegisterationRequestService registerationRequest)
         {
-            var user = await _unitOfWork.userRepository.Register(registerationRequest);
+            RegisterationRequest response = new RegisterationRequest();
+            response = _mapper.Map<RegisterationRequest>(registerationRequest);
+            var user = await _unitOfWork.userRepository.Register(response);
             return user;
         }
 
@@ -87,9 +97,11 @@ namespace UniversityManagement.Services.Services
             _unitOfWork.userRepository.UpdateToken(model);
         }
 
-        public long CreateUnixTime(LoginResponse model)
+        public long CreateUnixTime(LoginResponseService model)
         {
-            return _unitOfWork.userRepository.CreateUnixTime(model);
+            LoginResponse response = new LoginResponse();
+            response = _mapper.Map<LoginResponse>(model);
+            return _unitOfWork.userRepository.CreateUnixTime(response);
         }
     }
 }

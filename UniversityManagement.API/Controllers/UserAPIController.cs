@@ -1,12 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
 using System.Net;
-using System.Text;
 using UniversityManagement.API.Models;
 using UniversityManagement.Respositories.Models;
 using UniversityManagement.Services.IServices;
-using Microsoft.IdentityModel.Tokens;
+using UniversityManagement.Services.Models;
 
 namespace UniversityManagement.API.Controllers
 {
@@ -27,9 +25,11 @@ namespace UniversityManagement.API.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest model)
+        public async Task<IActionResult> Login([FromBody] LoginRequestAPI model)
         {
-            var LoginResponse = await _userService.Login(model);
+            LoginRequestService loginRequest = new LoginRequestService();
+            loginRequest = _mapper.Map<LoginRequestService>(model);
+            var LoginResponse = await _userService.Login(loginRequest);
             if (LoginResponse.User == null || string.IsNullOrEmpty(LoginResponse.Token))
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
@@ -44,9 +44,11 @@ namespace UniversityManagement.API.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterationRequest model)
+        public async Task<IActionResult> Register([FromBody] RegisterationRequestAPI model)
         {
-            bool ifUserNameUnique = _userService.IsUniqueUser(model.UserName);
+            RegisterationRequestService registerationRequest = new RegisterationRequestService();
+            registerationRequest = _mapper.Map<RegisterationRequestService>(model);
+            bool ifUserNameUnique = _userService.IsUniqueUser(registerationRequest.UserName);
             if (!ifUserNameUnique)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
@@ -54,7 +56,8 @@ namespace UniversityManagement.API.Controllers
                 _response.ErrorMessages.Add("Username already exists !");
                 return BadRequest(_response);
             }
-            var user = await _userService.Register(model);
+
+            var user = await _userService.Register(registerationRequest);
             if (user == null)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
@@ -68,7 +71,7 @@ namespace UniversityManagement.API.Controllers
         }
 
         [HttpPost("RefreshToken")]
-        public async Task<IActionResult> RefreshToken(LoginResponse model)
+        public async Task<IActionResult> RefreshToken(LoginResponseAPI model)
         {
             //IConfigurationSection section = _configuration.GetSection("ApiSettings");
             //string secretKey = section.GetValue<string>("SecretKey");
@@ -91,7 +94,9 @@ namespace UniversityManagement.API.Controllers
                 // Check accessToken expire ?
                 //var tokenInverification = tokenHanler.ValidateToken(model.Token, tokenValidateParam, out var validatedToken);
                 //var utcExpireDate = long.Parse(tokenInverification.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Exp).Value);
-                long utcExpireDate = _userService.CreateUnixTime(model);
+                LoginResponseService loginResponse = new LoginResponseService();
+                loginResponse = _mapper.Map<LoginResponseService>(model);
+                long utcExpireDate = _userService.CreateUnixTime(loginResponse);
                 var expireDate = _userService.ConvertUnixTimeToDateTime(utcExpireDate);
                 if(expireDate >DateTime.UtcNow)
                 {
@@ -102,7 +107,7 @@ namespace UniversityManagement.API.Controllers
                 }
 
                 // Check refreshtoken exist in DB
-                      var stiredToken = _userService.CheckRefreshToken(model);
+                      var stiredToken = _userService.CheckRefreshToken(loginResponse);
                 if(stiredToken == null)
                 {
                     _response.StatusCode = HttpStatusCode.BadRequest;
@@ -143,11 +148,12 @@ namespace UniversityManagement.API.Controllers
 
                 // create new token
                 var user = _userService.Find(stiredToken.UserId);
-                var token = await _userService.Login(new LoginRequest
+                var token = await _userService.Login(new LoginRequestService
                 {
                     UserName = user.UserName,
                     Password = user.Password,
                 });
+
                 _response.StatusCode = HttpStatusCode.OK;
                 _response.ErrorMessages.Add("Renew token success");
                 _response.Result = token;
