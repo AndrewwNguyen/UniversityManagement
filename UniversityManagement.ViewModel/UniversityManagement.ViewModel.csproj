@@ -25,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\UniversityManagement.API\UniversityManagement.API.csproj" />
     <ProjectReference Include="..\UniversityManagement.Entities\UniversityManagement.Entities.csproj" />
   </ItemGroup>
 
