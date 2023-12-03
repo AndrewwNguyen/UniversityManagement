@@ -19,9 +19,9 @@ namespace UniversityManagement.API.Controllers
         private readonly APIResponse _response;
         public SubjectAPIController(ISubjectService subjectService, IMapper mapper, APIResponse _response)
         {
-            this._subjectService = subjectService;
-            this._mapper = mapper;
-            this._response = _response;
+            _subjectService = subjectService;
+            _mapper = mapper;
+            _response = _response;
         }
 
         [HttpGet]

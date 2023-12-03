@@ -16,11 +16,11 @@ namespace UniversityManagement.API.Controllers
         private readonly ITeacherService _teacherService;
         private readonly IMapper _mapper;
         private readonly APIResponse _response;
-        public TeacherAPIController(ITeacherService teacherService, IMapper mapper, APIResponse _response)
+        public TeacherAPIController(ITeacherService teacherService, IMapper mapper, APIResponse response)
         {
             _teacherService = teacherService;
             _mapper = mapper;
-            this._response = _response;
+            _response = response;
         }
 
         [HttpGet]

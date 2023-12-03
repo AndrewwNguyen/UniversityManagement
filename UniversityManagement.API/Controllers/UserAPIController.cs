@@ -16,11 +16,11 @@ namespace UniversityManagement.API.Controllers
         private readonly IMapper _mapper;
         private readonly APIResponse _response;
         private readonly IConfiguration _configuration;
-        public UserAPIController(IUserService userService, IMapper mapper, APIResponse _response, IConfiguration configuration)
+        public UserAPIController(IUserService userService, IMapper mapper, APIResponse response, IConfiguration configuration)
         {
             _userService = userService;
             _mapper = mapper;
-            this._response = _response;
+            _response = response;
             _configuration = configuration;
         }
 
