@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using UniversityManagement.API.Exceptions;
 using UniversityManagement.API.Models;
 using UniversityManagement.Entities.Models;
 using UniversityManagement.Services.IServices;
@@ -18,11 +19,11 @@ namespace UniversityManagement.API.Controllers
         private readonly IStudentServices _studentServices;
         private readonly IMapper _mapper;
         private readonly APIResponse _response;
-        public StudentAPIController(IStudentServices studentServices, IMapper mapper, APIResponse _response)
+        public StudentAPIController(IStudentServices studentServices, IMapper mapper, APIResponse response)
         {
-            this._studentServices = studentServices;
-            this._mapper = mapper;
-            this._response = _response;
+            _studentServices = studentServices;
+            _mapper = mapper;
+            _response = response;
         }
 
         [HttpGet]
@@ -49,32 +50,22 @@ namespace UniversityManagement.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [Authorize()]
+        //[Authorize()]
         public async Task<ActionResult<APIResponse>> GetStudent(Guid id)
         {
-            try
-            {
-                if (id == Guid.Empty)
-                {
-                    _response.StatusCode = HttpStatusCode.BadRequest;
-                    return BadRequest(_response);
-                }
-                var student = _studentServices.Find(id);
-                if (student == null)
-                {
-                    _response.StatusCode = HttpStatusCode.NotFound;
-                    return NotFound(_response);
-                }
-                _response.Result = _mapper.Map<StudentViewModel>(student);
-                _response.StatusCode = HttpStatusCode.OK;
-                _response.IsSuccess = true;
-                return Ok(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-            }
-            return _response;
+            //if (id == Guid.Empty)
+            //{
+            //    throw new NotFoundException("Student id is empty");
+            //}
+            var student = _studentServices.Find(id);
+            //if (student == null)
+            //{
+            //    throw new NotFoundException("Student does not exist");
+            //}
+            _response.Result = _mapper.Map<StudentViewModel>(student);
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.IsSuccess = true;
+            return Ok(_response);
         }
 
         [HttpPost]
@@ -85,7 +76,8 @@ namespace UniversityManagement.API.Controllers
             {
                 if (createVM == null)
                 {
-                    return BadRequest(createVM);
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccess = false;
                 }
                 Student student = _mapper.Map<Student>(createVM);
                 _studentServices.AddStudent(student);
@@ -105,27 +97,19 @@ namespace UniversityManagement.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> DeleteStudent(Guid id)
         {
-            try
+            if (id == Guid.Empty)
             {
-                if (id == Guid.Empty)
-                {
-                    return BadRequest();
-                }
-                var student = _studentServices.Find(id);
-                if (student == null)
-                {
-                    return NotFound();
-                }
-                _studentServices.DeleteStudent(student);
-                _response.StatusCode = HttpStatusCode.NoContent;
-                _response.IsSuccess = true;
-                return Ok(_response);
+                throw new BadRequestException("Student does not exist");
             }
-            catch (Exception ex)
+            var student = _studentServices.Find(id);
+            if (student == null)
             {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
+                throw new NotFoundException("Student does not exist");
             }
-            return _response;
+            _studentServices.DeleteStudent(student);
+            _response.StatusCode = HttpStatusCode.NoContent;
+            _response.IsSuccess = true;
+            return Ok(_response);
         }
 
         [Authorize(Roles = "Admin")]
@@ -147,40 +131,6 @@ namespace UniversityManagement.API.Controllers
                 return BadRequest(_response);
             }
         }
-
-        //[HttpPatch("{id:Guid}", Name = "UpdateStudentPartial")]
-        //[Authorize(Roles = "Admin")]
-        //public async Task<ActionResult<APIResponse>> UpdateStudentPartial(Guid id, JsonPatchDocument<CreateStudentViewModel> createStudentViewModel)
-        //{
-        //    try
-        //    {
-        //        if (createStudentViewModel == null || id == Guid.Empty)
-        //        {
-        //            return BadRequest();
-        //        }
-        //        var student = _studentServices.Find(id);
-        //        CreateStudentViewModel createVM = _mapper.Map<CreateStudentViewModel>(student);
-        //        if (student == null)
-        //        {
-        //            return BadRequest();
-        //        }
-        //        createStudentViewModel.ApplyTo(createVM, ModelState);
-        //        Student model = _mapper.Map<Student>(createVM);
-        //        _studentServices.UpdateStudent(model);
-        //        if (ModelState.IsValid)
-        //        {
-        //            return BadRequest(ModelState);
-        //        }
-        //        _response.StatusCode = HttpStatusCode.NoContent;
-        //        _response.IsSuccess = true;
-        //        return Ok(_response);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _response.ErrorMessages = new List<string>() { ex.ToString() };
-        //    }
-        //    return _response;
-        //}
 
         [HttpGet("GetStudentsBySubject/{subjectName}", Name = "GetStudentsBySubject")]
         [ProducesResponseType(StatusCodes.Status200OK)]
