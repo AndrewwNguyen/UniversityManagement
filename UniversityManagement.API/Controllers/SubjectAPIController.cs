@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using UniversityManagement.API.Exceptions;
 using UniversityManagement.API.Models;
 using UniversityManagement.Entities.Models;
 using UniversityManagement.Services.IServices;
@@ -10,6 +11,7 @@ using UniversityManagement.ViewModel.SubjectViewModels;
 
 namespace UniversityManagement.API.Controllers
 {
+    [ServiceFilter(typeof(CustomExceptionAttribute))]
     [Route("api/[controller]")]
     [ApiController]
     public class SubjectAPIController : ControllerBase
