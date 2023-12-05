@@ -59,10 +59,6 @@ namespace UniversityManagement.Services.Services
 
         public Student Find(Guid entityId)
         {
-            if (entityId == Guid.Empty)
-            {
-                throw new NotFoundException("Student id is empty");
-            }
             var student = _unitOfWork.studentRepository.Find(entityId);
             return student;
         }

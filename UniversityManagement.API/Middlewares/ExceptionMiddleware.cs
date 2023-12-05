@@ -14,7 +14,7 @@ namespace UniversityManagement.API.Middlewares
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             try
-             {
+            {
                 await next(context);
             }
             catch (Exception ex)

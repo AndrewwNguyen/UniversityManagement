@@ -10,6 +10,7 @@ using UniversityManagement.ViewModel.DepartmentViewModels;
 
 namespace UniversityManagement.API.Controllers
 {
+    [ServiceFilter(typeof(CustomExceptionAttribute))]
     [Route("api/[controller]")]
     [ApiController]
     public class DepartmentAPIController : ControllerBase
