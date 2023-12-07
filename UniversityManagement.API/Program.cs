@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using UniversityManagement.API.Middlewares;
 using UniversityManagement.API.Models;
 using UniversityManagement.Entities.Data;
 using UniversityManagement.Entities.Models;
@@ -38,19 +39,20 @@ builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//builder.Services.AddTransient<CustomExceptionAttribute>();
 builder.Services.AddScoped(c => new APIResponse());
 builder.Services.AddControllers()
     .AddFluentValidation(x => {
         x.ImplicitlyValidateChildProperties = true;
         });
-
+builder.Services.AddScoped<ExceptionMiddleware>();
 //register the fluent validator
 builder.Services.AddScoped<IValidator<Teacher>, TeacherValidator>();
 builder.Services.AddScoped<IValidator<Student>, StudentValidator>();
 builder.Services.AddScoped<IValidator<Subject>, SubjectValidator>();
 
 var key = builder.Configuration.GetValue<string>("ApiSettings:SecretKey");
-//var secretKeyBytes = Encoding.UTF8.GetBytes(key);
+
 builder.Services.AddAuthentication(x =>
 {
     x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -152,7 +154,8 @@ app.UseCors(policy=>policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
 app.UseCors("default");
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.MapControllers();
+// exeption middleware
+app.ConfigureExceptionMiddleware();
+app.MapControllers();   
 
 app.Run();

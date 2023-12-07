@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using UniversityManagement.API.Exceptions;
 using UniversityManagement.API.Models;
 using UniversityManagement.Entities.Models;
 using UniversityManagement.Services.IServices;
@@ -9,6 +10,7 @@ using UniversityManagement.ViewModel.DepartmentViewModels;
 
 namespace UniversityManagement.API.Controllers
 {
+  
     [Route("api/[controller]")]
     [ApiController]
     public class DepartmentAPIController : ControllerBase
@@ -16,121 +18,78 @@ namespace UniversityManagement.API.Controllers
         private readonly IDepartmentService _departmentService;
         private readonly IMapper _mapper;
         private readonly APIResponse _response;
-        public DepartmentAPIController(IDepartmentService departmentService, IMapper mapper, APIResponse _response)
+        public DepartmentAPIController(IDepartmentService departmentService, IMapper mapper, APIResponse response)
         {
-            this._departmentService = departmentService;
-            this._mapper = mapper;
-            this._response = _response;
+            _departmentService = departmentService;
+            _mapper = mapper;
+            _response = response;
         }
 
         [HttpGet]
         [Authorize()]
         public async Task<ActionResult<APIResponse>> GetDepartments()
         {
-            try
-            {
-                var departmentlist = _departmentService.GetAllEntities();
-                _response.Result = _mapper.Map<List<DepartmentViewModel>>(departmentlist);
-                _response.StatusCode = HttpStatusCode.OK;
-                return Ok(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-            }
-            return _response;
+            var departmentlist = _departmentService.GetAllEntities();
+            _response.Result = _mapper.Map<List<DepartmentViewModel>>(departmentlist);
+            _response.StatusCode = HttpStatusCode.OK;
+            return Ok(_response);
         }
 
         [HttpGet("{id:Guid}", Name = "GetDepartment")]
         [Authorize()]
         public async Task<ActionResult<APIResponse>> GetDepartment(Guid id)
         {
-            try
+            var department = _departmentService.Find(id);
+            if (department == null)
             {
-                var department = _departmentService.Find(id);
-                if (department == null)
-                {
-                    _response.StatusCode = HttpStatusCode.NotFound;
-                    return NotFound(_response);
-                }
-                _response.Result = _mapper.Map<DepartmentViewModel>(department);
-                _response.StatusCode = HttpStatusCode.OK;
-                _response.IsSuccess = true;
-                return Ok(_response);
+                throw new NotFoundException("Department does not exist");
             }
-            catch (Exception ex)
-            {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-            }
-            return _response;
+            _response.Result = _mapper.Map<DepartmentViewModel>(department);
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.IsSuccess = true;
+            return Ok(_response);
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> CreateDepartment([FromBody] CreateDepartmentViewModel createVM)
         {
-            try
+            if (createVM == null)
             {
-                if (createVM == null)
-                {
-                    return BadRequest(createVM);
-                }
-                Department department =  _mapper.Map<Department>(createVM);
-                _departmentService.AddDepartment(department);
-                _response.Result = _mapper.Map<DepartmentViewModel>(department);
-                _response.StatusCode = HttpStatusCode.Created;
-                _response.IsSuccess = true;
-                return CreatedAtRoute("GetDepartment", new { id = department.DepartmentId }, _response);
+                throw new BadRequestException("Department does not exist");
             }
-            catch (Exception ex)
-            {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-            }
-            return _response;
+            Department department = _mapper.Map<Department>(createVM);
+            _departmentService.AddDepartment(department);
+            _response.Result = _mapper.Map<DepartmentViewModel>(department);
+            _response.StatusCode = HttpStatusCode.Created;
+            _response.IsSuccess = true;
+            return CreatedAtRoute("GetDepartment", new { id = department.DepartmentId }, _response);
         }
 
         [HttpDelete("{id:Guid}", Name = "DeleteDepartment")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> DeleteDepartment(Guid id)
         {
-            try
+            var department = _departmentService.Find(id);
+            if (department == null)
             {
-                var department = _departmentService.Find(id);
-                if (department == null)
-                {
-                    return NotFound();
-                }
-                _departmentService.DeleteDepartment(department);
-                _response.StatusCode = HttpStatusCode.NoContent;
-                _response.IsSuccess = true;
-                return Ok(_response);
+                throw new NotFoundException("Department does not exist");
             }
-            catch (Exception ex)
-            {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-            }
-            return _response;
+            _departmentService.DeleteDepartment(department);
+            _response.StatusCode = HttpStatusCode.NoContent;
+            _response.IsSuccess = true;
+            return Ok(_response);
         }
 
         [HttpPut("{id:Guid}", Name = "UpdateDepartment")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> UpdateDepartment(Guid id, [FromBody] DepartmentViewModel updateViewModel)
         {
-            try
-            {
-                Department model = _mapper.Map<Department>(updateViewModel);
-                _departmentService.UpdateDepartment(model);
-                _response.StatusCode = HttpStatusCode.NoContent;
-                _response.IsSuccess = true;
-                return Ok(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-                _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.IsSuccess = false;
-            }
-            return _response;
+            Department model = _mapper.Map<Department>(updateViewModel);
+            _departmentService.UpdateDepartment(model);
+            _response.StatusCode = HttpStatusCode.NoContent;
+            _response.IsSuccess = true;
+            return Ok(_response);
         }
     }
 }

@@ -9,6 +9,7 @@ using UniversityManagement.Services.Models;
 
 namespace UniversityManagement.API.Controllers
 {
+    //[ServiceFilter(typeof(CustomExceptionAttribute))]
     [Route("api/[controller]")]
     [ApiController]
     public class UserAPIController : ControllerBase
