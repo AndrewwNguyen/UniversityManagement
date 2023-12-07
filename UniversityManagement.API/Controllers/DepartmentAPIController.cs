@@ -10,7 +10,7 @@ using UniversityManagement.ViewModel.DepartmentViewModels;
 
 namespace UniversityManagement.API.Controllers
 {
-    [ServiceFilter(typeof(CustomExceptionAttribute))]
+  
     [Route("api/[controller]")]
     [ApiController]
     public class DepartmentAPIController : ControllerBase
@@ -29,18 +29,10 @@ namespace UniversityManagement.API.Controllers
         [Authorize()]
         public async Task<ActionResult<APIResponse>> GetDepartments()
         {
-            try
-            {
-                var departmentlist = _departmentService.GetAllEntities();
-                _response.Result = _mapper.Map<List<DepartmentViewModel>>(departmentlist);
-                _response.StatusCode = HttpStatusCode.OK;
-                return Ok(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-            }
-            return _response;
+            var departmentlist = _departmentService.GetAllEntities();
+            _response.Result = _mapper.Map<List<DepartmentViewModel>>(departmentlist);
+            _response.StatusCode = HttpStatusCode.OK;
+            return Ok(_response);
         }
 
         [HttpGet("{id:Guid}", Name = "GetDepartment")]
@@ -93,21 +85,11 @@ namespace UniversityManagement.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> UpdateDepartment(Guid id, [FromBody] DepartmentViewModel updateViewModel)
         {
-            try
-            {
-                Department model = _mapper.Map<Department>(updateViewModel);
-                _departmentService.UpdateDepartment(model);
-                _response.StatusCode = HttpStatusCode.NoContent;
-                _response.IsSuccess = true;
-                return Ok(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-                _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.IsSuccess = false;
-            }
-            return _response;
+            Department model = _mapper.Map<Department>(updateViewModel);
+            _departmentService.UpdateDepartment(model);
+            _response.StatusCode = HttpStatusCode.NoContent;
+            _response.IsSuccess = true;
+            return Ok(_response);
         }
     }
 }

@@ -30,18 +30,10 @@ namespace UniversityManagement.API.Controllers
         [Authorize()]
         public async Task<ActionResult<APIResponse>> GetSubjects()
         {
-            try
-            {
-                var subjectlist = _subjectService.GetAllEntities();
-                _response.Result = _mapper.Map<List<SubjectViewModel>>(subjectlist);
-                _response.StatusCode = HttpStatusCode.OK;
-                return Ok(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-            }
-            return _response;
+            var subjectlist = _subjectService.GetAllEntities();
+            _response.Result = _mapper.Map<List<SubjectViewModel>>(subjectlist);
+            _response.StatusCode = HttpStatusCode.OK;
+            return Ok(_response);
         }
 
         [HttpGet("{id:Guid}", Name = "GetSubject")]
@@ -53,129 +45,61 @@ namespace UniversityManagement.API.Controllers
         [Authorize()]
         public async Task<ActionResult<APIResponse>> GetSubject(Guid id)
         {
-            try
+            if (id == Guid.Empty)
             {
-                if (id == Guid.Empty)
-                {
-                    _response.StatusCode = HttpStatusCode.BadRequest;
-                    return BadRequest(_response);
-                }
-                var subject = _subjectService.Find(id);
-                if (subject == null)
-                {
-                    _response.StatusCode = HttpStatusCode.NotFound;
-                    return NotFound(_response);
-                }
-                _response.Result = _mapper.Map<SubjectViewModel>(subject);
-                _response.StatusCode = HttpStatusCode.OK;
-                _response.IsSuccess = true;
-                return Ok(_response);
+                throw new NotFoundException("Subject id is empty");
             }
-            catch (Exception ex)
+            var subject = _subjectService.Find(id);
+            if (subject == null)
             {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
+                throw new NotFoundException("Subject does not exist");
             }
-            return _response;
+            _response.Result = _mapper.Map<SubjectViewModel>(subject);
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.IsSuccess = true;
+            return Ok(_response);
         }
+
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> CreateSubject([FromBody] CreateSubjectViewModel createVM)
         {
-            try
+            if (createVM == null)
             {
-                if (createVM == null)
-                {
-                    return BadRequest(createVM);
-                }
-                Subject subject = _mapper.Map<Subject>(createVM);
-                _subjectService.AddSubject(subject);
-                _response.Result = _mapper.Map<SubjectViewModel>(subject);
-                _response.StatusCode = HttpStatusCode.Created;
-                _response.IsSuccess = true;
-                return CreatedAtRoute("GetSubject", new { id = subject.SubjectId }, _response);
+                throw new NotFoundException("Subject does not exist");
             }
-            catch (Exception ex)
-            {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-            }
-            return _response;
+            Subject subject = _mapper.Map<Subject>(createVM);
+            _subjectService.AddSubject(subject);
+            _response.Result = _mapper.Map<SubjectViewModel>(subject);
+            _response.StatusCode = HttpStatusCode.Created;
+            _response.IsSuccess = true;
+            return CreatedAtRoute("GetSubject", new { id = subject.SubjectId }, _response);
         }
+
         [HttpDelete("{id:Guid}", Name = "DeleteSubject")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> DeleteSubject(Guid id)
         {
-            try
+            var subject = _subjectService.Find(id);
+            if (subject == null)
             {
-                var subject = _subjectService.Find(id);
-                if (subject == null)
-                {
-                    return NotFound();
-                }
-                _subjectService.DeleteSubject(subject);
-                _response.StatusCode = HttpStatusCode.NoContent;
-                _response.IsSuccess = true;
-                return Ok(_response);
+                throw new NotFoundException("Subject does not exist");
             }
-            catch (Exception ex)
-            {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-            }
-            return _response;
+            _subjectService.DeleteSubject(subject);
+            _response.StatusCode = HttpStatusCode.NoContent;
+            _response.IsSuccess = true;
+            return Ok(_response);
         }
 
         [HttpPut("{id:Guid}", Name = "UpdateSubject")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> UpdateSubject(Guid id, [FromBody] SubjectViewModel updateViewModel)
         {
-            try
-            {
-                Subject model = _mapper.Map<Subject>(updateViewModel);
-                _subjectService.UpdateSubject(model);
-                _response.StatusCode = HttpStatusCode.NoContent;
-                _response.IsSuccess = true;
-                return Ok(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-                _response.StatusCode= HttpStatusCode.BadRequest;
-                _response.IsSuccess = false;
-            }
-            return _response;
-        }
-
-        [HttpPatch("{id:Guid}", Name = "UpdateSubjectPartial")]
-        [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<APIResponse>> UpdateSubjectPartial(Guid id, JsonPatchDocument<CreateSubjectViewModel> createSubjectViewModel)
-        {
-            try
-            {
-                if (createSubjectViewModel == null)
-                {
-                    return BadRequest();
-                }
-                var subject = _subjectService.Find(id);
-                CreateSubjectViewModel createVM = _mapper.Map<CreateSubjectViewModel>(subject);
-                if (subject == null)
-                {
-                    return BadRequest();
-                }
-                createSubjectViewModel.ApplyTo(createVM, ModelState);
-                Subject model = _mapper.Map<Subject>(createVM);
-                _subjectService.UpdateSubject(model);
-                if (ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-                _response.StatusCode = HttpStatusCode.NoContent;
-                _response.IsSuccess = true;
-                return Ok(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-            }
-            return _response;
+            Subject model = _mapper.Map<Subject>(updateViewModel);
+            _subjectService.UpdateSubject(model);
+            _response.StatusCode = HttpStatusCode.NoContent;
+            _response.IsSuccess = true;
+            return Ok(_response);
         }
 
         [HttpGet("GetSubjectByTeacher/{teacherName}", Name = "GetSubjectByTeacher")]
