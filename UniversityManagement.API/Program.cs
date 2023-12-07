@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
-using UniversityManagement.API.Exceptions;
 using UniversityManagement.API.Middlewares;
 using UniversityManagement.API.Models;
 using UniversityManagement.Entities.Data;
@@ -46,7 +45,7 @@ builder.Services.AddControllers()
     .AddFluentValidation(x => {
         x.ImplicitlyValidateChildProperties = true;
         });
-builder.Services.AddTransient<ExceptionMiddleware>();
+builder.Services.AddScoped<ExceptionMiddleware>();
 //register the fluent validator
 builder.Services.AddScoped<IValidator<Teacher>, TeacherValidator>();
 builder.Services.AddScoped<IValidator<Student>, StudentValidator>();

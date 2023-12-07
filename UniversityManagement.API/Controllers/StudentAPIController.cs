@@ -11,7 +11,7 @@ using UniversityManagement.ViewModel.StudentViewModels;
 
 namespace UniversityManagement.API.Controllers
 {
-    [ServiceFilter(typeof(CustomExceptionAttribute))]
+    //[ServiceFilter(typeof(CustomExceptionAttribute))]
     [Route("api/[controller]")]
     [ApiController]
     public class StudentAPIController : ControllerBase
@@ -31,19 +31,11 @@ namespace UniversityManagement.API.Controllers
         [Authorize()]
         public async Task<ActionResult<APIResponse>> GetStudents()
         {
-            try
-            {
-                var studentlist = _studentServices.GetAllEntities();
-                _response.Result = _mapper.Map<List<StudentViewModel>>(studentlist);
-                _response.StatusCode = HttpStatusCode.OK;
-                return Ok(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-            }
-            return _response;
-        }
+            var studentlist = _studentServices.GetAllEntities();
+            _response.Result = _mapper.Map<List<StudentViewModel>>(studentlist);
+            _response.StatusCode = HttpStatusCode.OK;
+            return Ok(_response);
+        }     
 
         [HttpGet("{id:Guid}", Name = "GetStudent")]
         [ProducesResponseType(StatusCodes.Status201Created)]
@@ -51,18 +43,18 @@ namespace UniversityManagement.API.Controllers
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        //[Authorize()]
+        [Authorize()]
         public async Task<ActionResult<APIResponse>> GetStudent(Guid id)
         {
-            //if (id == Guid.Empty)
-            //{
-            //    throw new NotFoundException("Student id is empty");
-            //}
+            if (id == Guid.Empty)
+            {
+                throw new NotFoundException("Student id is empty");
+            }
             var student = _studentServices.Find(id);
-            //if (student == null)
-            //{
-            //    throw new NotFoundException("Student does not exist");
-            //}
+            if (student == null)
+            {
+                throw new NotFoundException("Student does not exist");
+            }
             _response.Result = _mapper.Map<StudentViewModel>(student);
             _response.StatusCode = HttpStatusCode.OK;
             _response.IsSuccess = true;
@@ -73,35 +65,22 @@ namespace UniversityManagement.API.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> CreateStudent([FromBody] CreateStudentViewModel createVM)
         {
-            try
+            if (createVM == null)
             {
-                if (createVM == null)
-                {
-                    _response.StatusCode = HttpStatusCode.BadRequest;
-                    _response.IsSuccess = false;
-                }
-                Student student = _mapper.Map<Student>(createVM);
-                _studentServices.AddStudent(student);
-                _response.Result = _mapper.Map<StudentViewModel>(student);
-                _response.StatusCode = HttpStatusCode.Created;
-                _response.IsSuccess = true;
-                return CreatedAtRoute("GetStudent", new { id = student.StudentId }, _response);
+                throw new NotFoundException("Can not create student");
             }
-            catch (Exception ex)
-            {
-                _response.ErrorMessages = new List<string>() { ex.ToString() };
-            }
-            return _response;
+            Student student = _mapper.Map<Student>(createVM);
+            _studentServices.AddStudent(student);
+            _response.Result = _mapper.Map<StudentViewModel>(student);
+            _response.StatusCode = HttpStatusCode.Created;
+            _response.IsSuccess = true;
+            return CreatedAtRoute("GetStudent", new { id = student.StudentId }, _response);
         }
 
         [HttpDelete("{id:Guid}", Name = "DeleteStudent")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> DeleteStudent(Guid id)
         {
-            if (id == Guid.Empty)
-            {
-                throw new BadRequestException("Student does not exist");
-            }
             var student = _studentServices.Find(id);
             if (student == null)
             {
@@ -117,20 +96,11 @@ namespace UniversityManagement.API.Controllers
         [HttpPut("{id:Guid}", Name = "UpdateStudent")]
         public async Task<ActionResult<APIResponse>> UpdateStudent(Guid id, [FromBody] StudentViewModel updateViewModel)
         {
-            try
-            {
-                Student model = _mapper.Map<Student>(updateViewModel);
-                _studentServices.UpdateStudent(model);
-                _response.StatusCode = HttpStatusCode.NoContent;
-                _response.IsSuccess = true;
-                return Ok(_response);
-            }
-            catch (Exception ex)
-            {
-                _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.ErrorMessages.Add("Student is not exist !");
-                return BadRequest(_response);
-            }
+            Student model = _mapper.Map<Student>(updateViewModel);
+            _studentServices.UpdateStudent(model);
+            _response.StatusCode = HttpStatusCode.NoContent;
+            _response.IsSuccess = true;
+            return Ok(_response);
         }
 
         [HttpGet("GetStudentsBySubject/{subjectName}", Name = "GetStudentsBySubject")]
