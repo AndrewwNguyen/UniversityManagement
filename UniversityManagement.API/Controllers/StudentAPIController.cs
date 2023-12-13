@@ -11,7 +11,6 @@ using UniversityManagement.ViewModel.StudentViewModels;
 
 namespace UniversityManagement.API.Controllers
 {
-    //[ServiceFilter(typeof(CustomExceptionAttribute))]
     [Route("api/[controller]")]
     [ApiController]
     public class StudentAPIController : ControllerBase
@@ -28,7 +27,7 @@ namespace UniversityManagement.API.Controllers
         }
 
         [HttpGet]
-        [Authorize()]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<APIResponse>> GetStudents()
         {
             var studentlist = _studentServices.GetAllEntities();

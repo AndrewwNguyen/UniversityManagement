@@ -10,7 +10,6 @@ using UniversityManagement.ViewModel.DepartmentViewModels;
 
 namespace UniversityManagement.API.Controllers
 {
-  
     [Route("api/[controller]")]
     [ApiController]
     public class DepartmentAPIController : ControllerBase

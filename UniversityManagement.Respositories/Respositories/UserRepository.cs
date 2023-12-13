@@ -112,7 +112,8 @@ namespace UniversityManagement.Respositories.Respositories
                 Role = registerationRequest.Role,
             };
             db.Set<User>().Add(user);
-            user.Password = "";
+            db.SaveChanges();
+            //user.Password = "";
             return user;
         }
 

@@ -39,7 +39,6 @@ builder.Services.AddScoped<IClassService, ClassService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-//builder.Services.AddTransient<CustomExceptionAttribute>();
 builder.Services.AddScoped(c => new APIResponse());
 builder.Services.AddControllers()
     .AddFluentValidation(x => {

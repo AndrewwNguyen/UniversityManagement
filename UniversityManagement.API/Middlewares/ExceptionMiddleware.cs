@@ -17,7 +17,7 @@ namespace UniversityManagement.API.Middlewares
         {
             try
             {
-                await next(context);
+                 await next(context);
             }
             catch (Exception ex)
             {
@@ -26,33 +26,10 @@ namespace UniversityManagement.API.Middlewares
                 await HandleException(context, ex);
             }
         }
+
         private static Task HandleException(HttpContext context, Exception ex)
         {
-            //HttpStatusCode status;
-            //var stackTrace = string.Empty;
-            //string message = "";
             int statusCode = StatusCodes.Status500InternalServerError;
-            //if (exceptionType == typeof(NotFoundException))
-            //{
-            //    statusCode = StatusCodes.Status404NotFound;
-            //}
-            //else if (exceptionType == typeof(BadRequestException))
-            //{
-            //    statusCode = StatusCodes.Status400BadRequest;
-            //}
-            //else if (exceptionType == typeof(UnauthorizedAccessException))
-            //{
-            //    statusCode = StatusCodes.Status400BadRequest;
-            //}
-            //else if (exceptionType == typeof(Exceptions.NotImplementedException))
-            //{
-            //    statusCode = StatusCodes.Status400BadRequest;
-            //}
-            //else if (exceptionType == typeof(Exceptions.KeyNotFoundException))
-            //{
-            //    statusCode = StatusCodes.Status400BadRequest;
-            //}
-
             switch (ex)
             {
                 case NotFoundException _:
@@ -81,7 +58,7 @@ namespace UniversityManagement.API.Middlewares
             }
             var errorResponse = new ErrorResponse
             {
-                StatusCode = statusCode,
+                statusCode = statusCode,
                 Message = ex.Message,
             };
             context.Response.ContentType = "application/json";

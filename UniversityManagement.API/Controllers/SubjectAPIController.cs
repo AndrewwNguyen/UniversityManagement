@@ -11,7 +11,6 @@ using UniversityManagement.ViewModel.SubjectViewModels;
 
 namespace UniversityManagement.API.Controllers
 {
-    [ServiceFilter(typeof(CustomExceptionAttribute))]
     [Route("api/[controller]")]
     [ApiController]
     public class SubjectAPIController : ControllerBase

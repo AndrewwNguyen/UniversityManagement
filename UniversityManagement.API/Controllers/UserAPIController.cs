@@ -9,7 +9,6 @@ using UniversityManagement.Services.Models;
 
 namespace UniversityManagement.API.Controllers
 {
-    //[ServiceFilter(typeof(CustomExceptionAttribute))]
     [Route("api/[controller]")]
     [ApiController]
     public class UserAPIController : ControllerBase
@@ -33,7 +32,10 @@ namespace UniversityManagement.API.Controllers
             var LoginResponse = await _userService.Login(loginRequest);
             if (LoginResponse.User == null || string.IsNullOrEmpty(LoginResponse.Token))
             {
-                throw new NotFoundException("User or password is incorrect !");
+                //throw new NotFoundException("User or password is incorrect !");
+                _response.IsSuccess = false;
+                _response.ErrorMessages.Add("User or password is incorrect !");
+                return Ok(_response);
             }
             _response.StatusCode = HttpStatusCode.OK;
             _response.IsSuccess = true;
@@ -48,7 +50,9 @@ namespace UniversityManagement.API.Controllers
             bool ifUserNameUnique = _userService.IsUniqueUser(registerationRequest.UserName);
             if (!ifUserNameUnique)
             {
-                throw new BadRequestException("Username already exists !");
+                _response.IsSuccess = false;
+                _response.ErrorMessages.Add("User or password is incorrect !");
+                return Ok(_response);
             }
             var user = await _userService.Register(registerationRequest);
             if (user == null)

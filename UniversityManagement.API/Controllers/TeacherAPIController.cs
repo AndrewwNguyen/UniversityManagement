@@ -10,7 +10,6 @@ using UniversityManagement.ViewModel.TeacherViewModels;
 
 namespace UniversityManagement.API.Controllers
 {
-    //[ServiceFilter(typeof(CustomExceptionAttribute))]
     [Route("api/[controller]")]
     [ApiController]
     public class TeacherAPIController : ControllerBase
