@@ -19,6 +19,9 @@ namespace UniversityManagement.Services.IServices
         Task<LoginResponse> Login(LoginRequestService request);
         User Find(Guid entityId);
         Task<User> Register(RegisterationRequestService registerationRequest);
-        bool IsUniqueUser(string username);
+        Task<bool> IsUniqueUser(string username);
+        Task<bool> IsUniqueEmail(string email);
+        Task<string> CheckPasswordStrength(string password);
+
     }
 }

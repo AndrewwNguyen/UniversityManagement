@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using System.Text.RegularExpressions;
+using System.Text;
 using UniversityManagement.Entities.Models;
 using UniversityManagement.Respositories.Infrastructures;
 using UniversityManagement.Respositories.Models;
@@ -76,9 +78,15 @@ namespace UniversityManagement.Services.Services
         {
             return _unitOfWork.userRepository.Pagination(pageSize, PageIndex);
         }
-        public bool IsUniqueUser(string username)
+        public async Task<bool> IsUniqueUser(string username)
         {
-            bool result = _unitOfWork.userRepository.IsUniqueUser(username);
+            bool result = await _unitOfWork.userRepository.IsUniqueUser(username);
+            return result;
+        }
+
+        public async Task<bool> IsUniqueEmail(string email)
+        {
+            bool result = await _unitOfWork.userRepository.IsUniqueEmail(email);
             return result;
         }
 
@@ -98,6 +106,24 @@ namespace UniversityManagement.Services.Services
         {
             LoginResponse response = _mapper.Map<LoginResponse>(model);
             return _unitOfWork.userRepository.CreateUnixTime(response);
+        }
+
+        public async Task<string> CheckPasswordStrength(string password)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (password.Length < 6)
+            {
+                sb.Append("Minimum password length should be 6" + Environment.NewLine);
+            }
+            if (!(Regex.IsMatch(password, "[a-z]") && Regex.IsMatch(password, "[A-Z]") && Regex.IsMatch(password, "[0-9]")))
+            {
+                sb.Append("Password should be Alphanumeric" + Environment.NewLine);
+            }
+            if (!Regex.IsMatch(password, "[<,>,@,!,#,$,%,^,&,*,(,),_,+,\\,[,\\],{,},?,:,;,|,',\\,.,/,~,`,-,=]"))
+            {
+                sb.Append("Password should contain special chars" + Environment.NewLine);
+            }
+            return sb.ToString();
         }
     }
 }

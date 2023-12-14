@@ -7,7 +7,8 @@ namespace UniversityManagement.Respositories.IRespositories
     {
         long CreateUnixTime(LoginResponse model);
         public RefreshToken CheckRefreshToken(LoginResponse model);
-        bool IsUniqueUser(string username);
+        Task<bool> IsUniqueUser(string username);
+        Task<bool> IsUniqueEmail(string email);
         public IEnumerable<User> GetAllEntities();
         Task<LoginResponse> Login(LoginRequest request);
         Task<User> Register(RegisterationRequest registerationRequest);

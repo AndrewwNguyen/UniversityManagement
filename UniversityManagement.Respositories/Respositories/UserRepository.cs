@@ -9,8 +9,9 @@ using UniversityManagement.Respositories.IRespositories;
 using UniversityManagement.Respositories.Models;
 using System.Security.Cryptography;
 using Microsoft.Extensions.Configuration;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using UniversityManagement.Entities.Enum;
+using UniversityManagement.Respositories.Helpers;
+using System.Text.RegularExpressions;
 
 namespace UniversityManagement.Respositories.Respositories
 {
@@ -34,15 +35,17 @@ namespace UniversityManagement.Respositories.Respositories
             model.IsRevoked = true;
             db.Set<RefreshToken>().Update(model);
         }
-        public bool IsUniqueUser(string username)
+
+        public async Task<bool> IsUniqueUser(string username)
         {
-            var user = db.Set<User>().FirstOrDefault(x => x.UserName == username);
-            if (user == null)
-            {
-                return true;
-            }
-            return false;
+            return await db.Set<User>().AnyAsync(x => x.UserName == username);
         }
+
+        public async Task<bool> IsUniqueEmail(string email)
+        {
+            return await db.Set<User>().AnyAsync(x => x.Email == email);
+        }
+
         public async Task<LoginResponse> Login(LoginRequest request)
         {
             var user = db.Set<User>().FirstOrDefault(x => x.UserName.ToLower() == request.UserName.ToLower() && x.Password == request.Password);
@@ -108,12 +111,15 @@ namespace UniversityManagement.Respositories.Respositories
             {
                 UserName = registerationRequest.UserName,
                 FullName = registerationRequest.FullName,
-                Password = registerationRequest.Password,
-                Role = registerationRequest.Role,
+                Password = PasswordHasher.HashPassword(registerationRequest.Password),
+                Address = registerationRequest.Address,
+                Role = "User",
+                Status = Status.Actived,
+                DateOfCreation= DateTime.UtcNow,
+                Email = registerationRequest.Email,
             };
             db.Set<User>().Add(user);
             db.SaveChanges();
-            //user.Password = "";
             return user;
         }
 

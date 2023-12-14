@@ -47,11 +47,27 @@ namespace UniversityManagement.API.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterationRequestAPI model)
         {
             RegisterationRequestService registerationRequest = _mapper.Map<RegisterationRequestService>(model);
-            bool ifUserNameUnique = _userService.IsUniqueUser(registerationRequest.UserName);
-            if (!ifUserNameUnique)
+            bool checkUniqueUser =  await _userService.IsUniqueUser(registerationRequest.UserName);
+            if (checkUniqueUser)
             {
                 _response.IsSuccess = false;
-                _response.ErrorMessages.Add("User or password is incorrect !");
+                _response.ErrorMessages.Add("Username Already Exist !");
+                return Ok(_response);
+            }
+
+            bool checkUniqueEmail = await _userService.IsUniqueEmail(registerationRequest.Email);
+            if (checkUniqueEmail)
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages.Add("Email Already Exist !");
+                return Ok(_response);
+            }
+
+            var pass = await _userService.CheckPasswordStrength(registerationRequest.Password);
+            if (!string.IsNullOrEmpty(pass))
+            {
+                _response.IsSuccess = false;
+                _response.ErrorMessages.Add(pass.ToString());
                 return Ok(_response);
             }
             var user = await _userService.Register(registerationRequest);
